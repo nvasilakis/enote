@@ -8,7 +8,7 @@ namespace Notes {
       exec_name           = "notes";
       app_years           = "2013";
       build_version       = "0.1"; // automate this
-      app_icon            = "notes";
+      app_icon            = "mail-message-new";
       main_url            = "http://github.com/nvasilakis/notes";
       bug_url             = main_url.concat("/issues");
       help_url            = main_url.concat("/wiki");
@@ -25,14 +25,23 @@ namespace Notes {
       window.title = "Notes";
       window.set_default_size(400, 500);
       window.window_position = Gtk.WindowPosition.CENTER;
-        window.destroy.connect(Gtk.main_quit);
+	  try {
+	  /* TODO: Add a proper icon
+		 window.icon = new Gdk.Pixbuf.from_file ("my-app.png"); */
+//		  window.icon = Gtk.IconTheme.get_default ().load_icon_for_scale ("mail-message-new", 128, 128, 0);
+		  window.icon_name = "text-richtext";
+//		  window.icon = Gtk.IconTheme.get_default ().load_icon ("mail-message-new", 128, 0);
+	  } catch (Error e) {
+		  stderr.printf("Could not find proper icon");
+	  }
+	  window.destroy.connect(Gtk.main_quit);
 
       var welcome = new Welcome("Nothing Yet", 
                   "Take a note or set-up a reminder.");
-      welcome.append ("document-new", 
+      welcome.append ("mail-message-new",
               "Create", 
-              "Set up a task");
-      welcome.append ("document-open", 
+              "Set up a task.");
+      welcome.append ("folder-remote", 
               "Import", 
               "Import tasks from another machine.");
 
@@ -41,7 +50,7 @@ namespace Notes {
       var toolbar = new Gtk.Toolbar();
       toolbar.get_style_context ().add_class ("primary-toolbar"); // or titlebar
 
-      Gtk.Image img = new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.SMALL_TOOLBAR);
+      Gtk.Image img = new Gtk.Image.from_icon_name ("mail-message-new", Gtk.IconSize.SMALL_TOOLBAR);
       Gtk.ToolButton button1 = new Gtk.ToolButton (img, null);
       button1.clicked.connect (() => {
           stdout.printf ("Button 1\n");
