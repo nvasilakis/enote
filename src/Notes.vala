@@ -8,13 +8,14 @@ namespace Notes {
       exec_name           = "notes";
       app_years           = "2013";
       build_version       = "0.1"; // automate this
-      app_icon            = "mail-message-new";
+      app_icon            = "application-default-icon";
       main_url            = "http://github.com/nvasilakis/notes";
       bug_url             = main_url.concat("/issues");
       help_url            = main_url.concat("/wiki");
       translate_url       = "http://www.transifex.com/projects/p/notes/";
       about_authors       = {"Nikos Vasilakis <nikos@vasilak.is>"};
-      about_documenters   = {"Valadoc"};
+      about_artists       = {"Harvey Cabaguio"};
+      about_documenters   = {"Nikos Vasilakis <nikos@vasilak.is>, Valadoc"};
       about_comments      = "Take Notes and Setup Reminders!";
       about_translators   = null;
       about_license_type  = Gtk.License.GPL_2_0;

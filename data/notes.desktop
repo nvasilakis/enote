@@ -5,6 +5,6 @@ GenericName=Keep track of what you need to do
 Comment=Add new tasks, set due dates or add notes; check them off as you're done!
 Categories=GTK;Utility;
 Exec=notes %F
-Icon=text-plain
+Icon=notes #Need to verify that icon works
 Type=Application
 #X-GNOME-Gettext-Domain=notes
