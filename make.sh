@@ -21,5 +21,5 @@ else
   mkdir ./build  && cd ./build
   # Initiate cmake and build source; also, if
   # everything ok, bring executable to project's root
-  cmake .. &&  make && mv ./src/Notes ../Notes
+  cmake .. &&  make && mv ./Notes ../Notes && ../Notes
 fi
