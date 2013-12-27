@@ -1,14 +1,14 @@
 using Gtk;
 
-namespace Notes{
+namespace Note{
     public class Application : Granite.Application  {
         construct {
-            program_name        = "Notes";
-            exec_name           = "Notes";
+            program_name        = "Note";
+            exec_name           = "Note";
             app_years           = "2013";
             app_icon            = "application-default-icon";
-            app_launcher        = "notes.desktop";
-            application_id      = "org.elementary.notes";
+            app_launcher        = "note.desktop";
+            application_id      = "org.elementary.note";
             main_url            = "https://www.github.com/nvasilakis/note";
             bug_url             = "https://github.com/nvasilakis/note/issues";
             help_url            = "https://github.com/nvasilakis/note/wiki";

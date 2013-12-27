@@ -1,13 +1,13 @@
 using Gtk;
 
-namespace Notes{
+namespace Note{
     public class Window : Gtk.Window {
         Box mainbox;
         Gtk.Toolbar toolbar;
         Widget current;
 
         public Window(Granite.Application application) {
-            title = "Notes";
+            title = "Note";
             set_default_size(400,500);
             window_position = Gtk.WindowPosition.CENTER;
             destroy.connect(Gtk.main_quit);
