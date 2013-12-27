@@ -3,8 +3,8 @@ cmake_minimum_required (VERSION 2.8)
 #We define the minimum policy version
 cmake_policy(VERSION 2.8)
 #We define out project name.
-project(Notes)
-set (EXEC_NAME "Notes")
+project(Note)
+set (EXEC_NAME "Note")
 
 #Here we load the modules we downloaded earlier and placed into the ./cmake directory
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake )
@@ -49,8 +49,8 @@ OPTIONS
     --thread)
 
 #Here we define our executable name.
-add_executable(Notes
+add_executable(Note
     ${VALA_C} )
 
 #We need to link the libraries with our Executable.
-target_link_libraries(Notes ${DEPS_LIBRARIES})
+target_link_libraries(Note ${DEPS_LIBRARIES})

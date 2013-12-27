@@ -1,7 +1,7 @@
 #!/bin/bash
   
 ##
-# A script to build elementary notes 
+# A script to build elementary note 
 # from sources (or cleanup) on linux
 #
 # Usage: ./make.sh [clean]
@@ -21,5 +21,5 @@ else
   mkdir ./build  && cd ./build
   # Initiate cmake and build source; also, if
   # everything ok, bring executable to project's root
-  cmake .. &&  make && mv ./Notes ../Notes && ../Notes
+  cmake .. &&  make && mv ./Note ../Note && ../Note
 fi
