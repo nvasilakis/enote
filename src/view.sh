@@ -9,4 +9,4 @@
 # Usage: ./view.sh
 ##
 
-valac --pkg gtk+-3.0 --pkg granite Notes.vala && ./Notes
+valac --pkg gtk+-3.0 --pkg granite Wee.vala && ./Wee
