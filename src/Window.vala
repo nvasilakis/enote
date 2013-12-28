@@ -2,7 +2,7 @@ using Gtk;
 
 namespace Note{
     public class Window : Gtk.Window {
-        Box mainbox;
+        Box container;
         Gtk.Toolbar toolbar;
         Widget current;
 
@@ -20,7 +20,7 @@ namespace Note{
 
         public void add_menu(Granite.Widgets.AppMenu am){
             // build header
-            mainbox = new Box(Gtk.Orientation.VERTICAL, 0);
+            container = new Box(Gtk.Orientation.VERTICAL, 0);
             toolbar = new Toolbar();
             var img = new Image.from_icon_name ("mail-message-new",
                                                   IconSize.SMALL_TOOLBAR);
@@ -35,49 +35,30 @@ namespace Note{
             toolbar.add (separator);
             toolbar.add(btn_gear);
             toolbar.get_style_context ().add_class ("primary-toolbar");
-            mainbox.pack_start(toolbar, false, false);
-            add(mainbox);
+            container.pack_start(toolbar, false, false);
+            add(container);
         }
 
         public void swap_to_welcome() {
-            var welcome = new Granite.Widgets.Welcome("Nothing Yet",
-                                      "Take a note or set-up a reminder.");
-            welcome.append ("mail-message-new",
-                            "Create",
-                            "Set up a task.");
-            welcome.append ("folder-remote",
-                            "Import",
-                            "Import tasks from another machine.");
-            current = welcome;
-            clear_mainbox();
-            mainbox.pack_start(current);
-            mainbox.show_all();
+            Note.Welcome welcome = new Note.Welcome(this);
+            clear_container();
+            container.pack_start(welcome);
+            welcome.show_all();
         }
 
         public void swap_to_main(){
-            // The button:
-            Gtk.Switch _switch = new Gtk.Switch ();
-            _switch.notify["active"].connect (() => {
-                    if (_switch.active) {
-                        stdout.printf ("The switch is on!\n");
-                    } else {
-                        swap_to_welcome();
-                        stdout.printf ("The switch is off!\n");
-                    }
-                });
-
-            // Changes the state to on:
-            _switch.set_active (true);
-            clear_mainbox();
-            mainbox.pack_start(_switch);
-            mainbox.show_all();
+            Note.View view = new Note.View(this);
+            clear_container();
+//            this.add(view);
+            container.pack_end(view);
+            view.show_all();
         }
 
-        public void clear_mainbox(){
-            foreach(var child in mainbox.get_children()){
+        public void clear_container(){
+            foreach(var child in container.get_children()){
                 if (child == toolbar)
                     continue;
-                mainbox.remove(child);
+                container.remove(child);
             }
         }
     }

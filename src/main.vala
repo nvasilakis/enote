@@ -22,6 +22,7 @@ namespace Note{
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
             layout.swap_to_welcome();
+//            layout.swap_to_main();
             layout.show_all();
         }
 
