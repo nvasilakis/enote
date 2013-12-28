@@ -1,6 +1,6 @@
 namespace Note {
 
-    public class View : Gtk.TreeView {
+    public class TaskList : Gtk.TreeView {
         Note.Window window;
         Gtk.ListStore list_store;
 
@@ -11,8 +11,11 @@ namespace Note {
             N_COLUMNS
         }
 
-        public View(Note.Window window) {
-            list_store = new Gtk.ListStore (Col.N_COLUMNS, typeof (bool), typeof (string), typeof (string));
+        public TaskList(Note.Window window) {
+            list_store = new Gtk.ListStore (Col.N_COLUMNS,
+                                            typeof (bool),
+                                            typeof (string),
+                                            typeof (string));
             this.window = window;
 
             name  = "NoteList";
@@ -37,7 +40,8 @@ namespace Note {
             toggle.ypad = 1;
             toggle.xpad = 1;
             toggle.toggled.connect ((toggle, path) => {
-                    Gtk.TreePath tree_path = new Gtk.TreePath.from_string (path);
+                    Gtk.TreePath tree_path =
+                        new Gtk.TreePath.from_string (path);
                     Gtk.TreeIter iter;
                     list_store.get_iter (out iter, tree_path);
                     list_store.set (iter, Col.TOGGLE, !toggle.active);
@@ -61,44 +65,8 @@ namespace Note {
             insert ("one two three four");
             for (int i=1; i<11; i++)
                 insert ("item ".concat(i.to_string()));
-            insert ("We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! We are the People that rule the World! ");
-
-/*
-  Gtk.TreeIter iter;
-  list_store.append (out iter);
-  list_store.set (iter, Col.TOGGLE, true, Col.TEXT, "item 1");
-  list_store.append (out iter);
-  list_store.set (iter, Col.TOGGLE, false, Col.TEXT, "item 2");
-
-  toggle.xpad = 6;
-  insert_column_with_attributes (-1, "Toggle", toggle, "active", 1);
-  //append_column (column);
-
-  // setup the TEXT column
-  text.ypad = 6;                              // set vertical padding between rows
-  text.editable = true;
-
-  insert_column_with_attributes (-1, "Task", text, "text", 2, "strikethrough", 3);
-  //column.expand = true;                       // the text column should fill the whole width of the column
-  //append_column (column);
-
-  // setup the DRAGHANDLE column
-  handle.xpad = 6;
-  insert_column_with_attributes (-1, "Drag", text, "text", 4);
-  //append_column (column);
-
-  insert("one");
-  //insert("two");
-  //insert("three");
-
-//    cell = new Gtk.CellRendererText ();
-//    insert_column_with_attributes (-1, "State", cell, "text", 0);
-//    insert_column_with_attributes (-1, "Cities", cell, "text", 1);
-//    list_store.append (out iter);
-//    list_store.set (iter, 0, "Vienna", 1, 1);
-//    list_store.append (out iter);
-//    list_store.set (iter, 0, "Burgenland", 1, 13);
-*/
+            insert ("We\n are\n the\n People\n that\n rule\n the World!");
+            
         }
 
         public void insert(string ttask) {
@@ -106,7 +74,13 @@ namespace Note {
             string task = normalize(ttask);
             Gtk.TreeIter iter;
             list_store.append (out iter);
-            list_store.set (iter, Col.TEXT, task, Col.TOGGLE, false, Col.ICON, "view-list-symbolic");
+            list_store.set (iter,
+                            Col.TEXT,
+                            task,
+                            Col.TOGGLE,
+                            false,
+                            Col.ICON,
+                            "view-list-symbolic");
         }
 
 // Returns only the needed length based on column width
