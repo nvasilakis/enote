@@ -1,0 +1,17 @@
+Dependencies:
+    debhelper (>= 7)
+    cmake
+    pkg-config
+    valac
+    libgtk-3-dev
+    libgranite-dev
+
+Install Dependencies:
+  sudo apt-get install debhelper cmake pkg-config \
+                valac libgtk-3-dev libgranite-dev
+
+Installation:
+    git clone https://github.com/nvasilakis/note
+    cd note
+    ./make.sh
+    sudo make install
