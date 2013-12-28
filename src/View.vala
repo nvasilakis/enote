@@ -3,6 +3,7 @@ namespace Note {
     public class TaskList : Gtk.TreeView {
         Note.Window window;
         Gtk.ListStore list_store;
+        Gtk.Entry entry;
 
         private enum Col { // Column Types
             TOGGLE,
@@ -60,7 +61,14 @@ namespace Note {
             column.add_attribute (text, "text", Col.TEXT);
             append_column (column);
 
-    
+            entry = new Gtk.Entry();
+            entry.name = "Entry";
+            entry.placeholder_text = "Quick Note..";
+            entry.max_length = 50;
+            entry.hexpand = true;
+            entry.valign = Gtk.Align.END;
+            entry.secondary_icon_name  = "list-add-symbolic";
+            add(entry);
 
             insert ("one two three four");
             for (int i=1; i<11; i++)
