@@ -47,7 +47,7 @@ namespace Note{
         }
 
         public void swap_to_main(){
-            Note.LeftPane view = new Note.LeftPane(this);
+            Note.MainView view = new Note.MainView(this);
             clear_container();
 //            this.add(view);
             container.pack_end(view);
