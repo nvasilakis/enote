@@ -62,7 +62,7 @@ namespace Note {
             append_column (column);
             columns_autosize ();
 //            stdout.printf(get_activate_on_single_click().to_string());
-            stdout.printf("\n");
+//            stdout.printf("\n");
 //            enable_grid_lines = true;
 //            set_activate_on_single_click(true);
 //            this.activate_on_single_click = true;
@@ -82,9 +82,10 @@ namespace Note {
             GLib.Value cell;
             list_store.get_value (iter, Col.TEXT, out cell);
             string text = (string) cell;
-            stdout.printf(text.concat("\n"));
+//            stdout.printf(text.concat("\n"));
             this.window.view.update_main(text);
             this.window.view.show_all();
+			Granite.Services.Logger.notification("update main!");
         }
 
         public void insert(string ttask) {

@@ -78,7 +78,6 @@ namespace Note{
         }
 
         public void update_main(string text) {
-            stdout.printf("update main\n");
             view.buffer.text = text;
         }
     }

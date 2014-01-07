@@ -2,6 +2,7 @@ using Gtk;
 
 namespace Note{
     public class Application : Granite.Application  {
+
         construct {
             program_name        = "Note";
             exec_name           = "Note";
@@ -25,17 +26,23 @@ namespace Note{
 			context.set_help_enabled (true);
 			context.parse(ref args);
 
+			Granite.Services.Logger.DisplayLevel =
+			  (Utils.DEBUG ?
+			   Granite.Services.LogLevel.DEBUG :
+			   Granite.Services.LogLevel.WARN);
+			Granite.Services.Logger.notification("activated");
+
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
             layout.swap_to_welcome();
 //            layout.swap_to_main();
             layout.show_all();
         }
-
+/*
         public override void activate () {
-            stdout.printf ("activated\n");
-        }
 
+        }
+*/
         public static int main(string [] args) {
             Gtk.init(ref args);
             new Application().build_and_run(args);
