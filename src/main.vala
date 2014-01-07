@@ -18,7 +18,13 @@ namespace Note{
             about_license_type  = License.LGPL_3_0;
         }
 
-        public void build_and_run () {
+        public void build_and_run (string[] args) {
+			// Grab command line arguments
+			OptionContext context = new OptionContext ("Note");
+			context.add_main_entries (Utils.args, "note");
+			context.set_help_enabled (true);
+			context.parse(ref args);
+
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
             layout.swap_to_welcome();
@@ -32,7 +38,7 @@ namespace Note{
 
         public static int main(string [] args) {
             Gtk.init(ref args);
-            new Application().build_and_run();
+            new Application().build_and_run(args);
             Gtk.main();
             return 0;
         }

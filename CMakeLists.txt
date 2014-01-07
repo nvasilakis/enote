@@ -45,6 +45,7 @@ vala_precompile(VALA_C #${EXEC_NAME}
     src/Window.vala
     src/Welcome.vala
     src/TaskList.vala
+    src/Utils.vala
 PACKAGES
     gtk+-3.0
     granite

@@ -22,5 +22,5 @@ else
   # Initiate cmake and build source; also, if
   # everything ok, bring executable to project's root
   cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
-  &&  make && mv ./Note ../Note && ../Note
+  &&  make && mv ./Note ../Note && ../Note -d
 fi
