@@ -5,6 +5,7 @@ namespace Note{
         Box container;
         Gtk.Toolbar toolbar;
         Widget current;
+        public Note.MainView view {get; set;}
 
         public Window(Granite.Application application) {
             title = "Note";
@@ -47,7 +48,7 @@ namespace Note{
         }
 
         public void swap_to_main(){
-            Note.MainView view = new Note.MainView(this);
+            view = new Note.MainView(this);
             clear_container();
 //            this.add(view);
             container.pack_end(view);

@@ -46,6 +46,7 @@ namespace Note {
                     list_store.get_iter (out iter, tree_path);
                     list_store.set (iter, Col.TOGGLE, !toggle.active);
                 });
+            
             column = new Gtk.TreeViewColumn ();
             column.pack_start (toggle, false);
             column.add_attribute (toggle, "active", Col.TOGGLE);
@@ -54,17 +55,36 @@ namespace Note {
             Gtk.CellRendererText text = new Gtk.CellRendererText ();
             text.ypad = 1;
             text.xpad = 1;
-            text.editable = true;
+            text.editable = false;
             column = new Gtk.TreeViewColumn ();
             column.pack_start (text, true);
             column.add_attribute (text, "text", Col.TEXT);
             append_column (column);
+            columns_autosize ();
+//            stdout.printf(get_activate_on_single_click().to_string());
+            stdout.printf("\n");
+//            enable_grid_lines = true;
+//            set_activate_on_single_click(true);
+//            this.activate_on_single_click = true;
+// requires Gtk > 3.8
 
+            row_activated.connect (update_main);
+        }
 
-            insert ("one two three four");
-            for (int i=1; i<20; i++)
-                insert ("item ".concat(i.to_string()));
-            insert ("We\n are\n the\n People\n that\n rule\n the World!");
+        public void update_main(Gtk.TreePath path, Gtk.TreeViewColumn column) {
+            Gtk.TreeIter iter;
+            bool tmp = list_store.get_iter (out iter, path);
+            assert (tmp == true);
+//                    stdout.printf(iter.get_type().name());
+//                    stdout.printf(path.get_type().name());
+//                    stdout.printf());
+
+            GLib.Value cell;
+            list_store.get_value (iter, Col.TEXT, out cell);
+            string text = (string) cell;
+            stdout.printf(text.concat("\n"));
+            this.window.view.update_main(text);
+            this.window.view.show_all();
         }
 
         public void insert(string ttask) {

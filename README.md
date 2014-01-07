@@ -9,3 +9,6 @@ launchpad website
 github website
 translation website
 bugs website
+
+Notes:
+https://developer.gnome.org/gdata/unstable/
