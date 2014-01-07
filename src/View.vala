@@ -1,8 +1,6 @@
 namespace Note{
 
     public class LeftPane : Gtk.Grid {
-        public const string INIT_TEXT = "Dinner at Pacho's at 7pm";
-        public const string TOOLTIP_TEXT = "Add Task";
         Note.Window window;
         public Gtk.Entry entry;
         Note.TaskList tlist;
@@ -20,13 +18,13 @@ namespace Note{
 
             entry = new Gtk.Entry();
             entry.name = "Entry";
-            entry.placeholder_text = INIT_TEXT;
+            entry.placeholder_text = Utils.INIT_TEXT;
 //            entry.max_length = 20;
 //            entry.max_width = 50
             entry.hexpand = false;
             entry.valign = Gtk.Align.END;
             entry.secondary_icon_name  = "list-add-symbolic";
-            entry.secondary_icon_tooltip_text = TOOLTIP_TEXT;
+            entry.secondary_icon_tooltip_text = Utils.TOOLTIP_TEXT;
 
             entry.activate.connect(() => {this.insert(entry.text);});
             entry.icon_press.connect(() => {this.insert(entry.text);});

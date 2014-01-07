@@ -21,10 +21,15 @@ namespace Note{
 
         public void build_and_run (string[] args) {
 			// Grab command line arguments
-			OptionContext context = new OptionContext ("Note");
-			context.add_main_entries (Utils.args, "note");
-			context.set_help_enabled (true);
-			context.parse(ref args);
+			try {
+				OptionContext context = new OptionContext ("Note");
+				context.add_main_entries (Utils.args, "note");
+				context.set_help_enabled (true);
+				context.parse(ref args);
+			} catch (OptionError e) {
+				stdout.printf ("error: %s\n", e.message);
+				stdout.printf ("Run '%s --help' to see a full list of available command line options.\n", args[0]);
+			}
 
 			Granite.Services.Logger.DisplayLevel =
 			  (Utils.DEBUG ?
@@ -38,11 +43,7 @@ namespace Note{
 //            layout.swap_to_main();
             layout.show_all();
         }
-/*
-        public override void activate () {
 
-        }
-*/
         public static int main(string [] args) {
             Gtk.init(ref args);
             new Application().build_and_run(args);

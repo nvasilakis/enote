@@ -14,12 +14,19 @@ namespace Note{
             activated.connect((index) => {
                     switch (index) {
                     case 0:
-                    window.set_title("zero");
-//                        Window.show_content();
+    					window.create_new_task_window();
                         break;
                     case 1:
-                    window.set_title("one");
-                        break;
+					var txt = "<span weight='bold'>Sorry!</span>\n\n";
+					txt += "This feature hasn't been implemented yet!";
+					var msg = new Gtk.MessageDialog.with_markup (null,
+													 Gtk.DialogFlags.MODAL,
+													 Gtk.MessageType.ERROR,
+													 Gtk.ButtonsType.OK,
+													 txt);
+					msg.response.connect ((response_id) => { msg.destroy(); });
+					msg.show();
+					break;
                     }
                 });
 

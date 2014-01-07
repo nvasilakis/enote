@@ -2,10 +2,12 @@ using Gtk;
 
 namespace Note{
     public class Window : Gtk.Window {
+		bool is_empty = true;
         Box container;
         Gtk.Toolbar toolbar;
         Widget current;
         public Note.MainView view {get; set;}
+		Granite.Widgets.LightWindow lw;
 
         public Window(Granite.Application application) {
             title = "Note";
@@ -26,7 +28,7 @@ namespace Note{
             var img = new Image.from_icon_name ("mail-message-new",
                                                   IconSize.SMALL_TOOLBAR);
             var btn_create = new ToolButton (img, "Create");
-            btn_create.clicked.connect (swap_to_main);
+            btn_create.clicked.connect (create_new_task_window);
             toolbar.insert (btn_create,0);
             var btn_gear = am;
             btn_gear.set_expand(true);
@@ -39,6 +41,11 @@ namespace Note{
             container.pack_start(toolbar, false, false);
             add(container);
         }
+
+		public void create_new_task_window() {
+			lw = new NewTask();
+			lw.show_all();
+		}
 
         public void swap_to_welcome() {
             Note.Welcome welcome = new Note.Welcome(this);
@@ -53,6 +60,10 @@ namespace Note{
 //            this.add(view);
             container.pack_end(view);
             view.show_all();
+			if (is_empty) {
+				create_new_task_window();
+				this.is_empty = false;
+			}
         }
 
         public void clear_container(){
