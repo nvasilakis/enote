@@ -54,7 +54,13 @@ namespace Note{
                 "Reminder!",
                 "Wake up Mr. Freeman..",
                 "text-richtext");
-            Granite.Services.Logger.critical("Notify-send");
+            Granite.Services.Logger.notification("Notify-send");
+
+			debug("debug");
+			message("message");
+			warning("warning");
+//			error("error");
+//			critical("critical");
             try {
                 notification.show ();
             } catch (GLib.Error error) {
