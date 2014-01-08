@@ -37,11 +37,30 @@ namespace Note{
 			   Granite.Services.LogLevel.WARN);
 			Granite.Services.Logger.notification("activated");
 
+            Timeout.add(2000, update);
+
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
             layout.swap_to_welcome();
 //            layout.swap_to_main();
             layout.show_all();
+        }
+
+        public static bool update() {
+            if (!Notify.init("Note"))
+                critical("Failed to initialize libnotify.");
+            Notify.Notification notification;
+            notification = new Notify.Notification(
+                "Reminder!",
+                "Wake up Mr. Freeman..",
+                "text-richtext");
+            Granite.Services.Logger.critical("Notify-send");
+            try {
+                notification.show ();
+            } catch (GLib.Error error) {
+                warning ("Failed to show notification: %s", error.message);
+            }
+            return false;
         }
 
         public static int main(string [] args) {
