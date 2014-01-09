@@ -37,7 +37,16 @@ namespace Note{
 			   Granite.Services.LogLevel.DEBUG :
 			   Granite.Services.LogLevel.WARN);
 
-            Timeout.add(2000, update);
+            Task t = new Task("Breakfast");
+            t.when = new DateTime.now_local().add_seconds(10);
+            t.more = "We are the people that rule the world";
+
+            Timeout.add(1000 , () => {
+                    return update("one");
+                });
+            Timeout.add((t.in_seconds () * 1000) , () => {
+                    return update(t.what);
+                });
 
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
@@ -46,14 +55,14 @@ namespace Note{
             layout.show_all();
         }
 
-        public bool update() {
+        public bool update(string text) {
             debug("attempting notification");
             if (!Notify.init("Note"))
                 critical("Failed to initialize libnotify.");
             Notify.Notification notification;
             notification = new Notify.Notification(
                 "Reminder!",
-                "Wake up Mr. Freeman..",
+                text,
                 this.app_icon);
             try {
                 notification.show ();
