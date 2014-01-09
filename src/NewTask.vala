@@ -7,7 +7,6 @@ namespace Note{
 		DatePicker when_date;
 		TimePicker when_time;
 		Gtk.TextView notes;
-		Gtk.ScrolledWindow scrolled;
 
 		public NewTask() {
 			base("New Task");

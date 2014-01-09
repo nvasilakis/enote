@@ -5,7 +5,6 @@ namespace Note{
 		bool is_empty = true;
         Box container;
         Gtk.Toolbar toolbar;
-        Widget current;
         public Note.MainView view {get; set;}
 		Granite.Widgets.LightWindow lw;
 
@@ -14,11 +13,8 @@ namespace Note{
             set_default_size(400,500);
             window_position = Gtk.WindowPosition.CENTER;
             destroy.connect(Gtk.main_quit);
-            try {
-                icon_name = "text-richtext";
-            } catch (Error e) {
-                stderr.printf("Could not find proper icon");
-            }
+            icon_name = "text-richtext";
+            stderr.printf("Could not find proper icon");
         }
 
         public void add_menu(Granite.Widgets.AppMenu am){

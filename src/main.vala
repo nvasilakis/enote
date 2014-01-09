@@ -5,9 +5,10 @@ namespace Note{
 
         construct {
             program_name        = "Note";
+            build_version       = "0.1";
             exec_name           = "Note";
             app_years           = "2013";
-            app_icon            = "application-default-icon";
+            app_icon            = "text-richtext";
             app_launcher        = "note.desktop";
             application_id      = "org.elementary.note";
             main_url            = "https://www.github.com/nvasilakis/note";
@@ -35,7 +36,6 @@ namespace Note{
 			  (Utils.DEBUG ?
 			   Granite.Services.LogLevel.DEBUG :
 			   Granite.Services.LogLevel.WARN);
-			Granite.Services.Logger.notification("activated");
 
             Timeout.add(2000, update);
 
@@ -46,21 +46,15 @@ namespace Note{
             layout.show_all();
         }
 
-        public static bool update() {
+        public bool update() {
+            debug("attempting notification");
             if (!Notify.init("Note"))
                 critical("Failed to initialize libnotify.");
             Notify.Notification notification;
             notification = new Notify.Notification(
                 "Reminder!",
                 "Wake up Mr. Freeman..",
-                "text-richtext");
-            Granite.Services.Logger.notification("Notify-send");
-
-			debug("debug");
-			message("message");
-			warning("warning");
-//			error("error");
-//			critical("critical");
+                this.app_icon);
             try {
                 notification.show ();
             } catch (GLib.Error error) {
