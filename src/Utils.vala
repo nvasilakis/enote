@@ -1,8 +1,12 @@
 namespace Note {
 
 	public class Utils {
+		//application constants
 		public const string INIT_TEXT = "Breakfast at Milliway's at 7am";
         public const string TOOLTIP_TEXT = "Add Task";
+		public const string ICON = "text-richtext";
+
+		//boot params
 		public static bool DEBUG = false;
 
 		public static const OptionEntry[] args = {

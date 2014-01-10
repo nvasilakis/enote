@@ -13,7 +13,7 @@ namespace Note{
             set_default_size(400,500);
             window_position = Gtk.WindowPosition.CENTER;
             destroy.connect(Gtk.main_quit);
-            icon_name = "text-richtext";
+            icon_name = Utils.ICON;
             stderr.printf("Could not find proper icon");
         }
 

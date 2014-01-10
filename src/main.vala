@@ -8,7 +8,7 @@ namespace Note{
             build_version       = "0.1";
             exec_name           = "Note";
             app_years           = "2013";
-            app_icon            = "text-richtext";
+            app_icon            = Utils.ICON;
             app_launcher        = "note.desktop";
             application_id      = "org.elementary.note";
             main_url            = "https://www.github.com/nvasilakis/note";
@@ -37,16 +37,12 @@ namespace Note{
 			   Granite.Services.LogLevel.DEBUG :
 			   Granite.Services.LogLevel.WARN);
 
-            Task t = new Task("Breakfast");
-            t.when = new DateTime.now_local().add_seconds(10);
+//TODO fix create ticket/notify with date setter!
+			  Task t = new Task.with_date("Breakfast",
+				  new DateTime.now_local().add_seconds(10));
             t.more = "We are the people that rule the world";
-
-            Timeout.add(1000 , () => {
-                    return update("one");
-                });
-            Timeout.add((t.in_seconds () * 1000) , () => {
-                    return update(t.what);
-                });
+			t.date = new  DateTime.now_local().add_seconds(1);
+			t.title = "Meeting changed time";
 
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
@@ -55,22 +51,6 @@ namespace Note{
             layout.show_all();
         }
 
-        public bool update(string text) {
-            debug("attempting notification");
-            if (!Notify.init("Note"))
-                critical("Failed to initialize libnotify.");
-            Notify.Notification notification;
-            notification = new Notify.Notification(
-                "Reminder!",
-                text,
-                this.app_icon);
-            try {
-                notification.show ();
-            } catch (GLib.Error error) {
-                warning ("Failed to show notification: %s", error.message);
-            }
-            return false;
-        }
 
         public static int main(string [] args) {
             Gtk.init(ref args);
