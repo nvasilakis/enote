@@ -29,11 +29,13 @@ namespace Note {
 			set {add_date(value);}
 		}
         public string more {get; set;}
+        public int percent {get; set;}
 		private Gee.ArrayList<Ticket> notifications;
 
         public Task(string title){
             this.title = title;
 			this.notifications = new Gee.ArrayList<Ticket>();
+            this.percent = 0;
         }
 
 		public Task.with_date(string title, DateTime date) {
@@ -41,6 +43,7 @@ namespace Note {
 			// <store ref> = new Task(title)?
 			this.title = title;
 			this.notifications = new Gee.ArrayList<Ticket>();
+            this.percent = 0;
 			add_date(date);
 		}
 
@@ -98,6 +101,25 @@ namespace Note {
                   this.date.to_string(),
                   difference.to_string());
             return difference;
+        }
+
+        /**
+         * Note: clr REQUIRES #
+         * i.e., it is #999 not 999!
+         * TODO: Add checking
+         */
+        public string format_title(string clr) {
+            return ("<span underline='none' font_weight='bold' color='" + clr +
+                    "' size='large'>" + title + "</span> <span font_weight=" +
+                    "'light'>" + percent.to_string() +"%)</span>");
+        }
+
+        public string format_date() {
+            return ("<span color='#999aaa'> due on 04/14/2014 </span>");
+        }
+
+        public string format_notes() {
+            return more; //TODO: Return a maximum string size + flatten "\n"
         }
     }
 }
