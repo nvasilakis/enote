@@ -1,7 +1,7 @@
 namespace Note{
-
     public class LeftPane : Gtk.Grid {
         Note.Window window;
+
         public Gtk.Entry entry;
         Note.TaskList tlist;
         Gtk.ScrolledWindow scrolled_window;
@@ -9,6 +9,25 @@ namespace Note{
         public LeftPane (Note.Window window) {
             this.window = window;
             tlist = new TaskList(window);
+            populate ();
+            attach(tlist, 0, 1, 1, 1);
+        }
+
+        // TODO: A sophisticated populate function that serves 
+        // -- Demo purposes
+        // -- Debugging purposes
+        private void populate(){
+            for (int i=0; i <10; i++) {
+                //TODO fix create ticket/notify with date setter!
+                Task t = new Task.with_date("Breakfast",
+                      new DateTime.now_local().add_seconds(1+(10*i)));
+                t.more = "We are the people that rule the world";
+//                t.date = new  DateTime.now_local().add_seconds(1);
+                t.title = "Meeting changed time";
+                tlist.append(t);
+            }
+        }
+/*
             scrolled_window = new Gtk.ScrolledWindow (null, null);
 
             scrolled_window.expand = true;
@@ -32,51 +51,20 @@ namespace Note{
             expand = false;
             attach (scrolled_window, 0, 1, 1, 1);
             attach (entry, 0, 2, 1, 1);
-        }
-
+*/
         public void insert(string text) {
-            tlist.insert(text);
+            tlist.append(new Task(text));
             entry.text = "";
         }
     }
 
     public class MainView : Gtk.Box {
         Note.LeftPane lpane;
-        Gtk.ScrolledWindow  rpane;
-        Gtk.TextView  view;
 
         public MainView (Note.Window window) {
             orientation = Gtk.Orientation.HORIZONTAL;
             lpane = new LeftPane(window);
-
-
-//            rpane = new Gtk.TextView();
-            // A ScrolledWindow:
-            rpane = new Gtk.ScrolledWindow (null, null);
-            // The TextView:
-            view = new Gtk.TextView ();
-            view.set_wrap_mode (Gtk.WrapMode.WORD);
-            view.buffer.text = "Lorem Ipsum";
-            rpane.add (view);
-
-/*
-            rpane.override_font (Pango.FontDescription.from_string ("12"));
-            rpane.editable = true;
-//            rpane.wrap_mode = Gtk.WrapMode.WORD_CHAR;
-            rpane.valign = Gtk.Align.START;
-
-            rpane.vexpand = false;
-            rpane.hexpand = false;
-            rpane.buffer.text = "one two three four";
-*/
-
             add(lpane);
-            pack_start (rpane, true, true, 0);
-            lpane.entry.grab_focus();
-        }
-
-        public void update_main(string text) {
-            view.buffer.text = text;
         }
     }
 }

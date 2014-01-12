@@ -37,17 +37,11 @@ namespace Note{
 			   Granite.Services.LogLevel.DEBUG :
 			   Granite.Services.LogLevel.WARN);
 
-//TODO fix create ticket/notify with date setter!
-			  Task t = new Task.with_date("Breakfast",
-				  new DateTime.now_local().add_seconds(10));
-            t.more = "We are the people that rule the world";
-			t.date = new  DateTime.now_local().add_seconds(1);
-			t.title = "Meeting changed time";
 
             Window layout = new Window(this);
             layout.add_menu(create_appmenu(new Gtk.Menu()));
-            layout.swap_to_welcome();
-//            layout.swap_to_main();
+//            layout.swap_to_welcome();
+            layout.swap_to_main();
             layout.show_all();
         }
 

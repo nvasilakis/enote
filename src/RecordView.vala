@@ -4,7 +4,7 @@ namespace Note {
  */
 public class RecordView : Gtk.EventBox {
     // keep a handy reference
-    private Gtk.Window window;
+    private Note.Window window;
     private Task task;
     // top-level box
     private Gtk.Box record_box;
@@ -38,7 +38,7 @@ public class RecordView : Gtk.EventBox {
     // B2. lower
     private Gtk.Label notes;
 
-    public RecordView (Gtk.Window window, Task task) {
+    public RecordView (Note.Window window, Task task) {
         this.window = window;
         this.task = task;
         // Record

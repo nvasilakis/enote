@@ -111,7 +111,7 @@ namespace Note {
         public string format_title(string clr) {
             return ("<span underline='none' font_weight='bold' color='" + clr +
                     "' size='large'>" + title + "</span> <span font_weight=" +
-                    "'light'>" + percent.to_string() +"%)</span>");
+                    "'light'>(" + percent.to_string() +"%)</span>");
         }
 
         public string format_date() {

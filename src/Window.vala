@@ -56,10 +56,12 @@ namespace Note{
 //            this.add(view);
             container.pack_end(view);
             view.show_all();
+/*
 			if (is_empty) {
 				create_new_task_window();
 				this.is_empty = false;
 			}
+*/
         }
 
         public void clear_container(){
