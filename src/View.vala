@@ -14,6 +14,8 @@ namespace Note{
             records = new GLib.List<RecordView>();
             // The Grid:)
             grid = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+            grid.set_valign(Gtk.Align.START);
+            grid.set_vexpand(false);
             viewport = new Gtk.Viewport (null, null);
             this.add (viewport);
             viewport.add(grid);
@@ -22,10 +24,13 @@ namespace Note{
 
         public void append(Task task) {
             RecordView record = new RecordView(window, task);
+            record.set_vexpand(false);
+//            record.set_preferred_height(1,1);
 //            records.append(record);
             var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-            grid.pack_end(sep);
-            grid.pack_end(record);
+            sep.set_vexpand(false);
+            grid.pack_end(sep, false, false, 0);
+            grid.pack_end(record, false, false, 0);
             record.show_everything();
         }
     }
