@@ -12,6 +12,7 @@ namespace Note {
         // Option parameters
         public static bool intrusive_notifications = false;
         public static bool ask_delete_confirmation = false;
+        public static string  path_to_store_data = "";
 
 		public static const OptionEntry[] args = {
             { "debug",'d', 0, OptionArg.NONE, out Utils.DEBUG,

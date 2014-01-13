@@ -8,9 +8,9 @@ namespace Note{
 		TimePicker when_time;
 		Gtk.TextView notes;
 
-		public NewTask() {
+		public NewTask(Task t) {
 			base("New Task");
-            title = "Add a task!";
+            title = t = null ? "Add a task!" : "Edit task";
             resizable = false;
             set_keep_above (true);
             window_position = Gtk.WindowPosition.CENTER;
@@ -35,15 +35,23 @@ namespace Note{
             subgrid.set_column_spacing (8);
 
             var what_label = make_label ("What:");
-			what = new Granite.Widgets.HintedEntry (Utils.INIT_TEXT);
+            what = new Granite.Widgets.HintedEntry (Utils.INIT_TEXT);
+            if (t != null)
+                what.set_text(t.title);
 
             var when_label = make_label ("When:");
             when_date = make_date_picker ();
             when_time = make_time_picker ();
+            if (t !=null) { // actually test date
+                when_time.date = t.date;
+                when_time.time = t.date;
+            }
 
             var note_label = make_label ("Notes:");
             notes = new Gtk.TextView ();
             notes.set_wrap_mode (Gtk.WrapMode.WORD_CHAR);
+            if (t != null)
+                notes.buffer.text = t.more;
 
             var scrolled = new Gtk.ScrolledWindow (null, null);
             scrolled.add (notes);
