@@ -39,7 +39,7 @@ namespace Note{
         }
 
 		public void create_new_task_window() {
-			lw = new NewTask();
+			lw = new NewTask(null);
 			lw.show_all();
 		}
 
@@ -53,8 +53,8 @@ namespace Note{
         public void swap_to_main(){
             view = new Note.MainView(this);
             clear_container();
-//            this.add(view);
             container.pack_end(view);
+            view.quick.grab_focus();
             view.show_all();
 /*
 			if (is_empty) {

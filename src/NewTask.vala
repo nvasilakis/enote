@@ -8,9 +8,9 @@ namespace Note{
 		TimePicker when_time;
 		Gtk.TextView notes;
 
-		public NewTask(Task t) {
+		public NewTask(Task? t) {
 			base("New Task");
-            title = t = null ? "Add a task!" : "Edit task";
+            title = (t == null ? "Add a task!" : "Edit task");
             resizable = false;
             set_keep_above (true);
             window_position = Gtk.WindowPosition.CENTER;
@@ -43,7 +43,7 @@ namespace Note{
             when_date = make_date_picker ();
             when_time = make_time_picker ();
             if (t !=null) { // actually test date
-                when_time.date = t.date;
+                when_time.time = t.date;
                 when_time.time = t.date;
             }
 
@@ -71,7 +71,16 @@ namespace Note{
             buttonbox.set_layout (Gtk.ButtonBoxStyle.END);
 
             var cancel_button = new Gtk.Button.with_label ("Cancel");
-			var create_button = new Gtk.Button.with_label ("Add");
+            cancel_button.set_tooltip_text ("Return to the list of tasks");
+            cancel_button.clicked.connect (() => {this.destroy();});
+
+			var create_button = new Gtk.Button.with_label (
+                t == null? "Add" : "Save");
+            create_button.sensitive = (what.text != "");
+            create_button.set_tooltip_text ("Add this task to the list");
+            what.changed.connect(() => {
+                    create_button.sensitive = (what.text != "");
+                });
 
             buttonbox.pack_end (cancel_button);
             buttonbox.pack_end (create_button);

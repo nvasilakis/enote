@@ -1,12 +1,12 @@
 namespace Note{
-    public class LeftPane : Gtk.Grid {
+    public class MainView : Gtk.Grid {
         Note.Window window;
         // Quick-add entry
         public Gtk.Entry quick;
         Note.TaskList tlist;
         Gtk.ScrolledWindow scrolled_window;
 
-        public LeftPane (Note.Window window) {
+        public MainView (Note.Window window) {
             this.window = window;
             tlist = new TaskList(window);
             expand = true;
@@ -92,16 +92,6 @@ namespace Note{
         public void insert(string text) {
             tlist.append(new Task(text));
             quick.text = "";
-        }
-    }
-
-    public class MainView : Gtk.Box {
-        Note.LeftPane lpane;
-
-        public MainView (Note.Window window) {
-            orientation = Gtk.Orientation.HORIZONTAL;
-            lpane = new LeftPane(window);
-            add(lpane);
         }
     }
 }
