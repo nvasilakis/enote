@@ -51,6 +51,83 @@ namespace Note {
 			add_date(date);
 		}
 
+        /**
+         * Create task from quick entry text
+         * At this point we don't support task details. 
+         * We support the following combinators:
+         **/
+        /**
+         * <time>:
+         * meet at 5pm
+         * meet at 5
+         * meet at 5:00
+         * meet at 5:00pm
+         * meet at 17:00
+         **/
+        private DateTime is_time(string dt) {
+            // Not implemented yet
+            return new DateTime.local(0,0,0,0,0,0);
+        }
+        /**
+         * <offset from <now>>:
+         * meet in 5 minutes
+         * meet in 5 mins
+         * meet in 5'
+         * meet in 5 hours 15 minutes
+         * meet in 5 hours, 5'
+         * meet in 2 days.
+         **/
+        private DateTime is_offset(string dt) {
+            // Not implemented yet
+            return new DateTime.local(0,0,0,0,0,0);
+        }
+
+        /**
+         * <place>:
+         * meet at the cinema at <time>
+         * meet at <time> at the cinema
+         * meet in Levine Hall at <time>
+         * meet at <time> in Levinee Hall
+         * meet at the cinema in 5 mins
+         * meet in 5 mins at the cinema
+         * meet in Levine Hall in 5 mins
+         * meet in 5mins  in Levinee Hall
+         **/
+        private string is_place(string s) {
+            return "";
+        }
+
+        /**
+         * Note: It will always create a new task even if not parsed correctly.
+         * The reason for this is we can't have a critical error; worst-case
+         * scenario, if it can't be parsed,  we put everything on the title.
+         **/
+		public Task.from_parser(string blurb) {
+/*
+            var low_blurb = blurb.down();
+            int at_pos = low_blurb.last_index_of(" at ");
+            int in_pos = low_blurb.last_index_of(" in ");
+            if (at_pos == in_pos)
+                this.title = blurb;
+            else if (at_pos > in_pos) {
+                DateTime dt = parse_at(low_blurb.substring(at_pos+4));
+                this.title = blurb.substring(0,at_pos);
+                this.notifications = new Gee.ArrayList<Ticket>();
+                this.percent = 0;
+                if (dt != null)
+                    add_date(dt);
+            } else {
+                if (at_pos > 0) { // pizza
+                }
+			this.title = title;
+			this.notifications = new Gee.ArrayList<Ticket>();
+            this.percent = 0;
+			add_date(date);
+*/
+// For now, worst case, push everything into title:
+            title = blurb;
+		}
+
 		private void add_date(DateTime date) {
 			int size = notifications.size;
 			debug("ticket list has size %d", size );

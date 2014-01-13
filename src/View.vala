@@ -58,15 +58,14 @@ namespace Note{
 //            quick.halign = Gtk.Align.END;
             quick.secondary_icon_name  = "list-add-symbolic";
             quick.secondary_icon_tooltip_text = Utils.TOOLTIP_TEXT;
-
-//            quick.activate.connect(() => {this.insert(quick.text);});
-//            quick.icon_press.connect(() => {this.insert(quick.text);});
+            quick.activate.connect(() => {insert(quick.text);});
+            quick.icon_press.connect(() => {insert(quick.text);});
 //            expand = true;
             attach (quick, 0, 2, 1, 1);
         }
 
         public void insert(string text) {
-            tlview.append(new Task(text));
+            window.tlist.add(new Task.from_parser(text));
             quick.text = "";
         }
     }
