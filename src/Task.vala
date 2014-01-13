@@ -113,11 +113,12 @@ namespace Note {
          * TODO: Add checking
          **/
         public string format_title(string clr) {
+            var s = status();
             var t = title.char_count()>20? (title.substring(0,20)+"..") : title;
             return ("<span underline='none' font_weight='bold' color='" + clr +
                     "' size='large' strikethrough='" +(done? "true" : "false")+
                     "'>" + t + "</span> <span font_weight=" +
-                    "'light'>(" + percent.to_string() +"%)</span>");
+                    "'light'>(" + s.to_string() +"%)</span>");
         }
 
         public string format_date() {

@@ -47,24 +47,24 @@ namespace Note{
                 tlist.append(t);
 
                 t = new Task.with_date("Read protocol papers",
-                      new DateTime.now_local().add_minutes(1));
+                      new DateTime.now_local().add_hours(1));
                 t.more = "FoxNet, rvr, etc.";
                 tlist.append(t);
 
-                t = new Task.with_date("Have breakfast at Milliway's! ",
-                      new DateTime.now_local().add_minutes(1));
+                t = new Task.with_date("Breakfast at Milliway's! ",
+                      new DateTime.now_local().add_days(-1));
                 t.more = "Since I already did three impossible things this morning, why not round it off with a breakfast at the end of the galaxy?";
                 t.done = true;
                 tlist.append(t);
 
                 t = new Task.with_date("Build a Notes/Tasks application in Vala (Milestone 0.1)",
-                      new DateTime.now_local().add_minutes(1));
-                t.more = "TODO:\n * Granite Welcome Screen\n *List of Tasks\n * Insert Quick task (+Parsing Engine)\n * Insert new task\n * Icons and tooltips \n * i18n (transifex?)\n Analytics ";
+                      new DateTime.now_local().add_days(-1));
+                t.more = "TODO:\n * Granite Welcome Screen\n *List of Tasks\n * Insert Quick task (+Parsing Engine)\n * Insert new task\n * Icons and tooltips \n * i18n (transifex?)\n * Analytics ";
                 t.done = true;
                 tlist.append(t);
 
                 t = new Task.with_date("Hatch a dragon",
-                      new DateTime.now_local().add_minutes(1));
+                      new DateTime.now_local().add_days(-1));
                 t.more = "Assortment of urls: * http://vimeo.com/75093196\n http://vimeo.com/62092214\nhttp://vimeo.com/29017795";
                 t.done = true;
                 tlist.append(t);
