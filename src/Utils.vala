@@ -13,7 +13,13 @@ namespace Note {
         public static bool intrusive_notifications = false;
         public static bool ask_delete_confirmation = false;
         public static string  path_to_store_data = "";
-        public static bool show_thread_inverse = false;
+        public static bool show_thread_inverse   = false;
+        // 3 next could be a non-exclusive radio selection a la bootstrap
+        public static bool add_ntf_early_5_mins  = true;
+        public static bool add_ntf_early_15_mins = false;
+        public static bool add_ntf_early_1_hour  = false;
+        public static bool register_ntf_indication = false;
+        public static bool play_sound_on_ntfctn  = false;
 
 		public static const OptionEntry[] args = {
             { "debug",'d', 0, OptionArg.NONE, out Utils.DEBUG,
