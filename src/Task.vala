@@ -113,17 +113,42 @@ namespace Note {
          * TODO: Add checking
          **/
         public string format_title(string clr) {
+            var t = title.char_count()>20? (title.substring(0,20)+"..") : title;
             return ("<span underline='none' font_weight='bold' color='" + clr +
-                    "' size='large'>" + title + "</span> <span font_weight=" +
+                    "' size='large' strikethrough='" +(done? "true" : "false")+
+                    "'>" + t + "</span> <span font_weight=" +
                     "'light'>(" + percent.to_string() +"%)</span>");
         }
 
         public string format_date() {
-            return ("<span color='#999aaa'> due on 04/14/2014 </span>");
+            return ("<span color='#999aaa' strikethrough='" + 
+                    (done? "true" : "false") + "'> due on 04/14/2014 </span>");
         }
 
         public string format_notes() {
-            return more; //TODO: Return a maximum string size + flatten "\n"
+            var t = more.char_count()>500? (more.substring(0,500)+".."):more;
+            return ("<span strikethrough='" + (done? "true" : "false") + "'>" +
+                    t.replace("\n *","\n •").replace("\n*","\n •") + "</span>");
+            //TODO: Return a maximum string size + flatten "\n"
+        }
+
+        /**
+         * Calculates completion percentage based on the number of
+         * stars at the start of a line ending with some flavor of
+         * "Done". For instance, the following task is 66% complete:
+         *
+         * 'Hold Office Hours:\n'
+         * '* Reserve room. done'
+         * '* notify course mailing list -- DONE'
+         * '* Prepare slides'
+         *
+         * (Not implemented --  need to strikethrough individual lines)
+         **/
+        private int status(){
+            if (done)
+                return 100;
+            else
+                return 0; // Not implemented yet!
         }
 
         /**
