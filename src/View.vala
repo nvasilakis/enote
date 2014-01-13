@@ -1,74 +1,50 @@
 namespace Note{
+    // TODO: make use of ListBox -- added in GTK+ 3.10
+    // http://valadoc.org/#!api=gtk+-3.0/Gtk.ListBox
+    public class TaskListView : Gtk.ScrolledWindow {
+        Note.Window window;
+        GLib.List<RecordView> records;
+        Gtk.Box grid;
+        Gtk.Viewport viewport;
+
+        public TaskListView(Note.Window window) {
+            this.window = window;
+            expand = true;
+            set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+            records = new GLib.List<RecordView>();
+            // The Grid:)
+            grid = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+            viewport = new Gtk.Viewport (null, null);
+            this.add (viewport);
+            viewport.add(grid);
+            window.add(this);
+        }
+
+        public void append(Task task) {
+            RecordView record = new RecordView(window, task);
+            records.append(record);
+            var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            grid.pack_start(sep);
+            grid.pack_start(record);
+//            show_all();
+            record.show_everything();
+        }
+    }
+
     public class MainView : Gtk.Grid {
         Note.Window window;
         // Quick-add entry
         public Gtk.Entry quick;
-        Note.TaskList tlist;
+        public Note.TaskListView tlview {get; private set;}
         Gtk.ScrolledWindow scrolled_window;
 
         public MainView (Note.Window window) {
             this.window = window;
-            tlist = new TaskList(window);
+            tlview = new TaskListView(window);
             expand = true;
             row_homogeneous = false;
-            populate ();
-            attach(tlist, 0, 1, 1, 1);
+            attach(tlview, 0, 1, 1, 1);
             attach_quick();
-        }
-
-        // TODO: A sophisticated populate function that serves 
-        // -- Demo purposes
-        // -- Debugging purposes
-        private void populate(){
-                Task t = new Task.with_date("Buy present for Nikki",
-                      new DateTime.now_local().add_seconds(10));
-                t.more = "Katie had a good idea (bluemercury?) -- Send email";
-                t.important = false;
-
-                tlist.append(t);
-
-                t = new Task.with_date("Meeting with Andrew on φ-mail",
-                      new DateTime.now_local().add_minutes(1));
-                t.more = "Answer I need to have: why φ? Possible answers: ";
-                t.more += "To show that this application supports i18n? ";
-                t.important = true;
-                tlist.append(t);
-
-                t = new Task.with_date("It's my day of the week to cook!",
-                      new DateTime.now_local().add_minutes(23));
-                t.more = "Can pick groceries on the way";
-                t.repeating = true;
-                tlist.append(t);
-
-
-                t = new Task.with_date("Check chapters on Protocol Stack from FreeBSD Book ",
-                      new DateTime.now_local().add_minutes(1));
-                t.more = "Chapters 12 and 13 from 'The Design and Implementation of the FreeBSD Operating System' by Marshall Kirk McKusick and George V. Neville-Neil.";
-                t.important = true;
-                tlist.append(t);
-
-                t = new Task.with_date("Read protocol papers",
-                      new DateTime.now_local().add_hours(1));
-                t.more = "FoxNet, rvr, etc.";
-                tlist.append(t);
-
-                t = new Task.with_date("Breakfast at Milliway's! ",
-                      new DateTime.now_local().add_days(-1));
-                t.more = "Since I already did three impossible things this morning, why not round it off with a breakfast at the end of the galaxy?";
-                t.done = true;
-                tlist.append(t);
-
-                t = new Task.with_date("Build a Notes/Tasks application in Vala (Milestone 0.1)",
-                      new DateTime.now_local().add_days(-1));
-                t.more = "TODO:\n * Granite Welcome Screen\n *List of Tasks\n * Insert Quick task (+Parsing Engine)\n * Insert new task\n * Icons and tooltips \n * i18n (transifex?)\n * Analytics\n * Candidate names: Note, Pistachio ";
-                t.done = true;
-                tlist.append(t);
-
-                t = new Task.with_date("Hatch a dragon",
-                      new DateTime.now_local().add_days(-1));
-                t.more = "Assortment of urls: * http://vimeo.com/75093196\n http://vimeo.com/62092214\nhttp://vimeo.com/29017795";
-                t.done = true;
-                tlist.append(t);
         }
 
         private void attach_quick(){
@@ -90,7 +66,7 @@ namespace Note{
         }
 
         public void insert(string text) {
-            tlist.append(new Task(text));
+            tlview.append(new Task(text));
             quick.text = "";
         }
     }

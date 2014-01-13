@@ -19,5 +19,73 @@ namespace Note {
 			  "Enable debug logging", null },
             { null } //list terminator
         };
+
+        // A sophisticated populate function that serves
+        // -- Demo purposes
+        // -- Debugging purposes
+        public static void RunTests(Note.Window window) {
+             
+            Task t = new Task.with_date("Buy present for Nikki",
+                              new DateTime.now_local().add_seconds(10));
+            t.more = "Katie had a good idea (bluemercury?) -- Send email";
+            t.important = false;
+
+            window.view.tlview.append(t);
+
+            t = new Task.with_date("Meeting with Andrew on φ-mail",
+                                   new DateTime.now_local().add_minutes(1));
+            t.more = "Answer I need to have: why φ? Possible answers: ";
+            t.more += "To show that this application supports i18n? ";
+            t.important = true;
+            window.view.tlview.append(t);
+
+            t = new Task.with_date("It's my day of the week to cook!",
+                                   new DateTime.now_local().add_minutes(23));
+            t.more = "Can pick groceries on the way";
+            t.repeating = true;
+            window.view.tlview.append(t);
+
+
+            t = new Task.with_date("Check chapters on Protocol Stack from" +
+                                   "FreeBSD Book ",
+                                   new DateTime.now_local().add_minutes(1));
+            t.more = ("Chapters 12,13 from 'The Design and Implementation" +
+                      "of the FreeBSD Operating System' by Marshall Kirk"  +
+                      "McKusick and George V. Neville-Neil.");
+            t.important = true;
+            window.view.tlview.append(t);
+
+            t = new Task.with_date("Read protocol papers",
+                                   new DateTime.now_local().add_hours(1));
+            t.more = "FoxNet, rvr, etc.";
+            window.view.tlview.append(t);
+
+            t = new Task.with_date("Breakfast at Milliway's! ",
+                                   new DateTime.now_local().add_days(-1));
+            t.more = ("Since I already did three impossible things this " +
+                      "morning, why not round it off with a breakfast at " +
+                      "the end of the galaxy?");
+            t.done = true;
+            window.view.tlview.append(t);
+
+            t = new Task.with_date("Build a Notes/Tasks application in " +
+                                   "Vala (Milestone 0.1)",
+                                   new DateTime.now_local().add_days(-1));
+            t.more = ("TODO:\n * Granite Welcome Screen\n *List of Tasks" +
+                      "\n * Insert Quick task (+Parsing Engine)\n * Insert"+
+                      " new task\n * Icons and tooltips \n * i18n " +
+                      "(transifex?)\n * Analytics\n * Candidate names: " + 
+                      "Note, Pistachio ");
+            t.done = true;
+            window.view.tlview.append(t);
+
+            t = new Task.with_date("Hatch a dragon",
+                                   new DateTime.now_local().add_days(-1));
+            t.more = ("Assortment of urls: * http://vimeo.com/75093196\n " +
+                      "* http://vimeo.com/62092214\n"+
+                      "* http://vimeo.com/29017795");
+            t.done = true;
+            window.view.tlview.append(t);
+        }
 	}
 }

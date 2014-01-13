@@ -6,6 +6,7 @@ namespace Note{
         Box container;
         Gtk.Toolbar toolbar;
         public Note.MainView view {get; set;}
+        public Note.TaskList tlist {get; set;}
 		Granite.Widgets.LightWindow lw;
 
         public Window(Granite.Application application) {
@@ -51,7 +52,9 @@ namespace Note{
         }
 
         public void swap_to_main(){
-            view = new Note.MainView(this);
+            view = new Note.MainView (this);
+            tlist = new TaskList (this);
+            Utils.RunTests(this);
             clear_container();
             container.pack_end(view);
             view.quick.grab_focus();
