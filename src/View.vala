@@ -24,6 +24,7 @@ namespace Note{
                       new DateTime.now_local().add_seconds(10));
                 t.more = "Katie had a good idea (bluemercury?) -- Send email";
                 t.important = false;
+
                 tlist.append(t);
 
                 t = new Task.with_date("Meeting with Andrew on φ-mail",
@@ -59,7 +60,7 @@ namespace Note{
 
                 t = new Task.with_date("Build a Notes/Tasks application in Vala (Milestone 0.1)",
                       new DateTime.now_local().add_days(-1));
-                t.more = "TODO:\n * Granite Welcome Screen\n *List of Tasks\n * Insert Quick task (+Parsing Engine)\n * Insert new task\n * Icons and tooltips \n * i18n (transifex?)\n * Analytics ";
+                t.more = "TODO:\n * Granite Welcome Screen\n *List of Tasks\n * Insert Quick task (+Parsing Engine)\n * Insert new task\n * Icons and tooltips \n * i18n (transifex?)\n * Analytics\n * Candidate names: Note, Pistachio ";
                 t.done = true;
                 tlist.append(t);
 

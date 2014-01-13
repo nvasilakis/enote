@@ -114,7 +114,7 @@ namespace Note {
          **/
         public string format_title(string clr) {
             var s = status();
-            var t = title.char_count()>20? (title.substring(0,20)+"..") : title;
+            var t = title.char_count()>25? (title.substring(0,25)+"..") : title;
             return ("<span underline='none' font_weight='bold' color='" + clr +
                     "' size='large' strikethrough='" +(done? "true" : "false")+
                     "'>" + t + "</span> <span font_weight=" +
