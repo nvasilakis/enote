@@ -61,8 +61,7 @@ public class RecordView : Gtk.EventBox {
         priority_alignment.add (this.priority_box);
         // priority_icon
         priority_icon = new Gtk.Image ();
-        priority_icon.set_from_icon_name 
-                ("emblem-synchronizing-symbolic", Gtk.IconSize.MENU);
+        priority_icon.set_from_icon_name (task.get_icon (), Gtk.IconSize.MENU);
         priority_icon.set_halign (Gtk.Align.START);
         priority_icon.set_valign (Gtk.Align.START);
         priority_box.pack_start (this.priority_icon, false, false, 0);

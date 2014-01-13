@@ -1,16 +1,19 @@
 namespace Note{
     public class LeftPane : Gtk.Grid {
         Note.Window window;
-
-        public Gtk.Entry entry;
+        // Quick-add entry
+        public Gtk.Entry quick;
         Note.TaskList tlist;
         Gtk.ScrolledWindow scrolled_window;
 
         public LeftPane (Note.Window window) {
             this.window = window;
             tlist = new TaskList(window);
+            expand = true;
+            row_homogeneous = false;
             populate ();
             attach(tlist, 0, 1, 1, 1);
+            attach_quick();
         }
 
         // TODO: A sophisticated populate function that serves 
@@ -25,10 +28,6 @@ namespace Note{
 //                t.date = new  DateTime.now_local().add_seconds(1);
                 t.title = "Meeting changed time";
                 tlist.append(t);
-            }
-        }
-/*
-            scrolled_window = new Gtk.ScrolledWindow (null, null);
 
             scrolled_window.expand = true;
             scrolled_window.set_policy (Gtk.PolicyType.NEVER,
@@ -48,13 +47,9 @@ namespace Note{
             entry.activate.connect(() => {this.insert(entry.text);});
             entry.icon_press.connect(() => {this.insert(entry.text);});
 
-            expand = false;
-            attach (scrolled_window, 0, 1, 1, 1);
-            attach (entry, 0, 2, 1, 1);
-*/
         public void insert(string text) {
             tlist.append(new Task(text));
-            entry.text = "";
+            quick.text = "";
         }
     }
 

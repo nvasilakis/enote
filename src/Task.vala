@@ -1,14 +1,14 @@
 namespace Note {
 	/*
-	   That's a revocation ticket, that helps avoid the following case:
-	   if we need to amend the notification DateTime, the programe will
-	   add a new Timeout.add(lambda-to-libnotify()) callback, for which
-	   GLib provides no way of revoking (there is no Timeout.remove(...)
-	   method. In a way, this only  provides an indirection that will have
-	   to be valid (hence, a ticket) that will be checked in time.
+      That's a revocation ticket, that helps avoid the following case:
+      if we need to amend the notification DateTime, the programe will
+      add a new Timeout.add(lambda-to-libnotify()) callback, for which
+      GLib provides no way of revoking (there is no Timeout.remove(...)
+      method. In a way, this only  provides an indirection that will have
+      to be valid (hence, a ticket) that will be checked in time.
 	*/
 	public class Ticket {
-		bool validity;
+        bool validity;
 		public Ticket() {
 			validity = true;
 		}
@@ -22,6 +22,10 @@ namespace Note {
 	}
 
     public class Task {
+        public bool repeating;
+        public bool important;
+        public bool done;
+
         public string title {get; set; default = Utils.INIT_TEXT;}
         private DateTime _date;
 		public DateTime date {
@@ -62,7 +66,7 @@ namespace Note {
 
 		/* Need to pass also a ticket structure, in case the
 		   notification needs to be voided before it fires up, i.e.
-		   if there is an update. With these indirection tickets, I 
+		   if there is an update. With these indirection tickets, I
 		   preserve the ability to revocate, if needed. */
 		public void notify(Ticket ticket){
             Timeout.add((this.in_seconds () * 1000) , () => {
@@ -107,7 +111,7 @@ namespace Note {
          * Note: clr REQUIRES #
          * i.e., it is #999 not 999!
          * TODO: Add checking
-         */
+         **/
         public string format_title(string clr) {
             return ("<span underline='none' font_weight='bold' color='" + clr +
                     "' size='large'>" + title + "</span> <span font_weight=" +
@@ -120,6 +124,21 @@ namespace Note {
 
         public string format_notes() {
             return more; //TODO: Return a maximum string size + flatten "\n"
+        }
+
+        /**
+         * It imposes sort of a partial order, since it will only show the
+         * most important icon of these:
+         * repeating > important > done > default
+         **/
+        public string get_icon () {
+            if (repeating)
+                return "emblem-synchronizing-symbolic";
+            if (important)
+                return "emblem-important-symbolic";
+            if (done)
+                return "emblem-default-symbolic";
+            return "emblem-documents-symbolic";
         }
     }
 }

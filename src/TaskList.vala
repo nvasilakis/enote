@@ -13,13 +13,10 @@ namespace Note {
             expand = true;
             set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
             records = new GLib.List<RecordView>();
-
-            // The Grid:
+            // The Grid:)
             grid = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             viewport = new Gtk.Viewport (null, null);
-            viewport.set_size_request (200, 50);
             this.add (viewport);
-
             viewport.add(grid);
             window.add(this);
         }
