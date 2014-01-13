@@ -84,7 +84,7 @@ public class RecordView : Gtk.EventBox {
 
         //span box
         span_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        task_alignment.add (span_box); 
+        task_alignment.add (span_box);
         // upper layer
         upper_layer = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         span_box.pack_start (upper_layer, false, false, 0);
@@ -137,6 +137,7 @@ public class RecordView : Gtk.EventBox {
         menu = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         menu.set_halign (Gtk.Align.START);
         menu.set_valign (Gtk.Align.START);
+        menu.set_no_show_all (true);
         menu_alignment.add (menu);
 
         set_events(Gdk.EventMask.BUTTON_RELEASE_MASK);
@@ -171,12 +172,14 @@ public class RecordView : Gtk.EventBox {
                 if (event.x < 0 || event.x >= allocation.width ||
                     event.y < 0 || event.y >= allocation.height) {
                     this.menu.hide();
+                    menu.set_no_show_all (true);
                 }
                 return true;
             });
 
         this.enter_notify_event.connect ((event) => {
-                this.menu.show();
+                menu.set_no_show_all (false);
+                this.menu.show_all();
                 return true;
             });
     }
