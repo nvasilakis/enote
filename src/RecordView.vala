@@ -30,6 +30,7 @@ public class RecordView : Gtk.EventBox {
     // B. Right side:
     private Gtk.Box span_box; // main container
     private Gtk.Alignment task_alignment;
+    private Gtk.Alignment date_alignment;
     // B1. upper
     private Gtk.Box upper_layer;
     private Gtk.Label title;
@@ -108,13 +109,18 @@ public class RecordView : Gtk.EventBox {
                 return false;
             });
         upper_layer.pack_start (this.task_event, true, true, 0);
-
+        /* due-date */
+        date_alignment = new Gtk.Alignment (0, 0, 0, 1);
+        date_alignment.top_padding = 0;
+        date_alignment.set_halign (Gtk.Align.END);
+        date_alignment.set_valign (Gtk.Align.START);
+        right.add_overlay (date_alignment);
         // due date -- later on, might be good to make it editable
         due_date = new Gtk.Label ("");
         due_date.set_halign (Gtk.Align.END);
         due_date.set_valign (Gtk.Align.END);
         due_date.set_markup (task.format_date());
-        upper_layer.pack_end (due_date, true, true, 0);
+        date_alignment.add (due_date);
 
         /* lower layer -- notes */
         notes = new Gtk.Label (task.format_notes());
