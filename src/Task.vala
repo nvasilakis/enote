@@ -204,6 +204,8 @@ namespace Note {
         }
 
         public string format_notes() {
+            if (more == null)
+                return "";
             var t = more.char_count()>500? (more.substring(0,500)+".."):more;
             return ("<span strikethrough='" + (done? "true" : "false") + "'>" +
                     t.replace("\n *","\n •").replace("\n*","\n •") + "</span>");

@@ -2,7 +2,6 @@ using Gtk;
 
 namespace Note{
     public class Window : Gtk.Window {
-		bool is_empty = true;
         Box container;
         Gtk.Toolbar toolbar;
         public Note.MainView view {get; set;}
@@ -15,7 +14,6 @@ namespace Note{
             window_position = Gtk.WindowPosition.CENTER;
             destroy.connect(Gtk.main_quit);
             icon_name = Utils.ICON;
-            stderr.printf("Could not find proper icon");
         }
 
         public void add_menu(Granite.Widgets.AppMenu am){

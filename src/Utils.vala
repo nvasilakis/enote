@@ -9,10 +9,11 @@ namespace Note {
 		//boot params
 		public static bool DEBUG = false;
 
-        // Option parameters
+        // Preferences parameters
         public static bool intrusive_notifications = false;
         public static bool ask_delete_confirmation = false;
         public static string  path_to_store_data = "";
+        public static bool show_thread_inverse = false;
 
 		public static const OptionEntry[] args = {
             { "debug",'d', 0, OptionArg.NONE, out Utils.DEBUG,
@@ -24,21 +25,21 @@ namespace Note {
         // -- Demo purposes
         // -- Debugging purposes
         public static void RunTests(Note.Window window) {
-             
-            Task t = new Task.with_date("Buy present for Nikki",
+
+            Task t1 = new Task.with_date("Buy present for Nikki",
                               new DateTime.now_local().add_seconds(10));
-            t.more = "Katie had a good idea (bluemercury?) -- Send email";
-            t.important = false;
+            t1.more = "Katie had a good idea (bluemercury?) -- Send email";
+            t1.important = false;
 
-            window.view.tlview.append(t);
+            window.view.tlview.append(t1);
 
-            t = new Task.with_date("Meeting with Andrew on φ-mail",
+            Task t2 = new Task.with_date("Meeting with Andrew on φ-mail",
                                    new DateTime.now_local().add_minutes(1));
-            t.more = "Answer I need to have: why φ? Possible answers: ";
-            t.more += "To show that this application supports i18n? ";
-            t.important = true;
-            window.view.tlview.append(t);
-
+            t2.more = "Answer I need to have: why φ? Possible answers: ";
+            t2.more += "To show that this application supports i18n? ";
+            t2.important = true;
+            window.view.tlview.append(t2);
+/*
             t = new Task.with_date("It's my day of the week to cook!",
                                    new DateTime.now_local().add_minutes(23));
             t.more = "Can pick groceries on the way";
@@ -86,6 +87,7 @@ namespace Note {
                       "* http://vimeo.com/29017795");
             t.done = true;
             window.view.tlview.append(t);
+*/
         }
 	}
 }

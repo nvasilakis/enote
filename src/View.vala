@@ -17,16 +17,15 @@ namespace Note{
             viewport = new Gtk.Viewport (null, null);
             this.add (viewport);
             viewport.add(grid);
-            window.add(this);
+//            window.add(this);
         }
 
         public void append(Task task) {
             RecordView record = new RecordView(window, task);
-            records.append(record);
+//            records.append(record);
             var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-            grid.pack_start(sep);
-            grid.pack_start(record);
-//            show_all();
+            grid.pack_end(sep);
+            grid.pack_end(record);
             record.show_everything();
         }
     }
@@ -36,7 +35,6 @@ namespace Note{
         // Quick-add entry
         public Gtk.Entry quick;
         public Note.TaskListView tlview {get; private set;}
-        Gtk.ScrolledWindow scrolled_window;
 
         public MainView (Note.Window window) {
             this.window = window;

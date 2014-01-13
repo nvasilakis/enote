@@ -192,7 +192,6 @@ public class RecordView : Gtk.EventBox {
 
     // Show all but mini-menu
     public void show_everything(){
-        this.window.add(this);
         this.window.show_all();
         this.menu.hide ();
     }
