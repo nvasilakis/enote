@@ -1,7 +1,7 @@
 #!/bin/bash
   
 ##
-# A script to build elementary note 
+# A script to build elementary enoté 
 # from sources (or cleanup) on linux
 #
 # Usage: ./make.sh [clean]
@@ -22,5 +22,5 @@ else
   # Initiate cmake and build source; also, if
   # everything ok, bring executable to project's root
   cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
-  &&  make && mv ./Note ../Note && ../Note -d
+  &&  make && mv ./enote ../enote && ../enote -d
 fi

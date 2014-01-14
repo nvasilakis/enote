@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Enoté
+Version=0.1
+GenericName=Notes, Reminders, Tasks
+Comment=Be on top of what you need to do
+Categories=GTK;Utility;
+Exec=enote %F
+Icon=enote #Need to verify that icon works
+Type=Application
+#X-GNOME-Gettext-Domain=notes

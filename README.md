@@ -1,4 +1,5 @@
-# Note
+# enoté
+
 The sexiest note-taking and reminder-setup application for Linux:)
 
 Take notes, schedule tasks and setup reminders. Monitor progress, get
@@ -6,13 +7,13 @@ notifications and cross-out when you're done. Synchronize with your
 online services, take them on your phone or host everything  on the
 cloud.  _And do all of these with style!_
 
-## Current Release: 0.1 | Aether
+## Current Release: enoté 0.1 | Aether
 
 ![Note 0.1 Atlas ](http://www.seas.upenn.edu/~nvas/note-0.1.jpg)
 
 [Launchpad] (http://www.launchpad.net/enote) | [Translations] (https://www.transifex.com/projects/p/enote/) | [Issues] (https://github.com/nvasilakis/note/issues)
 
-## Roadmap for 0.2 | Gaia Release
+## Roadmap for enoté v.0.2 | Gaia Release
 
 ### High-level Idea: Make Note Self-Hosting
 
@@ -36,7 +37,7 @@ etc.
 * logging -- DONE
 * startup options -- DONE
 
-## Roadmap for 0.3 | Atlas Release
+## Roadmap for enoté v.0.3 | Atlas Release
 
 * GSettings interfacing
 * url/email parsing
