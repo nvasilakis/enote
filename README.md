@@ -1,4 +1,4 @@
-# enoté
+# ![enote icon](http://www.seas.upenn.edu/~nvas/enote-64.png)  enoté
 
 The sexiest note-taking and reminder-setup application for Linux:)
 
@@ -9,7 +9,7 @@ cloud.  _And do all of these with style!_
 
 ## Current Release: enoté 0.1 | Aether
 
-![Note 0.1 Atlas ](http://www.seas.upenn.edu/~nvas/note-0.1.jpg)
+![Note 0.1 Atlas ](http://www.seas.upenn.edu/~nvas/enote-0.1.jpg)
 
 [Launchpad] (http://www.launchpad.net/enote) | [Translations] (https://www.transifex.com/projects/p/enote/) | [Issues] (https://github.com/nvasilakis/note/issues)
 
