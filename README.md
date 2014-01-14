@@ -1,20 +1,25 @@
 # Note
-## Take Notes and Setup Reminders!
+The sexiest note-taking and reminder-setup application for Linux:)
 
-A Note-taking and task-scheduling application for Linux. It allows sharing between machines and synchronization with other applications (e.g., GMail tasks and iPhone notes). This readme file contains pointers to other files:
+Take notes, schedule tasks and setup reminders. Monitor progress, get
+notifications and cross-out when you're done. Synchronize with your
+online services, take them on your phone or host everything  on the
+cloud.  _And do all of these with style!_
 
-* **Websites**
-TODO:
-* launchpad url
-* translation url
-* bugs update
+## Current Release: 0.1 | Aether
 
-Notes:
-https://developer.gnome.org/gdata/unstable/
+![Note 0.1 Atlas ](http://www.seas.upenn.edu/~nvas/note-0.1.jpg)
 
-### Roadmap for 0.2
+[Launchpad] (http://www.launchpad.net/enote) | [Translations] (https://www.transifex.com/projects/p/enote/) | [Issues] (https://github.com/nvasilakis/note/issues)
 
-*** features ***
+## Roadmap for 0.2 | Gaia Release
+
+### High-level Idea: Make Note Self-Hosting
+
+Goal for 0.2: Make project self-hosting -- being able to save/restore it's own set of tasks, deadlines, done status
+etc.
+
+### Features
 
 * back-end add/remove events (NEXT)
 * Persistence
@@ -26,14 +31,12 @@ https://developer.gnome.org/gdata/unstable/
 * simple text on right pane -- DONE (changed layout)
 * a simple way of deleting events -- DONE
 
-Goal for 0.2: Make project self-hosting
-
-*** internals ***
+### internals 
 
 * logging -- DONE
 * startup options -- DONE
 
-### Roadmap for 0.3
+## Roadmap for 0.3 | Atlas Release
 
 * GSettings interfacing
 * url/email parsing

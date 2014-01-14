@@ -45,55 +45,53 @@ namespace Note {
             t2.more += "To show that this application supports i18n? ";
             t2.important = true;
             window.view.tlview.append(t2);
-/*
-            t = new Task.with_date("It's my day of the week to cook!",
+
+            Task t3 = new Task.with_date("It's my day of the week to cook!",
                                    new DateTime.now_local().add_minutes(23));
-            t.more = "Can pick groceries on the way";
-            t.repeating = true;
-            window.view.tlview.append(t);
+            t3.more = "Can pick groceries on the way";
+            t3.repeating = true;
+            window.view.tlview.append(t3);
 
-
-            t = new Task.with_date("Check chapters on Protocol Stack from" +
-                                   "FreeBSD Book ",
+            Task t4 = new Task.with_date("Check chapters on Protocol Stack " +
+                                   "from the FreeBSD Book ",
                                    new DateTime.now_local().add_minutes(1));
-            t.more = ("Chapters 12,13 from 'The Design and Implementation" +
+            t4.more = ("Chapters 12,13 from 'The Design and Implementation" +
                       "of the FreeBSD Operating System' by Marshall Kirk"  +
                       "McKusick and George V. Neville-Neil.");
-            t.important = true;
-            window.view.tlview.append(t);
+            t4.important = true;
+            window.view.tlview.append(t4);
 
-            t = new Task.with_date("Read protocol papers",
+            Task t5 = new Task.with_date("Read protocol papers",
                                    new DateTime.now_local().add_hours(1));
-            t.more = "FoxNet, rvr, etc.";
-            window.view.tlview.append(t);
+            t5.more = "FoxNet, rvr, etc.";
+            window.view.tlview.append(t5);
 
-            t = new Task.with_date("Breakfast at Milliway's! ",
+            Task t6 = new Task.with_date("Breakfast at Milliway's! ",
                                    new DateTime.now_local().add_days(-1));
-            t.more = ("Since I already did three impossible things this " +
+            t6.more = ("Since I already did three impossible things this " +
                       "morning, why not round it off with a breakfast at " +
                       "the end of the galaxy?");
-            t.done = true;
-            window.view.tlview.append(t);
+            t6.done = true;
+            window.view.tlview.append(t6);
 
-            t = new Task.with_date("Build a Notes/Tasks application in " +
+            Task t7 = new Task.with_date("Build a Notes/Tasks application in " +
                                    "Vala (Milestone 0.1)",
                                    new DateTime.now_local().add_days(-1));
-            t.more = ("TODO:\n * Granite Welcome Screen\n *List of Tasks" +
+            t7.more = ("TODO:\n * Granite Welcome Screen\n *List of Tasks" +
                       "\n * Insert Quick task (+Parsing Engine)\n * Insert"+
                       " new task\n * Icons and tooltips \n * i18n " +
                       "(transifex?)\n * Analytics\n * Candidate names: " + 
-                      "Note, Pistachio ");
-            t.done = true;
-            window.view.tlview.append(t);
+                      "Note, Pistachio, lapp, enoté  ");
+            t7.done = true;
+            window.view.tlview.append(t7);
 
-            t = new Task.with_date("Hatch a dragon",
+            Task t8 = new Task.with_date("Hatch a dragon",
                                    new DateTime.now_local().add_days(-1));
-            t.more = ("Assortment of urls: * http://vimeo.com/75093196\n " +
+            t8.more = ("Assortment of urls: * http://vimeo.com/75093196\n " +
                       "* http://vimeo.com/62092214\n"+
                       "* http://vimeo.com/29017795");
-            t.done = true;
-            window.view.tlview.append(t);
-*/
+            t8.done = true;
+            window.view.tlview.append(t8);
         }
 	}
 }
