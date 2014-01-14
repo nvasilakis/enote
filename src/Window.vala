@@ -1,11 +1,11 @@
 using Gtk;
 
-namespace Note{
+namespace Enote{
   public class Window : Gtk.Window {
     Box container;
     Gtk.Toolbar toolbar;
-    public Note.MainView view {get; set;}
-    public Note.TaskList tlist {get; set;}
+    public Enote.MainView view {get; set;}
+    public Enote.TaskList tlist {get; set;}
     Granite.Widgets.LightWindow lw;
 
     public Window(Granite.Application application) {
@@ -43,14 +43,14 @@ namespace Note{
     }
 
     public void swap_to_welcome() {
-      Note.Welcome welcome = new Note.Welcome(this);
+      Enote.Welcome welcome = new Enote.Welcome(this);
       clear_container();
       container.pack_start(welcome);
       welcome.show_all();
     }
 
     public void swap_to_main(){
-      view = new Note.MainView (this);
+      view = new Enote.MainView (this);
       tlist = new TaskList (this);
       Utils.RunTests(this);
       clear_container();

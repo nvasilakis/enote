@@ -1,15 +1,15 @@
-namespace Note {
+namespace Enote {
 
     /**
      * Basic TaskList backend prividing
      * add/remove functionality, load from file, synchronizing
      **/
     public class TaskList {
-        Note.Window window;
+        Enote.Window window;
         TaskListView tlview;
         public static GLib.List<Task> tlist;
 
-        public TaskList(Note.Window window) {
+        public TaskList(Enote.Window window) {
             tlist = new GLib.List<Task>();
             this.window = window;
             this.tlview = window.view.tlview;

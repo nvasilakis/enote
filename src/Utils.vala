@@ -1,4 +1,4 @@
-namespace Note {
+namespace Enote {
 
 	public class Utils {
 		//application constants
@@ -30,7 +30,7 @@ namespace Note {
         // A sophisticated populate function that serves
         // -- Demo purposes
         // -- Debugging purposes
-        public static void RunTests(Note.Window window) {
+        public static void RunTests(Enote.Window window) {
 
             Task t1 = new Task.with_date("Buy present for Nikki",
                               new DateTime.now_local().add_seconds(10));
@@ -74,14 +74,14 @@ namespace Note {
             t6.done = true;
             window.view.tlview.append(t6);
 
-            Task t7 = new Task.with_date("Build a Notes/Tasks application in " +
+            Task t7 = new Task.with_date("Build a Enotes/Tasks application in " +
                                    "Vala (Milestone 0.1)",
                                    new DateTime.now_local().add_days(-1));
             t7.more = ("TODO:\n * Granite Welcome Screen\n *List of Tasks" +
                       "\n * Insert Quick task (+Parsing Engine)\n * Insert"+
                       " new task\n * Icons and tooltips \n * i18n " +
                       "(transifex?)\n * Analytics\n * Candidate names: " + 
-                      "Note, Pistachio, lapp, enoté  ");
+                      "Enote, Pistachio, lapp, enoté  ");
             t7.done = true;
             window.view.tlview.append(t7);
 

@@ -1,6 +1,6 @@
 using Granite.Widgets;
 
-namespace Note{
+namespace Enote{
 	public class NewTask : LightWindow {
 		Gtk.Grid grid;
 		HintedEntry what;

@@ -1,10 +1,10 @@
-namespace Note {
+namespace Enote {
 /**
- * A RecordView widget for showing one Task/Note to the user
+ * A RecordView widget for showing one Task/Enote to the user
  */
 public class RecordView : Gtk.EventBox {
     // keep a handy reference
-    private Note.Window window;
+    private Enote.Window window;
     private Task task;
     // top-level box
     private Gtk.Box record_box;
@@ -39,7 +39,7 @@ public class RecordView : Gtk.EventBox {
     // B2. lower
     private Gtk.Label notes;
 
-    public RecordView (Note.Window window, Task task) {
+    public RecordView (Enote.Window window, Task task) {
         this.window = window;
         this.task = task;
         // Record
@@ -68,7 +68,7 @@ public class RecordView : Gtk.EventBox {
         priority_box.pack_start (this.priority_icon, false, false, 0);
 
 
-        /* Right Pane on Overlay -- Task, Notes and Due Date */
+        /* Right Pane on Overlay -- Task, Enotes and Due Date */
         // Overlay
         right = new Gtk.Overlay ();
         record_box.pack_start (right, true, true, 0);

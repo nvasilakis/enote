@@ -1,13 +1,13 @@
-namespace Note{
+namespace Enote{
     // TODO: make use of ListBox -- added in GTK+ 3.10
     // http://valadoc.org/#!api=gtk+-3.0/Gtk.ListBox
     public class TaskListView : Gtk.ScrolledWindow {
-        Note.Window window;
+        Enote.Window window;
         GLib.List<RecordView> records;
         Gtk.Box grid;
         Gtk.Viewport viewport;
 
-        public TaskListView(Note.Window window) {
+        public TaskListView(Enote.Window window) {
             this.window = window;
             expand = true;
             set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
@@ -36,12 +36,12 @@ namespace Note{
     }
 
     public class MainView : Gtk.Grid {
-        Note.Window window;
+        Enote.Window window;
         // Quick-add entry
         public Gtk.Entry quick;
-        public Note.TaskListView tlview {get; private set;}
+        public Enote.TaskListView tlview {get; private set;}
 
-        public MainView (Note.Window window) {
+        public MainView (Enote.Window window) {
             this.window = window;
             tlview = new TaskListView(window);
             expand = true;

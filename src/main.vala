@@ -1,6 +1,6 @@
 using Gtk;
 
-namespace Note{
+namespace Enote{
   public class Application : Granite.Application  {
 
     construct {

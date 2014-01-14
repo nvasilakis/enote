@@ -1,10 +1,10 @@
 using Gtk;
 
-namespace Note{
+namespace Enote{
     public class Welcome : Granite.Widgets.Welcome {
-        Note.Window window;
+        Enote.Window window;
 
-        public Welcome(Note.Window window) {
+        public Welcome(Enote.Window window) {
             base("Nothing Yet","Take a note or set-up a reminder!");
             this.window = window;
             append ("mail-message-new","Create","Set up a task.");
