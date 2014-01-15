@@ -6,8 +6,9 @@ namespace Enote{
     construct {
       program_name        = "Enoté";
       build_version       = "0.1";
+      build_release_name  = "Aether";
       exec_name           = "enote";
-      app_years           = "2013";
+      app_years           = "2013 - 2014";
       app_icon            = Utils.ICON;
       app_launcher        = "enote.desktop";
       application_id      = "org.elementary.enote";

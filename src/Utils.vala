@@ -162,7 +162,6 @@ namespace Enote {
         // next valid time,
         // current implementation makes simple assumptions
         public Epoch.next(int h, int m, Clock c) {
-            debug("====>" + h.to_string());
             valid = true;
             var now = new DateTime.now_local();
             h = (c == Clock.PM && h !=12)? (h+12) : h;

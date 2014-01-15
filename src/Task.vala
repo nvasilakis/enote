@@ -184,14 +184,13 @@ namespace Enote {
                 this.percent = 0;
                 Epoch dt = is_offset(low_blurb.substring(in_pos+4));
                 if (dt.is_valid()) {
-                    this.title = blurb.substring(0,at_pos);
+                    this.title = blurb.substring(0,in_pos);
                     debug(blurb + " | " + dt.get_date().to_string());
                     add_date(dt.get_date());
                 } else {
                     this.title = blurb;
                 }
             }
-            title = blurb;
         }
 
         private void add_date(DateTime date) {
