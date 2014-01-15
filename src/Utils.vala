@@ -28,6 +28,17 @@ namespace Enote {
       { null } //list terminator
     };
 
+      // Check if all characters in a string array are digits
+      // This is only used with arrays of length two for time
+      // calculations
+      public static  bool are_digits(string digits) {
+          foreach (char c in digits.to_utf8()) {
+              if (!c.isdigit())
+                  return false;
+          }
+          return true;
+      }
+
     // A sophisticated populate function that serves
     // -- Demo purposes
     // -- Debugging purposes
@@ -95,4 +106,62 @@ namespace Enote {
       window.view.tlview.append(t8);
     }
   }
+
+    public enum Clock{
+        PM,
+        AM,
+        NONE
+    }
+
+    /**
+     * Sort of functional wrapper for Datetime, used mostly for
+     * the parser (can result in "None").
+     * Might be able to leverage exceptions?
+     **/
+    public class Epoch {
+        bool valid;
+        DateTime date_time;
+
+
+        // Creates current epoch
+        public Epoch() {
+            date_time = new DateTime.now_local();
+            valid = true;
+        }
+
+        public Epoch.invalid() {
+            valid = false;
+        }
+
+        // next valid time,
+        // current implementation makes simple assumptions
+        public Epoch.next(int h, int m, Clock c) {
+            valid = true;
+            var now = new DateTime.now_local();
+            h = (c == Clock.PM && h !=12)? (h+12) : h;
+            // Now time should be between 0/24
+            if (is_valid_time (h, m)) {
+                date_time = new DateTime.local(now.get_year(),
+                                               now.get_month(),
+                                               now.get_day_of_month(),
+                                               h,
+                                               m,
+                                               0);
+            } else {
+                valid = false;
+            }
+        }
+
+        private bool is_valid_time(int h, int m) {
+            return ((h >= 0 && h < 24) && (m >= 0 && m < 60));
+        }
+
+        public bool is_valid() {
+            return valid;
+        }
+
+        public DateTime get_date() {
+            return date_time;
+        }
+    }
 }

@@ -58,35 +58,48 @@ namespace Enote {
          **/
         /**
          * <time>:
-         * meet at 5pm
          * meet at 5
+         * meet at 17
          * meet at 5:00
+         * meet at 5pm
          * meet at 5:00pm
          * meet at 17:00
          *
          * @param dt string after the at
          * @return the DateTime or new local(0,0,0,0,0,0) if error
          **/
-        private DateTime at_time(string dt) {
-            string dt1 = dt.strip();
+        private Epoch at_time(string date) {
+            string dt = date.strip();
             int sz = dt.char_count();
-/*
-            if (sz == 1 || sz == 2) {
-                if (int.parse(dt) !=0)
-                    return next_possible(int.parse(dt));
-            } else if (sz > 2 && sz < 7) {
-                if (dt.ends_with("pm") || dt.ends_with("am")) {
-                        int.parse(dt.chomp());
-                        if (dt.containts("pm") || dt.contains("am")) {
-                                // Not implemented yet
-                                return new DateTime.local(0,0,0,0,0,0);
-                        }
-                    return new DateTime.local(0,0,0,0,0,0);
+            Clock c = Clock.NONE;
+            if (sz == 1 || sz == 2) { // at 5 / at 17
+                if (Utils.are_digits(dt))
+                    return new Epoch.next(int.parse(dt), 0, Clock.NONE);
+                else
+                    return new Epoch.invalid();
+            } else if (sz > 2 && sz < 7) { // rest
+                if (dt.has_suffix("pm"))
+                    c = Clock.PM;
+                else if (dt.has_suffix("am"))
+                    c = Clock.PM;
+
+                dt = dt.replace("pm","").replace("am","");
+                if (dt.contains(":")) { // 5:00 / 5:00 (pm) / 17:00
+                    string[]  d =  dt.split(":");
+                    if ((d.length < 2) && (Utils.are_digits(d[0]))
+                                     && (Utils.are_digits(d[1])))  {
+                        return new Epoch.next(int.parse(d[0]),
+                                              int.parse(d[1]) ,c);
+                    }
+                } else { // 5pm
+                    if (Utils.are_digits(dt)) {
+                        return new Epoch.next(int.parse(dt), 0, c);
+                    }
                 }
             }
-*/
-            return new DateTime.local(0,0,0,0,0,0);
+            return new Epoch.invalid();
         }
+
         /**
          * <offset from <now>>:
          * meet in 5 minutes
@@ -122,28 +135,23 @@ namespace Enote {
          * scenario, if it can't be parsed,  we put everything on the title.
          **/
         public Task.from_parser(string blurb) {
-            /*
-              var low_blurb = blurb.down();
-              int at_pos = low_blurb.last_index_of(" at ");
-              int in_pos = low_blurb.last_index_of(" in ");
-              if (at_pos == in_pos)
-              this.title = blurb;
-              else if (at_pos > in_pos) {
-              DateTime dt = parse_at(low_blurb.substring(at_pos+4));
-              this.title = blurb.substring(0,at_pos);
-              this.notifications = new Gee.ArrayList<Ticket>();
-              this.percent = 0;
-              if (dt != null)
-              add_date(dt);
-              } else {
-              if (at_pos > 0) { // pizza
-              }
-              this.title = title;
-              this.notifications = new Gee.ArrayList<Ticket>();
-              this.percent = 0;
-              add_date(date);
-            */
-            // For now, worst case, push everything into title:
+
+            var low_blurb = blurb.down();
+            int at_pos = low_blurb.last_index_of(" at ");
+            int in_pos = low_blurb.last_index_of(" in ");
+            if (at_pos == in_pos)
+                this.title = blurb;
+            else if (at_pos > in_pos) {
+                this.notifications = new Gee.ArrayList<Ticket>();
+                this.percent = 0;
+                Epoch  dt = at_time(low_blurb.substring(at_pos+4));
+                if (dt.is_valid()) {
+                    this.title = blurb.substring(0,at_pos);
+                    add_date(dt.get_date());
+                } else {
+                    this.title = blurb;
+                }
+            }
             title = blurb;
         }
 
