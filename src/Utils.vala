@@ -39,6 +39,32 @@ namespace Enote {
           return true;
       }
 
+      // Check if suffix it is
+      public static int has_suffix(string hay, string needle) {
+          if (hay.has_suffix(needle)) {
+              var t = hay.replace(needle,"").strip();
+              if (are_digits(t))
+                  return int.parse(t);
+          }
+          return 0;
+      }
+
+      // the integer analogue of OR-ing boolean values
+      // if there is any value > 0, it returns the first
+      // otherwise it returns 0.
+      public static int or_int (int nu, ...) {
+          int res = 0;
+          var varargs = va_list();
+          for (int i=0; i<nu; i++) {
+              int v = varargs.arg();
+              if (v>0) {
+                  res += v;
+                  break;
+              }
+          }
+          return res;
+      }
+
     // A sophisticated populate function that serves
     // -- Demo purposes
     // -- Debugging purposes
@@ -136,6 +162,7 @@ namespace Enote {
         // next valid time,
         // current implementation makes simple assumptions
         public Epoch.next(int h, int m, Clock c) {
+            debug("====>" + h.to_string());
             valid = true;
             var now = new DateTime.now_local();
             h = (c == Clock.PM && h !=12)? (h+12) : h;
@@ -150,6 +177,21 @@ namespace Enote {
             } else {
                 valid = false;
             }
+        }
+
+        public Epoch.add_minutes (int m) {
+            valid = true;
+            date_time = new DateTime.now_local().add_minutes(m);
+        }
+
+        public Epoch.add_hours (int h) {
+            valid = true;
+            date_time = new DateTime.now_local().add_hours(h);
+        }
+
+        public Epoch.add_days (int d) {
+            valid = true;
+            date_time = new DateTime.now_local().add_days(d);
         }
 
         private bool is_valid_time(int h, int m) {

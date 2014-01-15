@@ -51,6 +51,9 @@ namespace Enote {
             add_date(date);
         }
 
+/////////////////// Quick Task Parser /////////////////////////////////
+// TODO: Add noon/midnight keywords
+
         /**
          * Create task from quick entry text
          * At this point we don't support task details.
@@ -64,6 +67,7 @@ namespace Enote {
          * meet at 5pm
          * meet at 5:00pm
          * meet at 17:00
+         * meet at 17:00 am
          *
          * @param dt string after the at
          * @return the DateTime or new local(0,0,0,0,0,0) if error
@@ -77,17 +81,19 @@ namespace Enote {
                     return new Epoch.next(int.parse(dt), 0, Clock.NONE);
                 else
                     return new Epoch.invalid();
-            } else if (sz > 2 && sz < 7) { // rest
+            } else if (sz > 2 && sz < 9) { // rest
                 if (dt.has_suffix("pm"))
                     c = Clock.PM;
                 else if (dt.has_suffix("am"))
-                    c = Clock.PM;
+                    c = Clock.AM;
 
-                dt = dt.replace("pm","").replace("am","");
+                dt = dt.replace("pm","").replace("am","").strip();
                 if (dt.contains(":")) { // 5:00 / 5:00 (pm) / 17:00
                     string[]  d =  dt.split(":");
-                    if ((d.length < 2) && (Utils.are_digits(d[0]))
-                                     && (Utils.are_digits(d[1])))  {
+                    debug("====>" + dt);
+//                    THREE at 11:50pm
+                    if ((d.length < 3) && (Utils.are_digits(d[0]))
+                                       && (Utils.are_digits(d[1])))  {
                         return new Epoch.next(int.parse(d[0]),
                                               int.parse(d[1]) ,c);
                     }
@@ -109,9 +115,30 @@ namespace Enote {
          * meet in 5 hours, 5'
          * meet in 2 days.
          **/
-        private DateTime is_offset(string dt) {
-            // Not implemented yet
-            return new DateTime.local(0,0,0,0,0,0);
+        private Epoch is_offset(string date) {
+            string dt = date.strip();
+            int sz = dt.char_count();
+            Clock c = Clock.NONE;
+            if (Utils.are_digits(dt)) { // in 5, 50, 500
+                return new Epoch.add_minutes(int.parse(dt));
+            } else {
+                int v;
+                if ((v = Utils.or_int(6, Utils.has_suffix(dt, "minutes"),
+                                      Utils.has_suffix(dt, "mins"),
+                                      Utils.has_suffix(dt, "m"),
+                                      Utils.has_suffix(dt, "min"),
+                                      Utils.has_suffix(dt, "'"))) > 0) {
+                    return new Epoch.add_minutes(v);
+                } else if ((v = Utils.or_int(3, Utils.has_suffix(dt, "hours"),
+                                             Utils.has_suffix(dt, "hr"),
+                                             Utils.has_suffix(dt, "h"))) > 0) {
+                    return new Epoch.add_hours(v);
+                } else if ((v = Utils.or_int(2, Utils.has_suffix(dt, "days"),
+                                             Utils.has_suffix(dt, "d"))) > 0) {
+                    return new Epoch.add_days(v);
+                }
+            }
+            return new Epoch.invalid();
         }
 
         /**
@@ -135,10 +162,10 @@ namespace Enote {
          * scenario, if it can't be parsed,  we put everything on the title.
          **/
         public Task.from_parser(string blurb) {
-
             var low_blurb = blurb.down();
             int at_pos = low_blurb.last_index_of(" at ");
             int in_pos = low_blurb.last_index_of(" in ");
+            debug("at_pos: "+at_pos.to_string()+"\tin_pos:"+in_pos.to_string());
             if (at_pos == in_pos)
                 this.title = blurb;
             else if (at_pos > in_pos) {
@@ -147,6 +174,18 @@ namespace Enote {
                 Epoch  dt = at_time(low_blurb.substring(at_pos+4));
                 if (dt.is_valid()) {
                     this.title = blurb.substring(0,at_pos);
+                    debug(blurb + " | " + dt.get_date().to_string());
+                    add_date(dt.get_date());
+                } else {
+                    this.title = blurb;
+                }
+            } else if (at_pos < in_pos) {
+                this.notifications = new Gee.ArrayList<Ticket>();
+                this.percent = 0;
+                Epoch dt = is_offset(low_blurb.substring(in_pos+4));
+                if (dt.is_valid()) {
+                    this.title = blurb.substring(0,at_pos);
+                    debug(blurb + " | " + dt.get_date().to_string());
                     add_date(dt.get_date());
                 } else {
                     this.title = blurb;
