@@ -57,6 +57,9 @@ PACKAGES
 OPTIONS
     --thread)
 
+include(GSettings)
+add_schema("schema/org.pantheon.enote.gschema.xml")
+
 #Here we define our executable name.
 add_executable(enote
     ${VALA_C} )

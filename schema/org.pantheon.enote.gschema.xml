@@ -1,0 +1,19 @@
+<schemalist>
+  <schema id="org.pantheon.enote" path="/org/pantheon/enote/">
+    <key name="db-dir" type="s">
+      <default>""</default>
+      <summary>Database file directoy</summary>
+      <description>
+        Directory where the database file is stored. By default it's the user_data_dir, 
+        but can be configured to be anything (for instance, to synchronize via Dropbox)
+      </description>
+    </key>
+    <key name="window-state" type="s">
+      <default>"Normal"</default>
+      <summary>The saved state of the window</summary>
+      <description>
+        The saved state of the window (maximized, normal)
+      </description>
+    </key>
+  </schema>
+</schemalist>

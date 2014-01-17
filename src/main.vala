@@ -1,5 +1,3 @@
-using Gtk;
-
 namespace Enote{
   public class Application : Granite.Application  {
 
@@ -18,7 +16,7 @@ namespace Enote{
       translate_url       = "https://transifex.com/p/enote";
 
       about_authors       = {"Nikos Vasilakis <nikos@vasilak.is>"};
-      about_license_type  = License.LGPL_3_0;
+      about_license_type  = Gtk.License.LGPL_3_0;
     }
 
     public void build_and_run (string[] args) {
@@ -32,12 +30,15 @@ namespace Enote{
         stdout.printf ("error: %s\n", e.message);
         stdout.printf ("Run '%s --help' to see a full list of available command line options.\n", args[0]);
       }
-
+	  // Setup logging
       Granite.Services.Logger.DisplayLevel =
         (Utils.DEBUG ?
          Granite.Services.LogLevel.DEBUG :
          Granite.Services.LogLevel.WARN);
-
+	// Setup GSettings
+		Settings settings = new Settings("org.pantheon.enote");
+		debug("window-sate:" + settings.get_string("window-state"));
+		debug("db-dir:" +settings.get_string("db-dir"));
 
       Window layout = new Window(this);
       layout.add_menu(create_appmenu(new Gtk.Menu()));
