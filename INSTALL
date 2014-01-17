@@ -6,14 +6,17 @@ Dependencies:
     libgtk-3-dev
     libgranite-dev
     libsqlheavy0.1-dev
+    libnotify-dev
 
 Install Dependencies:
   sudo apt-get install debhelper cmake pkg-config \
                 valac libgtk-3-dev libgranite-dev \
-                libsqlheavy0.1-dev
+                libsqlheavy0.1-dev libnotify-dev
 
 Installation:
     git clone https://github.com/nvasilakis/enote
     cd enote
-    ./make.sh
+    mkdir build && cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+    make
     sudo make install
