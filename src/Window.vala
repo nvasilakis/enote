@@ -36,12 +36,12 @@ namespace Enote{
     }
 
     public void create_new_task_window() {
-      lw = new NewTask(null);
+		lw = new NewTaskView(null, this);
       lw.show_all();
     }
 
     public void swap_to_welcome() {
-		Utils.persistence(DB.CREATE, this);
+      Utils.view = Facade.WELCOME;
       Enote.Welcome welcome = new Enote.Welcome(this);
       clear_container();
       container.pack_start(welcome);
@@ -52,17 +52,14 @@ namespace Enote{
       view = new Enote.MainView (this);
       tlist = new TaskList (this);
 //      Utils.RunTests(this);
-	  Utils.persistence(DB.LOAD, this);
+	  if (Utils.view == Facade.WELCOME)
+	      Utils.view = Facade.MAIN;
+	  else
+		  Utils.persistence(DB.LOAD, this);
       clear_container();
       container.pack_end(view);
       view.quick.grab_focus();
       view.show_all();
-      /*
-         if (is_empty) {
-         create_new_task_window();
-         this.is_empty = false;
-         }
-       */
     }
 
     public void clear_container(){

@@ -35,6 +35,8 @@ namespace Enote{
         (Utils.DEBUG ?
          Granite.Services.LogLevel.DEBUG :
          Granite.Services.LogLevel.WARN);
+
+
 	// Setup GSettings
 		Settings settings = new Settings("org.pantheon.enote");
 		var dbd = settings.get_string("db-dir");
@@ -44,13 +46,16 @@ namespace Enote{
 		// Create window
 		Window layout = new Window(this);
 		layout.add_menu(create_appmenu(new Gtk.Menu()));
-		if (Utils.file_exists(dbd)) { // proceed with data
+		if (Utils.file_exists(Utils.db)) { // proceed with data
+			Utils.view = Facade.MAIN;
 			layout.swap_to_main();
 		} else { // welcome screen
 			debug("db does not exist");
+			Utils.view = Facade.WELCOME;
 			layout.swap_to_welcome();
 		}
       layout.show_all();
+
     }
 
 

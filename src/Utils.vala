@@ -8,6 +8,7 @@ namespace Enote {
     public const string DATADIR_SUFFIX = "/.enote/n.db";
     //boot params
     public static bool DEBUG = false;
+    public static Facade view;
 
     // Preferences parameters with default values
     public static string  db = "";
@@ -70,11 +71,10 @@ namespace Enote {
       public static  bool file_exists(string fpath) {
 		  var f = File.new_for_path(fpath);
 		  var e = f.query_exists();
-		  var file_info = f.query_info ("*", FileQueryInfoFlags.NONE);
-		  var sz = file_info.get_size ();
+//		  var file_info = f.query_info ("*", FileQueryInfoFlags.NONE);
+//		  var sz = file_info.get_size ();
 		  debug("exists? " + e.to_string());
-		  debug("size: " + sz.to_string());
-		  Process.exit(0);
+//		  Process.exit(0);
 		  return e;
 	  }
 
@@ -191,6 +191,11 @@ namespace Enote {
 		QUERY,
 		UPDATE,
 		DELETE
+	}
+
+	public enum Facade {
+		WELCOME,
+		MAIN
 	}
 
     public enum Clock{

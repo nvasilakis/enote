@@ -1,19 +1,23 @@
 using Granite.Widgets;
 
 namespace Enote{
-	public class NewTask : LightWindow {
+	public class NewTaskView : LightWindow {
 		Gtk.Grid grid;
 		HintedEntry what;
 		DatePicker when_date;
 		TimePicker when_time;
 		Gtk.TextView notes;
+		Enote.Window w;
 
-		public NewTask(Task? t) {
+		public NewTaskView(Task? t, Enote.Window w) {
+			debug("*********************  ");
+			this.w = w;
+			debug("*********************  ");
 			base("New Task");
             title = (t == null ? "Add a task!" : "Edit task");
             resizable = false;
             set_keep_above (true);
-            window_position = Gtk.WindowPosition.CENTER;
+            window_position = Gtk.WindowPosition.CENTER_ON_PARENT;
 			set_default_size(400,500);
 			set_size_request (100,200);
 
@@ -45,7 +49,9 @@ namespace Enote{
             if (t !=null) { // actually test date
                 when_time.time = t.date;
                 when_time.time = t.date;
-            }
+            } else {
+				when_date.set_text("");
+			}
 
             var note_label = make_label ("Notes:");
             notes = new Gtk.TextView ();
@@ -81,6 +87,7 @@ namespace Enote{
             what.changed.connect(() => {
                     create_button.sensitive = (what.text != "");
                 });
+			create_button.clicked.connect(new_task);
 
             buttonbox.pack_end (cancel_button);
             buttonbox.pack_end (create_button);
@@ -108,6 +115,33 @@ namespace Enote{
             time_picker.width_request = 120;
             return time_picker;
         }
+
+		private void new_task() {
+			Task t = new Task(what.get_text());
+			if (when_date.get_text() != "") {
+				debug("user picked date");
+				t.date = new DateTime.local(when_date.date.get_year(),
+											when_date.date.get_month(),
+											when_date.date.get_day_of_month(),
+											when_time.time.get_hour(),
+											when_time.time.get_minute(),
+											when_time.time.get_second());
+			} else {
+				debug("user did not pick date");
+				t.date = new DateTime.from_unix_local (0);
+			}
+			t.more = notes.buffer.text;
+			if (Utils.view == Facade.WELCOME) {
+				debug("*********************  ");
+				Utils.persistence(DB.CREATE, w);
+				debug("*********************  ");
+				debug("database created");
+				w.swap_to_main();
+			}
+			// TODO: record into the database
+			w.view.tlview.append(t);
+			this.destroy();
+		}
 	}
 
 	public class ErrorDialog : Gtk.MessageDialog {

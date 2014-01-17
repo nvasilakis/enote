@@ -194,16 +194,20 @@ namespace Enote {
         }
 
         private void add_date(DateTime date) {
-            int size = notifications.size;
-            debug("ticket list has size %d", size );
-            if (size > 0) {
-                debug("Nullifying ticket at %d", (size -1));
-                notifications[size-1].invalidate();
-            }
-            _date = date;
-            Ticket ticket = new Ticket();
-            notifications.add(ticket);
-            notify(ticket);
+            // User does not have a specific due date
+			debug("add date" + date.to_string());
+			if (date.get_year() > 1970) {
+				int size = notifications.size;
+				debug("ticket list has size %d", size );
+				if (size > 0) {
+					debug("Nullifying ticket at %d", (size -1));
+					notifications[size-1].invalidate();
+				}
+				Ticket ticket = new Ticket();
+				notifications.add(ticket);
+				notify(ticket);
+			}
+			_date = date;
         }
 
         /* Need to pass also a ticket structure, in case the
@@ -240,7 +244,7 @@ namespace Enote {
         private int in_seconds() {
             var now = new DateTime.now_local ();
             int difference =  (int) (this.date.difference(now)/1000000);
-            debug(difference.to_string());
+            debug("difference: " + difference.to_string());
             //Need to check if below zero -- then passed, cross out
             debug("Times: [now %s], [target %s], [dif: %s secs] ",
                   now.to_string(),
@@ -264,7 +268,7 @@ namespace Enote {
         }
 
         public string format_date() {
-            return ("<span color='#999aaa' strikethrough='" + 
+            return ("<span color='#999aaa' strikethrough='" +
                     (done? "true" : "false") + "'> due on 04/14/2014 </span>");
         }
 
