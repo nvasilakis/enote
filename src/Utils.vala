@@ -68,7 +68,14 @@ namespace Enote {
 
 	  // Check if a file exists
       public static  bool file_exists(string fpath) {
-		  return File.new_for_path(fpath).query_exists();
+		  var f = File.new_for_path(fpath);
+		  var e = f.query_exists();
+		  var file_info = f.query_info ("*", FileQueryInfoFlags.NONE);
+		  var sz = file_info.get_size ();
+		  debug("exists? " + e.to_string());
+		  debug("size: " + sz.to_string());
+		  Process.exit(0);
+		  return e;
 	  }
 
       // Check if all characters in a string array are digits
