@@ -36,7 +36,7 @@ namespace Enote{
     }
 
     public void create_new_task_window() {
-		lw = new NewTaskView(null, this);
+		lw = new NewTaskView(null,this);
       lw.show_all();
     }
 
@@ -55,7 +55,7 @@ namespace Enote{
 	  if (Utils.view == Facade.WELCOME)
 	      Utils.view = Facade.MAIN;
 	  else
-		  Utils.persistence(DB.LOAD, this);
+		  Utils.persistence(DB.LOAD);
       clear_container();
       container.pack_end(view);
       view.quick.grab_focus();

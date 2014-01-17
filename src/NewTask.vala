@@ -7,12 +7,8 @@ namespace Enote{
 		DatePicker when_date;
 		TimePicker when_time;
 		Gtk.TextView notes;
-		Enote.Window w;
 
-		public NewTaskView(Task? t, Enote.Window w) {
-			debug("*********************  ");
-			this.w = w;
-			debug("*********************  ");
+		public NewTaskView(Task? t, Enote.Window window) {
 			base("New Task");
             title = (t == null ? "Add a task!" : "Edit task");
             resizable = false;
@@ -87,7 +83,9 @@ namespace Enote{
             what.changed.connect(() => {
                     create_button.sensitive = (what.text != "");
                 });
-			create_button.clicked.connect(new_task);
+			create_button.clicked.connect(() => {
+					new_task(window);
+				});
 
             buttonbox.pack_end (cancel_button);
             buttonbox.pack_end (create_button);
@@ -116,7 +114,7 @@ namespace Enote{
             return time_picker;
         }
 
-		private void new_task() {
+		private void new_task(Enote.Window window) {
 			Task t = new Task(what.get_text());
 			if (when_date.get_text() != "") {
 				debug("user picked date");
@@ -132,14 +130,12 @@ namespace Enote{
 			}
 			t.more = notes.buffer.text;
 			if (Utils.view == Facade.WELCOME) {
-				debug("*********************  ");
-				Utils.persistence(DB.CREATE, w);
-				debug("*********************  ");
+				Utils.persistence(DB.CREATE);
 				debug("database created");
-				w.swap_to_main();
+				window.swap_to_main();
 			}
+			window.view.tlview.append(t);
 			// TODO: record into the database
-			w.view.tlview.append(t);
 			this.destroy();
 		}
 	}

@@ -30,7 +30,7 @@ namespace Enote {
     };
 
 	  // TODO change this void down here to grab errors
-	  public static void persistence(DB option, Enote.Window window) {
+	  public static void persistence(DB option) {
 		  try {
 			  var db = new SQLHeavy.Database (db, SQLHeavy.FileMode.READ
 											  | SQLHeavy.FileMode.WRITE
@@ -55,7 +55,7 @@ namespace Enote {
 					  t.done = (qr.fetch_int(3) == 0);
 					  t.date = new DateTime.from_unix_local (qr.fetch_int(4));
 					  t.more = qr.fetch_string(5);
-					  window.view.tlview.append(t);
+//					  window.view.tlview.append(t);
 				  }
 				  break;
 			  case DB.SAVE:

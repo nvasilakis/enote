@@ -203,21 +203,18 @@ namespace Enote {
 					debug("Nullifying ticket at %d", (size -1));
 					notifications[size-1].invalidate();
 				}
+//				_date = date; // this is needed before
 				Ticket ticket = new Ticket();
 				notifications.add(ticket);
-				notify(ticket);
+				Timeout.add((this.in_seconds (date) * 1000) , () => {
+						/* Need to pass also a ticket structure, in case the
+						notification needs to be voided before it fires up, i.e.
+						there is an update. With these indirection tickets, I
+						preserve the ability to revocate, if needed. */
+						return notify_aux(ticket);
+					});
 			}
 			_date = date;
-        }
-
-        /* Need to pass also a ticket structure, in case the
-           notification needs to be voided before it fires up, i.e.
-           if there is an update. With these indirection tickets, I
-           preserve the ability to revocate, if needed. */
-        public void notify(Ticket ticket){
-            Timeout.add((this.in_seconds () * 1000) , () => {
-                    return notify_aux(ticket);
-                });
         }
 
         private bool notify_aux(Ticket ticket) {
@@ -241,14 +238,14 @@ namespace Enote {
 
 
         // Need to check if >=0
-        private int in_seconds() {
+        private int in_seconds(DateTime date) {
             var now = new DateTime.now_local ();
-            int difference =  (int) (this.date.difference(now)/1000000);
+            int difference =  (int) (date.difference(now)/1000000);
             debug("difference: " + difference.to_string());
             //Need to check if below zero -- then passed, cross out
             debug("Times: [now %s], [target %s], [dif: %s secs] ",
                   now.to_string(),
-                  this.date.to_string(),
+                  date.to_string(),
                   difference.to_string());
             return difference;
         }
@@ -268,8 +265,13 @@ namespace Enote {
         }
 
         public string format_date() {
-            return ("<span color='#999aaa' strikethrough='" +
-                    (done? "true" : "false") + "'> due on 04/14/2014 </span>");
+			var s = "";
+			if (_date.get_year() > 1970) {
+				s = ("<span color='#999aaa' strikethrough='" +
+					 (done? "true" : "false") + "'> due on " +
+					 _date.format("%B %e, %Y") + " </span>");
+			}
+			return s;
         }
 
         public string format_notes() {
