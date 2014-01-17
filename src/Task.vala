@@ -268,11 +268,18 @@ namespace Enote {
 			var s = "";
 			if (_date.get_year() > 1970) {
 				s = ("<span color='#999aaa' strikethrough='" +
-					 (done? "true" : "false") + "'> due on " +
-					 _date.format("%B %e, %Y") + " </span>");
+					 (done? "true" : "false") + "'> due ");
+				s += (not_same_day()? ("on " + _date.format("%B %e, %Y")) :
+					("at " + _date.format("%H:%m")));
+				s += " </span>";
 			}
 			return s;
         }
+
+	private bool not_same_day() {
+		return (_date.get_day_of_year() !=
+				new DateTime.now_local().get_day_of_year());
+	}
 
         public string format_notes() {
             if (more == null)
