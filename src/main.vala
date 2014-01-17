@@ -15,7 +15,7 @@ namespace Enote{
       help_url            = "https://github.com/nvasilakis/enote/wiki";
       translate_url       = "https://transifex.com/p/enote";
 
-      about_authors       = {"Nikos Vasilakis <nikos@vasilak.is>"};
+      about_authors       = {"Enoté Developers <nikos@vasilak.is>"};
       about_license_type  = Gtk.License.LGPL_3_0;
     }
 

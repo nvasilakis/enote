@@ -34,11 +34,11 @@ namespace Enote {
         }
         public string more {get; set;}
         public int percent {get; set;}
-        private Gee.ArrayList<Ticket> notifications;
+        private Array<Ticket> notifications;
 
         public Task(string title){
             this.title = title;
-            this.notifications = new Gee.ArrayList<Ticket>();
+            this.notifications = new Array<Ticket>();
             this.percent = 0;
         }
 
@@ -46,7 +46,7 @@ namespace Enote {
             // TODO: Can I replace this with
             // <store ref> = new Task(title)?
             this.title = title;
-            this.notifications = new Gee.ArrayList<Ticket>();
+            this.notifications = new Array<Ticket>();
             this.percent = 0;
             add_date(date);
         }
@@ -169,7 +169,7 @@ namespace Enote {
             if (at_pos == in_pos)
                 this.title = blurb;
             else if (at_pos > in_pos) {
-                this.notifications = new Gee.ArrayList<Ticket>();
+                this.notifications = new Array<Ticket>();
                 this.percent = 0;
                 Epoch  dt = at_time(low_blurb.substring(at_pos+4));
                 if (dt.is_valid()) {
@@ -180,7 +180,7 @@ namespace Enote {
                     this.title = blurb;
                 }
             } else if (at_pos < in_pos) {
-                this.notifications = new Gee.ArrayList<Ticket>();
+                this.notifications = new Array<Ticket>();
                 this.percent = 0;
                 Epoch dt = is_offset(low_blurb.substring(in_pos+4));
                 if (dt.is_valid()) {
@@ -197,15 +197,15 @@ namespace Enote {
             // User does not have a specific due date
 			debug("add date" + date.to_string());
 			if (date.get_year() > 1970) {
-				int size = notifications.size;
+				int size = (int) notifications.length;
 				debug("ticket list has size %d", size );
 				if (size > 0) {
 					debug("Nullifying ticket at %d", (size -1));
-					notifications[size-1].invalidate();
+					notifications.index(size-1).invalidate();
 				}
 //				_date = date; // this is needed before
 				Ticket ticket = new Ticket();
-				notifications.add(ticket);
+				notifications.append_val(ticket);
 				Timeout.add((this.in_seconds (date) * 1000) , () => {
 						/* Need to pass also a ticket structure, in case the
 						notification needs to be voided before it fires up, i.e.
