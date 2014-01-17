@@ -1,8 +1,6 @@
-using Gtk;
-
 namespace Enote{
   public class Window : Gtk.Window {
-    Box container;
+    Gtk.Box container;
     Gtk.Toolbar toolbar;
     public Enote.MainView view {get; set;}
     public Enote.TaskList tlist {get; set;}
@@ -18,18 +16,18 @@ namespace Enote{
 
     public void add_menu(Granite.Widgets.AppMenu am){
       // build header
-      container = new Box(Gtk.Orientation.VERTICAL, 0);
-      toolbar = new Toolbar();
-      var img = new Image.from_icon_name ("mail-message-new",
-          IconSize.SMALL_TOOLBAR);
-      var btn_create = new ToolButton (img, "Create");
+      container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+      toolbar = new Gtk.Toolbar();
+      var img = new Gtk.Image.from_icon_name ("mail-message-new",
+          Gtk.IconSize.SMALL_TOOLBAR);
+      var btn_create = new Gtk.ToolButton (img, "Create");
       btn_create.clicked.connect (create_new_task_window);
       toolbar.insert (btn_create,0);
       var btn_gear = am;
       btn_gear.set_expand(true);
 
-      btn_gear.set_halign(Align.END);
-      var separator = new SeparatorToolItem ();
+      btn_gear.set_halign(Gtk.Align.END);
+      var separator = new Gtk.SeparatorToolItem ();
       toolbar.add (separator);
       toolbar.add(btn_gear);
       toolbar.get_style_context ().add_class ("primary-toolbar");

@@ -1,5 +1,3 @@
-using Gtk;
-
 namespace Enote{
     public class Welcome : Granite.Widgets.Welcome {
         Enote.Window window;
