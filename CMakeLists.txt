@@ -70,14 +70,18 @@ target_link_libraries(enote ${DEPS_LIBRARIES})
 # make install targets
 install(TARGETS enote RUNTIME DESTINATION bin)                                                                                                                                  
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/enote.desktop
-  DESTINATION share/applications)
+  ${CMAKE_INSTALL_PREFIX}/share/applications)
 
-install (FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/enote.svg
-  DESTINATION share/icons/hicolor/48x48/apps/)
-install (FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/enote.svg
-  DESTINATION share/icons/hicolor/64x64/apps/)
-install (FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/enote.svg
-  DESTINATION share/icons/hicolor/128x128/apps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/16/enote.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/enote.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/enote.svg DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/enote.svg DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/enote.svg DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps)
+
+install(
+    CODE
+        "execute_process (COMMAND gtk-update-icon-cache -t -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)"
+    CODE
+        "message (STATUS \"Updated icon cache in ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor\")"
+)
+
