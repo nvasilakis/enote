@@ -1,4 +1,16 @@
-Dependencies:
+## This is a self-documented script. You can run by ./INSTALL
+
+<<-EOF
+To create the building environment, you need:
+  cmake
+  valac-0.20
+EOF
+  sudo add-apt-repository ppa:vala-team/ppa
+  sudo apt-get update
+  sudo apt-get install -y cmake valac-0.20
+
+<<-EOF
+Enote' itself, depends on:
     debhelper (>= 7)
     cmake
     pkg-config
@@ -7,13 +19,21 @@ Dependencies:
     libgranite-dev
     libsqlheavy0.1-dev
     libnotify-dev
+EOF
 
-Install Dependencies:
+#To install these dependencies:
   sudo apt-get install debhelper cmake pkg-config \
                 valac libgtk-3-dev libgranite-dev \
-                libsqlheavy0.1-dev libnotify-dev
+                libsqlheavy0.1-dev libnotify-dev -my
 
-Installation:
+cat <<-EOF
+# If there is problem with libsqlheavy-0.1, run:
+  sudo add-apt-repository ppa:nemequ/sqlheavy  
+  sudo apt-get update
+  sudo apt-get install sqlheavy0.1-dev
+EOF
+
+#And to install enote' itself:
     git clone https://github.com/nvasilakis/enote
     cd enote
     mkdir build && cd build
