@@ -5,14 +5,14 @@ namespace Enote {
     public const string INIT_TEXT = "Breakfast at Milliway's at 7am";
     public const string TOOLTIP_TEXT = "Add Task";
     public const string ICON = "text-richtext";
-
+    public const string DATADIR_SUFFIX = "/.enote/n.db";
     //boot params
     public static bool DEBUG = false;
 
     // Preferences parameters with default values
+    public static string  db = "";
     public static bool intrusive_notifications = false;
     public static bool ask_delete_confirmation = false;
-    public static string  path_to_store_data = "";
     public static bool show_thread_inverse   = false;
     // 3 next could be a non-exclusive radio selection a la bootstrap
     public static bool add_ntf_early_5_mins  = true;
@@ -27,6 +27,49 @@ namespace Enote {
         "Enable debug logging", null },
       { null } //list terminator
     };
+
+	  // TODO change this void down here to grab errors
+	  public static void persistence(DB option, Enote.Window window) {
+		  try {
+			  var db = new SQLHeavy.Database (db, SQLHeavy.FileMode.READ
+											  | SQLHeavy.FileMode.WRITE
+											  | SQLHeavy.FileMode.CREATE);
+			  switch (option) {
+			  case DB.CREATE:
+				  db.execute ("CREATE TABLE task (title TEXT,"
+							  + " repeating INTEGER,"
+							  + " important INTEGER,"
+							  + " done INTEGER,"
+							  + " date INTEGER,"
+							  + " more TEXT,"
+							  + " id INTEGER PRIMARY KEY AUTOINCREMENT);");
+				  break;
+			  case DB.LOAD: // TODO: grab pending first, then done?
+				  SQLHeavy.QueryResult qr;
+				  SQLHeavy.Query q = db.prepare ("SELECT * FROM task");
+				  for (qr = q.execute (); !qr.finished; qr.next ()) {
+					  Task t = new Task(qr.fetch_string(0));
+					  t.repeating = (qr.fetch_int(1) == 0);
+					  t.important = (qr.fetch_int(2) == 0);
+					  t.done = (qr.fetch_int(3) == 0);
+					  t.date = new DateTime.from_unix_local (qr.fetch_int(4));
+					  t.more = qr.fetch_string(5);
+					  window.view.tlview.append(t);
+				  }
+				  break;
+			  case DB.SAVE:
+				  debug("impossible to save yet, sorry!");
+				  break;
+			  }
+		  } catch (SQLHeavy.Error e) {
+			  warning ("Could not create db, %s", e.message);
+		  }
+	  }
+
+	  // Check if a file exists
+      public static  bool file_exists(string fpath) {
+		  return File.new_for_path(fpath).query_exists();
+	  }
 
       // Check if all characters in a string array are digits
       // This is only used with arrays of length two for time
@@ -64,6 +107,7 @@ namespace Enote {
           }
           return res;
       }
+
 
     // A sophisticated populate function that serves
     // -- Demo purposes
@@ -118,7 +162,7 @@ namespace Enote {
       t7.more = ("TODO:\n * Granite Welcome Screen\n *List of Tasks" +
           "\n * Insert Quick task (+Parsing Engine)\n * Insert"+
           " new task\n * Icons and tooltips \n * i18n " +
-          "(transifex?)\n * Analytics\n * Candidate names: " + 
+          "(transifex?)\n * Analytics\n * Candidate names: " +
           "Enote, Pistachio, lapp, enoté  ");
       t7.done = true;
       window.view.tlview.append(t7);
@@ -132,6 +176,15 @@ namespace Enote {
       window.view.tlview.append(t8);
     }
   }
+	public enum DB {
+		CREATE,
+		LOAD,
+		SAVE,
+		INSERT,
+		QUERY,
+		UPDATE,
+		DELETE
+	}
 
     public enum Clock{
         PM,

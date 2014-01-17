@@ -54,6 +54,7 @@ PACKAGES
     granite
     glib-2.0
     libnotify
+    sqlheavy-0.1
 OPTIONS
     --thread)
 

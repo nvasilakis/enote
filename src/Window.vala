@@ -41,6 +41,7 @@ namespace Enote{
     }
 
     public void swap_to_welcome() {
+		Utils.persistence(DB.CREATE, this);
       Enote.Welcome welcome = new Enote.Welcome(this);
       clear_container();
       container.pack_start(welcome);
@@ -50,7 +51,8 @@ namespace Enote{
     public void swap_to_main(){
       view = new Enote.MainView (this);
       tlist = new TaskList (this);
-      Utils.RunTests(this);
+//      Utils.RunTests(this);
+	  Utils.persistence(DB.LOAD, this);
       clear_container();
       container.pack_end(view);
       view.quick.grab_focus();

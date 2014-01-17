@@ -5,10 +5,12 @@ Dependencies:
     valac
     libgtk-3-dev
     libgranite-dev
+    libsqlheavy0.1-dev
 
 Install Dependencies:
   sudo apt-get install debhelper cmake pkg-config \
-                valac libgtk-3-dev libgranite-dev
+                valac libgtk-3-dev libgranite-dev \
+                libsqlheavy0.1-dev
 
 Installation:
     git clone https://github.com/nvasilakis/enote
