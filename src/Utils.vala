@@ -4,7 +4,7 @@ namespace Enote {
     //application constants
     public const string INIT_TEXT = "Breakfast at Milliway's at 7am";
     public const string TOOLTIP_TEXT = "Add Task";
-    public const string ICON = "text-richtext";
+    public const string ICON = "enote";
     public const string DATADIR_SUFFIX = "/.enote/n.db";
     //boot params
     public static bool DEBUG = false;

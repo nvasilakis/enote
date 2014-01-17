@@ -62,8 +62,22 @@ include(GSettings)
 add_schema("schema/org.pantheon.enote.gschema.xml")
 
 #Here we define our executable name.
-add_executable(enote
-    ${VALA_C} )
+add_executable(enote ${VALA_C})
 
 #We need to link the libraries with our Executable.
 target_link_libraries(enote ${DEPS_LIBRARIES})
+
+# make install targets
+install(TARGETS enote RUNTIME DESTINATION bin)                                                                                                                                  
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/enote.desktop
+  DESTINATION share/applications)
+
+install (FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/enote.svg
+  DESTINATION share/icons/hicolor/48x48/apps/)
+install (FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/enote.svg
+  DESTINATION share/icons/hicolor/64x64/apps/)
+install (FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/enote.svg
+  DESTINATION share/icons/hicolor/128x128/apps/)
