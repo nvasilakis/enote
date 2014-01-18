@@ -129,13 +129,14 @@ namespace Enote{
 				t.date = new DateTime.from_unix_local (0);
 			}
 			t.more = notes.buffer.text;
+            var persistence = new Persistence(Utils.db);
 			if (Utils.view == Facade.WELCOME) {
-				Utils.persistence(DB.CREATE);
+                persistence.create_db();
 				debug("database created");
 				window.swap_to_main();
 			}
-			window.view.tlview.append(t);
-			// TODO: record into the database
+			window.view.attach_one(t);
+			persistence.insert(t);
 			this.destroy();
 		}
 	}

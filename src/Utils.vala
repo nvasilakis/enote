@@ -11,7 +11,7 @@ namespace Enote {
     public static Facade view;
 
     // Preferences parameters with default values
-    public static string  db = "";
+      public static string db = "";
     public static bool intrusive_notifications = false;
     public static bool ask_delete_confirmation = false;
     public static bool show_thread_inverse   = false;
@@ -29,54 +29,13 @@ namespace Enote {
       { null } //list terminator
     };
 
-	  // TODO change this void down here to grab errors
-	  public static void persistence(DB option) {
-		  try {
-			  var db = new SQLHeavy.Database (db, SQLHeavy.FileMode.READ
-											  | SQLHeavy.FileMode.WRITE
-											  | SQLHeavy.FileMode.CREATE);
-			  switch (option) {
-			  case DB.CREATE:
-				  db.execute ("CREATE TABLE task (title TEXT,"
-							  + " repeating INTEGER,"
-							  + " important INTEGER,"
-							  + " done INTEGER,"
-							  + " date INTEGER,"
-							  + " more TEXT,"
-							  + " id INTEGER PRIMARY KEY AUTOINCREMENT);");
-				  break;
-			  case DB.LOAD: // TODO: grab pending first, then done?
-				  SQLHeavy.QueryResult qr;
-				  SQLHeavy.Query q = db.prepare ("SELECT * FROM task");
-				  for (qr = q.execute (); !qr.finished; qr.next ()) {
-					  Task t = new Task(qr.fetch_string(0));
-					  t.repeating = (qr.fetch_int(1) == 0);
-					  t.important = (qr.fetch_int(2) == 0);
-					  t.done = (qr.fetch_int(3) == 0);
-					  t.date = new DateTime.from_unix_local (qr.fetch_int(4));
-					  t.more = qr.fetch_string(5);
-//					  window.view.tlview.append(t);
-				  }
-				  break;
-			  case DB.SAVE:
-				  debug("impossible to save yet, sorry!");
-				  break;
-			  }
-		  } catch (SQLHeavy.Error e) {
-			  warning ("Could not create db, %s", e.message);
-		  }
-	  }
-
-	  // Check if a file exists
+      // Check if a file exists
       public static  bool file_exists(string fpath) {
-		  var f = File.new_for_path(fpath);
-		  var e = f.query_exists();
-//		  var file_info = f.query_info ("*", FileQueryInfoFlags.NONE);
-//		  var sz = file_info.get_size ();
-		  debug("exists? " + e.to_string());
-//		  Process.exit(0);
-		  return e;
-	  }
+          var f = File.new_for_path(fpath);
+          var e = f.query_exists();
+          debug("exists? " + e.to_string());
+          return e;
+      }
 
       // Check if all characters in a string array are digits
       // This is only used with arrays of length two for time
@@ -115,6 +74,13 @@ namespace Enote {
           return res;
       }
 
+      public static void parse_settings (Settings sts) {
+          // TODO optimize
+          var op1 = (Environment.get_home_dir()+ DATADIR_SUFFIX);
+          var op2 =(sts.get_string("db-dir") + DATADIR_SUFFIX);
+          db = (sts.get_string("db-dir") == "")? op1 : op2;
+          debug("db file:" + Utils.db);
+      }
 
     // A sophisticated populate function that serves
     // -- Demo purposes

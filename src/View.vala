@@ -67,6 +67,15 @@ namespace Enote{
             attach (quick, 0, 2, 1, 1);
         }
 
+        public void attach_one (Task t) {
+            this.tlview.append(t);
+        }
+
+        public void attach_all (Array<Task> at) {
+          for (int i=0; i<at.length; i++)
+              attach_one(at.index(i));
+        }
+
         public void insert(string text) {
             window.tlist.add(new Task.from_parser(text));
             quick.text = "";

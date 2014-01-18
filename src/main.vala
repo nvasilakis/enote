@@ -37,12 +37,8 @@ namespace Enote{
          Granite.Services.LogLevel.WARN);
 
 
-	// Setup GSettings
-		Settings settings = new Settings("org.pantheon.enote");
-		var dbd = settings.get_string("db-dir");
-		var sfx = Utils.DATADIR_SUFFIX;
-		Utils.db=(dbd=="")? (Environment.get_home_dir()+sfx) : (dbd+sfx);
-		debug("db file:" + Utils.db);
+        // Setup GSettings
+        Utils.parse_settings(new Settings("org.pantheon.enote"));
 		// Create window
 		Window layout = new Window(this);
 		layout.add_menu(create_appmenu(new Gtk.Menu()));

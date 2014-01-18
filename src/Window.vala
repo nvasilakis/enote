@@ -52,10 +52,12 @@ namespace Enote{
       view = new Enote.MainView (this);
       tlist = new TaskList (this);
 //      Utils.RunTests(this);
-	  if (Utils.view == Facade.WELCOME)
-	      Utils.view = Facade.MAIN;
-	  else
-		  Utils.persistence(DB.LOAD);
+      if (Utils.view == Facade.WELCOME)
+          Utils.view = Facade.MAIN;
+      else {
+          var persistence = new Persistence(Utils.db);
+          view.attach_all(persistence.load_db());
+      }
       clear_container();
       container.pack_end(view);
       view.quick.grab_focus();
