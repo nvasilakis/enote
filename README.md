@@ -15,31 +15,36 @@ cloud.  _And do all of these with style!_
 
 ## Roadmap for enoté v.0.2 | Gaia Release
 
-### High-level Idea: Make Note Self-Hosting
-
 Goal for 0.2: Make project self-hosting -- being able to save/restore it's own set of tasks, deadlines, done status
 etc.
 
 ### Features
 
-* back-end add/remove events (NEXT)
-* Persistence
+* back-end add/remove events -- DONE
+* persistence -- DONE
 * popup window for new event -- DONE
-* Notification mechanism -- DONE
-* Pick date -- DONE
-* Parse input (e.g., breakfst at tifanny's at 6)
-* Menu quit and preferences pane'
+* notification mechanism -- DONE
+* pick date -- DONE
+* GSettings interfacing -- DONE
+* parse input (e.g., breakfst at tifanny's at 6) -- DONE
 * simple text on right pane -- DONE (changed layout)
 * a simple way of deleting events -- DONE
+* simple Icon -- DONE
+* edit/Delete Event (Next)
 
 ### internals 
 
 * logging -- DONE
 * startup options -- DONE
+* register enoté on launchpad, transifex -- DONE
+* create ppa build recipe
 
 ## Roadmap for enoté v.0.3 | Atlas Release
 
-* GSettings interfacing
+* menu quit and preferences pane'
 * url/email parsing
-synchronization with google services
-calendar integration
+* synchronization with google services
+* maya calendar integration
+* play sound on notification
+* daemonize
+* create a better icon!

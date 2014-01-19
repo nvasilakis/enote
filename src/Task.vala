@@ -270,7 +270,7 @@ namespace Enote {
 				s = ("<span color='#999aaa' strikethrough='" +
 					 (done? "true" : "false") + "'> due ");
 				s += (not_same_day()? ("on " + _date.format("%B %e, %Y")) :
-					("at " + _date.format("%H:%m")));
+					("at " + _date.format("%H:%M")));
 				s += " </span>";
 			}
 			return s;
