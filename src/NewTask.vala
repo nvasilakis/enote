@@ -37,7 +37,7 @@ namespace Enote{
             var what_label = make_label ("What:");
             what = new Granite.Widgets.HintedEntry (Utils.INIT_TEXT);
             if (t != null)
-                what.set_text(t.title);
+                (what as Gtk.Entry).set_text(t.title);
 
             var when_label = make_label ("When:");
             when_date = make_date_picker ();
@@ -115,7 +115,7 @@ namespace Enote{
         }
 
 		private void new_task(Enote.Window window) {
-			Task t = new Task(what.get_text());
+			Task t = new Task((what as Gtk.Entry).get_text());
 			if (when_date.get_text() != "") {
 				debug("user picked date");
 				t.date = new DateTime.local(when_date.date.get_year(),

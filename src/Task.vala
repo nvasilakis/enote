@@ -117,8 +117,6 @@ namespace Enote {
          **/
         private Epoch is_offset(string date) {
             string dt = date.strip();
-            int sz = dt.char_count();
-            Clock c = Clock.NONE;
             if (Utils.are_digits(dt)) { // in 5, 50, 500
                 return new Epoch.add_minutes(int.parse(dt));
             } else {
@@ -152,9 +150,9 @@ namespace Enote {
          * meet in Levine Hall in 5 mins
          * meet in 5mins  in Levinee Hall
          **/
-        private string is_place(string s) {
-            return "";
-        }
+//        private string is_place(string s) {
+//            return "";
+//        }
 
         /**
          * Note: It will always create a new task even if not parsed correctly.
