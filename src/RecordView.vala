@@ -102,7 +102,7 @@ public class RecordView : Gtk.EventBox {
         task_event.add (title); //TODO, launch lightbox
         task_event.button_release_event.connect((event) => {
                 debug ("Update task");
-                NewTaskView ntv = new NewTaskView(task, window);
+                NewTaskView ntv = new NewTaskView(task, window, this);
                 ntv.show_all();
                 return false;
             });
@@ -137,7 +137,7 @@ public class RecordView : Gtk.EventBox {
         notes.set_halign (Gtk.Align.START);
         notes.set_valign (Gtk.Align.START);
         notes.xalign = 0;
-        span_box.pack_end (this.notes, true, false, 0); 
+        span_box.pack_end (this.notes, true, false, 0);
 
         /* Mini-menu */
         menu_alignment = new Gtk.Alignment (0, 0, 0, 1);

@@ -8,7 +8,7 @@ namespace Enote{
 		TimePicker when_time;
 		Gtk.TextView notes;
 
-		public NewTaskView(Task? t, Enote.Window window) {
+		public NewTaskView(Task? t, Enote.Window window, RecordView? rview) {
 			base("New Task");
             title = (t == null ? "Add a task!" : "Edit task");
             resizable = false;
@@ -46,7 +46,10 @@ namespace Enote{
             when_date = make_date_picker ();
             when_time = make_time_picker ();
             if (t !=null) { // actually test date
-                when_time.time = t.date;
+				if (t.date == new DateTime.from_unix_local(0))
+					when_date.set_text("");
+				else
+                    when_date.date = t.date;
                 when_time.time = t.date;
             } else {
 				when_date.set_text("");
@@ -82,12 +85,13 @@ namespace Enote{
 			var create_button = new Gtk.Button.with_label (
                 t == null? "Add" : "Save");
             create_button.sensitive = (what.text != "");
-            create_button.set_tooltip_text ("Add this task to the list");
+			var tooltip = (t==null)? "Add this task to the list":"Update task";
+            create_button.set_tooltip_text (tooltip);
             what.changed.connect(() => {
                     create_button.sensitive = (what.text != "");
                 });
 			create_button.clicked.connect(() => {
-					new_task(window);
+					new_task(window, t, rview);
 				});
 
             buttonbox.pack_end (cancel_button);
@@ -117,8 +121,14 @@ namespace Enote{
             return time_picker;
         }
 
-		private void new_task(Enote.Window window) {
-			Task t = new Task((what as Gtk.Entry).get_text());
+		/**
+		 * @param window The window to draw upon, needed to attach task
+		 * @param tid The task id in case of update, -1 if it's new
+		 **/
+		private void new_task(Enote.Window window, Task? t, RecordView? rview) {
+			bool update = (t != null);
+			t = (update? t : new Task(""));
+			t.title = (what as Gtk.Entry).get_text();
 			if (when_date.get_text() != "") {
 				debug("user picked date");
 				t.date = new DateTime.local(when_date.date.get_year(),
@@ -138,8 +148,15 @@ namespace Enote{
 				debug("database created");
 				window.swap_to_main();
 			}
-			window.view.attach_one(t);
-			persistence.insert(t);
+			if (!update) { // new
+				window.view.attach_one(t);
+				persistence.insert(t);
+			} else {
+				persistence.update(t);
+				if (rview == null)
+					warning("rview==null && task!=null - what update is that?");
+				window.swap_to_main();
+			}
 			this.destroy();
 		}
 	}

@@ -36,7 +36,7 @@ namespace Enote{
     }
 
     public void create_new_task_window() {
-		lw = new NewTaskView(null,this);
+		lw = new NewTaskView(null,this,null);
       lw.show_all();
     }
 

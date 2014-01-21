@@ -17,7 +17,7 @@ if [[ "$1" == 'clean' ]]; then
   done
 else 
   
-  #rm -rf ~/.enote # remove data dir
+  rm -rf ~/.enote # remove data dir
   rm -r ./build # re-create build for temp's
   mkdir ./build  && cd ./build
   # Initiate cmake and build source; also, if

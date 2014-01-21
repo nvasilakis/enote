@@ -39,6 +39,7 @@ namespace Enote {
                     t.date = new DateTime.from_unix_local (qr.fetch_int(4));
                     t.more = qr.fetch_string(5);
                     t.id = qr.fetch_int(6);
+					debug("Load -- Id:" + t.id.to_string());
                     at.append_val(t);
                 }
             } catch (SQLHeavy.Error e) {
@@ -73,9 +74,10 @@ namespace Enote {
 
         public void update (Task t) {
             var s = ("UPDATE 'task' SET title=:title, repeating=:repeating, " +
-                     "important=:important, done=done:, date=:date, " +
+                     "important=:important, done=:done, date=:date, " +
                      "more=:more WHERE id=:id;");
             try {
+				debug("Update -- Id:" + t.id.to_string());
                 var q = new SQLHeavy.Query (hdb, s);
                 q.set_string (":title", t.title);
                 q.set_int (":repeating", (t.repeating?1:0));
@@ -89,7 +91,6 @@ namespace Enote {
             } catch (SQLHeavy.Error e) {
                 warning ("Could not update db, %s", e.message);
             }
-            debug("update: Not Implemented");
         }
     }
 }
