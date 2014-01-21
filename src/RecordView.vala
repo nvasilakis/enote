@@ -161,9 +161,16 @@ public class RecordView : Gtk.EventBox {
         mark_as_done.set_halign (Gtk.Align.START);
         mark_as_done.set_relief (Gtk.ReliefStyle.NONE);
         done_icon = new Gtk.Image.from_icon_name
-        ("object-select-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+            ("object-select-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         mark_as_done.child = this.done_icon;
         mark_as_done.set_tooltip_text ("Mark as done");
+		mark_as_done.button_release_event.connect( (event) => {
+				task.done = true;
+				Persistence persistence = new Persistence(Utils.db);
+				persistence.update(task);
+				window.swap_to_main();
+				return false;
+			});
         menu.pack_start (mark_as_done, false, true, 0);
 
         // delete task
@@ -171,9 +178,16 @@ public class RecordView : Gtk.EventBox {
         mark_as_delete.set_halign (Gtk.Align.START);
         mark_as_delete.set_relief (Gtk.ReliefStyle.NONE);
         delete_icon = new Gtk.Image.from_icon_name
-        ("edit-delete-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+            ("edit-delete-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         mark_as_delete.child = this.delete_icon;
         mark_as_delete.set_tooltip_text ("Delete");
+		mark_as_delete.button_release_event.connect( (event) => {
+				Persistence persistence = new Persistence(Utils.db);
+				persistence.delete(task);
+				// TODO: Do not reload the Database
+				window.swap_to_main();
+				return false;
+			});
         menu.pack_end (mark_as_delete, false, true, 0);
 
         // Connect mouse-over events

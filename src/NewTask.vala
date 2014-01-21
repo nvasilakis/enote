@@ -155,6 +155,7 @@ namespace Enote{
 				persistence.update(t);
 				if (rview == null)
 					warning("rview==null && task!=null - what update is that?");
+				// TODO: Do not reload everything!
 				window.swap_to_main();
 			}
 			this.destroy();

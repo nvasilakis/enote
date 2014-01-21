@@ -62,6 +62,7 @@ namespace Enote {
                 q.set_int (":repeating", (t.repeating?1:0));
                 q.set_int (":important", (t.important?1:0));
                 q.set_int (":done", (t.done?1:0));
+				debug("Date: " + t.date.to_unix().to_string());
                 q.set_int (":date", (int) t.date.to_unix());
                 q.set_string (":more", t.more);
                 q.execute();
@@ -92,5 +93,18 @@ namespace Enote {
                 warning ("Could not update db, %s", e.message);
             }
         }
+
+        public void delete(Task t) {
+            var s = "DELETE FROM 'task' WHERE (id=:id);";
+            try {
+                var q = new SQLHeavy.Query (hdb, s);
+                q.set_int (":id", t.id);
+                q.execute();
+				debug("Deleted: " + t.id.to_string());
+            } catch (SQLHeavy.Error e) {
+                warning ("Could not detele from the db, %s", e.message);
+            }
+        }
+
     }
 }
