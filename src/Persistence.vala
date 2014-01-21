@@ -19,8 +19,8 @@ namespace Enote {
                              + " important INTEGER,"
                              + " done INTEGER,"
                              + " date INTEGER,"
-                             + " more TEXT);");
-//                             + " id INTEGER PRIMARY KEY AUTOINCREMENT);");
+                             + " more TEXT,"
+                             + " id INTEGER PRIMARY KEY AUTOINCREMENT);");
             } catch (SQLHeavy.Error e) {
                 warning ("Could not create db, %s", e.message);
             }
@@ -38,6 +38,7 @@ namespace Enote {
                     t.done = (qr.fetch_int(3) != 0); //SQLite: 0 == false
                     t.date = new DateTime.from_unix_local (qr.fetch_int(4));
                     t.more = qr.fetch_string(5);
+                    t.id = qr.fetch_int(6);
                     at.append_val(t);
                 }
             } catch (SQLHeavy.Error e) {
@@ -63,13 +64,31 @@ namespace Enote {
                 q.set_int (":date", (int) t.date.to_unix());
                 q.set_string (":more", t.more);
                 q.execute();
-                debug("Inserted id: " + hdb.last_insert_id.to_string());
+                t.id = (int) hdb.last_insert_id; // store task id, for UPDATE
+                debug("Inserted id: " + t.id.to_string());
             } catch (SQLHeavy.Error e) {
-                warning ("Could not create db, %s", e.message);
+                warning ("Could not insert in db, %s", e.message);
             }
         }
 
         public void update (Task t) {
+            var s = ("UPDATE 'task' SET title=:title, repeating=:repeating, " +
+                     "important=:important, done=done:, date=:date, " +
+                     "more=:more WHERE id=:id;");
+            try {
+                var q = new SQLHeavy.Query (hdb, s);
+                q.set_string (":title", t.title);
+                q.set_int (":repeating", (t.repeating?1:0));
+                q.set_int (":important", (t.important?1:0));
+                q.set_int (":done", (t.done?1:0));
+                q.set_int (":date", (int) t.date.to_unix());
+                q.set_int (":id", (int) t.id);
+                q.set_string (":more", t.more);
+                q.execute();
+                debug("Updated id: " + t.id.to_string());
+            } catch (SQLHeavy.Error e) {
+                warning ("Could not update db, %s", e.message);
+            }
             debug("update: Not Implemented");
         }
     }

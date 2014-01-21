@@ -22,9 +22,10 @@ namespace Enote {
     }
 
     public class Task {
-        public bool repeating;
-        public bool important;
-        public bool done;
+        public bool repeating {get; set;}
+        public bool important {get; set;}
+        public bool done {get; set;}
+        public int id {get;set;}
 
         public string title {get; set; default = Utils.INIT_TEXT;}
         private DateTime _date;
