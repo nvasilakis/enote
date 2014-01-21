@@ -100,6 +100,12 @@ public class RecordView : Gtk.EventBox {
         // plug-in task events
         task_event = new Gtk.EventBox ();
         task_event.add (title); //TODO, launch lightbox
+        task_event.button_release_event.connect((event) => {
+                debug ("Update task");
+                NewTaskView ntv = new NewTaskView(task, window);
+                ntv.show_all();
+                return false;
+            });
         task_event.enter_notify_event.connect ((event) => {
                 on_mouse_enter (this, event);
                 return false;

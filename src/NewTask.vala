@@ -13,7 +13,10 @@ namespace Enote{
             title = (t == null ? "Add a task!" : "Edit task");
             resizable = false;
             set_keep_above (true);
-            window_position = Gtk.WindowPosition.CENTER_ON_PARENT;
+            window_position = Gtk.WindowPosition.CENTER;
+            int x; int y;
+            window.get_position(out x, out y);
+            move(x, (y+100));
 			set_default_size(400,500);
 			set_size_request (100,200);
 
