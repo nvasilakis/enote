@@ -80,6 +80,7 @@ namespace Enote{
             Task t = new Task.from_parser(text);
             window.tlist.add(t);
             Persistence persistence = new Persistence(Utils.db);
+			debug("come here");
             persistence.insert(t);
             quick.text = "";
         }

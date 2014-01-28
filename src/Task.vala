@@ -165,9 +165,10 @@ namespace Enote {
             int at_pos = low_blurb.last_index_of(" at ");
             int in_pos = low_blurb.last_index_of(" in ");
             debug("at_pos: "+at_pos.to_string()+"\tin_pos:"+in_pos.to_string());
-            if (at_pos == in_pos)
+            if (at_pos == in_pos){
                 this.title = blurb;
-            else if (at_pos > in_pos) {
+				add_date(new DateTime.from_unix_local(0));
+				} else if (at_pos > in_pos) {
                 this.notifications = new Array<Ticket>();
                 this.percent = 0;
                 Epoch  dt = at_time(low_blurb.substring(at_pos+4));
