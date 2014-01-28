@@ -11,7 +11,7 @@ namespace Enote {
     public static Facade view;
 
     // Preferences parameters with default values
-      public static string db = "";
+    public static string db = "";
     public static bool intrusive_notifications = false;
     public static bool ask_delete_confirmation = false;
     public static bool show_thread_inverse   = false;
@@ -29,58 +29,58 @@ namespace Enote {
       { null } //list terminator
     };
 
-      // Check if a file exists
-      public static  bool file_exists(string fpath) {
-          var f = File.new_for_path(fpath);
-          var e = f.query_exists();
-          debug("exists? " + e.to_string());
-          return e;
-      }
+    // Check if a file exists
+    public static  bool file_exists(string fpath) {
+      var f = File.new_for_path(fpath);
+      var e = f.query_exists();
+      debug("exists? " + e.to_string());
+      return e;
+    }
 
-      // Check if all characters in a string array are digits
-      // This is only used with arrays of length two for time
-      // calculations
-      public static  bool are_digits(string digits) {
-          foreach (char c in digits.to_utf8()) {
-              if (!c.isdigit())
-                  return false;
-          }
-          return true;
+    // Check if all characters in a string array are digits
+    // This is only used with arrays of length two for time
+    // calculations
+    public static  bool are_digits(string digits) {
+      foreach (char c in digits.to_utf8()) {
+        if (!c.isdigit())
+          return false;
       }
+      return true;
+    }
 
-      // Check if suffix it is
-      public static int has_suffix(string hay, string needle) {
-          if (hay.has_suffix(needle)) {
-              var t = hay.replace(needle,"").strip();
-              if (are_digits(t))
-                  return int.parse(t);
-          }
-          return 0;
+    // Check if suffix it is
+    public static int has_suffix(string hay, string needle) {
+      if (hay.has_suffix(needle)) {
+        var t = hay.replace(needle,"").strip();
+        if (are_digits(t))
+          return int.parse(t);
       }
+      return 0;
+    }
 
-      // the integer analogue of OR-ing boolean values
-      // if there is any value > 0, it returns the first
-      // otherwise it returns 0.
-      public static int or_int (int nu, ...) {
-          int res = 0;
-          var varargs = va_list();
-          for (int i=0; i<nu; i++) {
-              int v = varargs.arg();
-              if (v>0) {
-                  res += v;
-                  break;
-              }
-          }
-          return res;
+    // the integer analogue of OR-ing boolean values
+    // if there is any value > 0, it returns the first
+    // otherwise it returns 0.
+    public static int or_int (int nu, ...) {
+      int res = 0;
+      var varargs = va_list();
+      for (int i=0; i<nu; i++) {
+        int v = varargs.arg();
+        if (v>0) {
+          res += v;
+          break;
+        }
       }
+      return res;
+    }
 
-      public static void parse_settings (Settings sts) {
-          // TODO optimize
-          var op1 = (Environment.get_home_dir()+ DATADIR_SUFFIX);
-          var op2 =(sts.get_string("db-dir") + DATADIR_SUFFIX);
-          db = (sts.get_string("db-dir") == "")? op1 : op2;
-          debug("db file:" + Utils.db);
-      }
+    public static void parse_settings (Settings sts) {
+      // TODO optimize
+      var op1 = (Environment.get_home_dir()+ DATADIR_SUFFIX);
+      var op2 =(sts.get_string("db-dir") + DATADIR_SUFFIX);
+      db = (sts.get_string("db-dir") == "")? op1 : op2;
+      debug("db file:" + Utils.db);
+    }
 
     // A sophisticated populate function that serves
     // -- Demo purposes
@@ -149,91 +149,91 @@ namespace Enote {
       window.view.tlview.append(t8);
     }
   }
-	public enum DB {
-		CREATE,
-		LOAD,
-		SAVE,
-		INSERT,
-		QUERY,
-		UPDATE,
-		DELETE
-	}
+  public enum DB {
+    CREATE,
+      LOAD,
+      SAVE,
+      INSERT,
+      QUERY,
+      UPDATE,
+      DELETE
+  }
 
-	public enum Facade {
-		WELCOME,
-		MAIN
-	}
+  public enum Facade {
+    WELCOME,
+      MAIN
+  }
 
-    public enum Clock{
-        PM,
-        AM,
-        NONE
+  public enum Clock{
+    PM,
+      AM,
+      NONE
+  }
+
+  /**
+   * Sort of functional wrapper for Datetime, used mostly for
+   * the parser (can result in "None").
+   * Might be able to leverage exceptions?
+   **/
+  public class Epoch {
+    bool valid;
+    DateTime date_time;
+
+
+    // Creates current epoch
+    public Epoch() {
+      date_time = new DateTime.now_local();
+      valid = true;
     }
 
-    /**
-     * Sort of functional wrapper for Datetime, used mostly for
-     * the parser (can result in "None").
-     * Might be able to leverage exceptions?
-     **/
-    public class Epoch {
-        bool valid;
-        DateTime date_time;
-
-
-        // Creates current epoch
-        public Epoch() {
-            date_time = new DateTime.now_local();
-            valid = true;
-        }
-
-        public Epoch.invalid() {
-            valid = false;
-        }
-
-        // next valid time,
-        // current implementation makes simple assumptions
-        public Epoch.next(int h, int m, Clock c) {
-            valid = true;
-            var now = new DateTime.now_local();
-            h = (c == Clock.PM && h !=12)? (h+12) : h;
-            // Now time should be between 0/24
-            if (is_valid_time (h, m)) {
-                date_time = new DateTime.local(now.get_year(),
-                                               now.get_month(),
-                                               now.get_day_of_month(),
-                                               h,
-                                               m,
-                                               0);
-            } else {
-                valid = false;
-            }
-        }
-
-        public Epoch.add_minutes (int m) {
-            valid = true;
-            date_time = new DateTime.now_local().add_minutes(m);
-        }
-
-        public Epoch.add_hours (int h) {
-            valid = true;
-            date_time = new DateTime.now_local().add_hours(h);
-        }
-
-        public Epoch.add_days (int d) {
-            valid = true;
-            date_time = new DateTime.now_local().add_days(d);
-        }
-
-        private bool is_valid_time(int h, int m) {
-            return ((h >= 0 && h < 24) && (m >= 0 && m < 60));
-        }
-
-        public bool is_valid() {
-            return valid;
-        }
-
-        public DateTime get_date() {
-            return date_time;
-        }
+    public Epoch.invalid() {
+      valid = false;
     }
+
+    // next valid time,
+    // current implementation makes simple assumptions
+    public Epoch.next(int h, int m, Clock c) {
+      valid = true;
+      var now = new DateTime.now_local();
+      h = (c == Clock.PM && h !=12)? (h+12) : h;
+      // Now time should be between 0/24
+      if (is_valid_time (h, m)) {
+        date_time = new DateTime.local(now.get_year(),
+            now.get_month(),
+            now.get_day_of_month(),
+            h,
+            m,
+            0);
+      } else {
+        valid = false;
+      }
+    }
+
+    public Epoch.add_minutes (int m) {
+      valid = true;
+      date_time = new DateTime.now_local().add_minutes(m);
+    }
+
+    public Epoch.add_hours (int h) {
+      valid = true;
+      date_time = new DateTime.now_local().add_hours(h);
+    }
+
+    public Epoch.add_days (int d) {
+      valid = true;
+      date_time = new DateTime.now_local().add_days(d);
+    }
+
+    private bool is_valid_time(int h, int m) {
+      return ((h >= 0 && h < 24) && (m >= 0 && m < 60));
+    }
+
+    public bool is_valid() {
+      return valid;
+    }
+
+    public DateTime get_date() {
+      return date_time;
+    }
+  }
 }

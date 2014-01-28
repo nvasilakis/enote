@@ -30,30 +30,27 @@ namespace Enote{
         stdout.printf ("error: %s\n", e.message);
         stdout.printf ("Run '%s --help' to see a full list of available command line options.\n", args[0]);
       }
-	  // Setup logging
+      // Setup logging
       Granite.Services.Logger.DisplayLevel =
         (Utils.DEBUG ?
          Granite.Services.LogLevel.DEBUG :
          Granite.Services.LogLevel.WARN);
 
-
-        // Setup GSettings
-        Utils.parse_settings(new Settings("org.pantheon.enote"));
-		// Create window
-		Window layout = new Window(this);
-		layout.add_menu(create_appmenu(new Gtk.Menu()));
-		if (Utils.file_exists(Utils.db)) { // proceed with data
-			Utils.view = Facade.MAIN;
-			layout.swap_to_main();
-		} else { // welcome screen
-			debug("db does not exist");
-			Utils.view = Facade.WELCOME;
-			layout.swap_to_welcome();
-		}
+      // Setup GSettings
+      Utils.parse_settings(new Settings("org.pantheon.enote"));
+      // Create window
+      Window layout = new Window(this);
+      layout.add_menu(create_appmenu(new Gtk.Menu()));
+      if (Utils.file_exists(Utils.db)) { // proceed with data
+        Utils.view = Facade.MAIN;
+        layout.swap_to_main();
+      } else { // welcome screen
+        debug("db does not exist");
+        Utils.view = Facade.WELCOME;
+        layout.swap_to_welcome();
+      }
       layout.show_all();
-
     }
-
 
     public static int main(string [] args) {
       Gtk.init(ref args);
