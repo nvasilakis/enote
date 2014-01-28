@@ -1,3 +1,11 @@
+/**
+ * Summary: Startup screen when database is not there.
+ *
+ * Copyright (c) 2013-2014 Nikos Vasilakis. All rights reserved.
+ *
+ * Use of this source code is governed by a GPL v3 license that can be
+ * found in LICENSE file or at http://nikos.vasilak.is/LICENSE
+ */
 namespace Enote{
   public class Welcome : Granite.Widgets.Welcome {
     Enote.Window window;

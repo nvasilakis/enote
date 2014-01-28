@@ -1,3 +1,12 @@
+/**
+ * Summary: Appearance of a single task slot ("record") in the main
+ * window of Enoté.
+ *
+ * Copyright (c) 2013-2014 Nikos Vasilakis. All rights reserved.
+ *
+ * Use of this source code is governed by a GPL v3 license that can be
+ * found in LICENSE file or at http://nikos.vasilak.is/LICENSE
+ */
 namespace Enote {
   /**
    * A RecordView widget for showing one Task/Enote to the user

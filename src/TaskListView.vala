@@ -1,3 +1,11 @@
+/**
+ * Summary: Appearance of the list of tasks in the main window.
+ *
+ * Copyright (c) 2013-2014 Nikos Vasilakis. All rights reserved.
+ *
+ * Use of this source code is governed by a GPL v3 license that can be
+ * found in LICENSE file or at http://nikos.vasilak.is/LICENSE
+ */
 namespace Enote{
   // TODO: make use of ListBox -- added in GTK+ 3.10
   // http://valadoc.org/#!api=gtk+-3.0/Gtk.ListBox

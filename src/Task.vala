@@ -1,3 +1,15 @@
+/**
+ * Summary: Task class is building block of the application back-end.
+ *
+ * Provides many different creation methods to facilitate both quick-add
+ * and new task windows, and takes care of notifications based on a
+ * revocation mechanism (to work with on-the-fly updates)
+ *
+ * Copyright (c) 2013-2014 Nikos Vasilakis. All rights reserved.
+ *
+ * Use of this source code is governed by a GPL v3 license that can be
+ * found in LICENSE file or at http://nikos.vasilak.is/LICENSE
+ */
 namespace Enote {
   /**
    * That's a revocation ticket, that helps avoid the following case:

@@ -1,3 +1,14 @@
+/**
+ * Summary: Custom list for the in-memory tasks
+ *
+ * Eventually will be able to order and pick based on attributes,
+ * without hitting the database.
+ *
+ * Copyright (c) 2013-2014 Nikos Vasilakis. All rights reserved.
+ *
+ * Use of this source code is governed by a GPL v3 license that can be
+ * found in LICENSE file or at http://nikos.vasilak.is/LICENSE
+ */
 namespace Enote {
 
   /**
