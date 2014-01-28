@@ -40,13 +40,13 @@ link_directories(${LIB_PATHS})
 #Then we compule the *.c files to turn them into a true executable.
 add_definitions(${CFLAGS})
 vala_precompile(VALA_C #${EXEC_NAME}
-    src/main.vala
-    src/View.vala
+    src/Enote.vala
+    src/TaskListView.vala
     src/Window.vala
     src/Welcome.vala
     src/TaskList.vala
     src/Utils.vala
-    src/NewTask.vala
+    src/NewTaskView.vala
     src/Task.vala
     src/RecordView.vala
     src/Persistence.vala
