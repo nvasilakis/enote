@@ -1,5 +1,35 @@
 <schemalist>
-  <schema id="org.pantheon.enote" path="/org/pantheon/enote/">
+  <schema path="/org/pantheon/enote/state" id="org.pantheon.enote.state">
+    <key name="window-state" type="s">
+      <default>"Normal"</default>
+      <summary>The saved state of the window</summary>
+      <description>
+        The saved state of the window (maximized, normal)
+      </description>
+    </key>
+    <key name="window-width" type="i">
+      <default>450</default>
+      <summary>Window Width</summary>
+      <description>Saves the window width for restoring it later.</description>
+    </key>
+    <key name="window-height" type="i">
+      <default>600</default>
+      <summary>Window Height</summary>
+      <description>Saves the window height for restoring it later.</description>
+    </key>
+    <key name="opening-x" type="i">
+      <default>-1</default>
+      <summary>X position of window</summary>
+      <description>Saves the window’s X position for restoring it later.</description>
+    </key>
+    <key name="opening-y" type="i">
+      <default>-1</default>
+      <summary>Y position of window</summary>
+      <description>Saves the window’s Y position for restoring it later.</description>
+    </key>
+  </schema>
+
+  <schema path="/org/pantheon/enote/preferences/" id="org.pantheon.enote.preferences">
     <key name="db-dir" type="s">
       <default>""</default>
       <summary>Database file directoy</summary>
@@ -8,12 +38,25 @@
         but can be configured to be anything (for instance, to synchronize via Dropbox)
       </description>
     </key>
-    <key name="window-state" type="s">
-      <default>"Normal"</default>
-      <summary>The saved state of the window</summary>
+    <key name="play-sound" type="b">
+      <default>false</default>
+      <summary>Play sound on notification</summary>
       <description>
-        The saved state of the window (maximized, normal)
+        Play a sound when a notification is shown
       </description>
     </key>
-  </schema>
+    <key name="show-inverse" type="b">
+      <default>false</default>
+      <summary>Show task thread inverted</summary>
+      <description>
+        Show the task thead inverted, starting from old and coming down to new tasks.
+      </description>
+    </key>
+    <key name="intrusive-notification" type="b">
+      <default>false</default>
+      <summary>Show intrusive notification</summary>
+      <description>
+        Show a top level window that needs to be clicked (i.e., clear or snooze) instead of a libnotify event
+      </description>
+    </key>
 </schemalist>
