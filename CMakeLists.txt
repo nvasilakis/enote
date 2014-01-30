@@ -50,6 +50,7 @@ vala_precompile(VALA_C #${EXEC_NAME}
     src/Task.vala
     src/RecordView.vala
     src/Persistence.vala
+    src/Preferences.vala
 PACKAGES
     gtk+-3.0
     granite
