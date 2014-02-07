@@ -1,5 +1,5 @@
 <schemalist>
-  <schema path="/org/pantheon/enote/state" id="org.pantheon.enote.state">
+  <schema path="/org/pantheon/enote/state/" id="org.pantheon.enote.state">
     <key name="window-state" type="s">
       <default>"Normal"</default>
       <summary>The saved state of the window</summary>
@@ -59,4 +59,5 @@
         Show a top level window that needs to be clicked (i.e., clear or snooze) instead of a libnotify event
       </description>
     </key>
+  </schema>
 </schemalist>
