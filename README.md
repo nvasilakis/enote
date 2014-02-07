@@ -48,3 +48,7 @@ etc.
 * play sound on notification
 * daemonize
 * create a better icon!
+
+Other, comparable products:
+* [taskpaper] (http://www.hogbaysoftware.com/products/taskpaper)
+* [todoist] (http://todoist.com/mac)
