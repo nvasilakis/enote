@@ -52,11 +52,18 @@
         Show the task thead inverted, starting from old and coming down to new tasks.
       </description>
     </key>
-    <key name="intrusive-notification" type="b">
+    <key name="intrusive-notifications" type="b">
       <default>false</default>
       <summary>Show intrusive notification</summary>
       <description>
         Show a top level window that needs to be clicked (i.e., clear or snooze) instead of a libnotify event
+      </description>
+    </key>
+    <key name="ask-delete" type="b">
+      <default>false</default>
+      <summary>Ask for confirmation before deleting an event</summary>
+      <description>
+        Show a dialog for every task deletion, that asks user to confirm such a deletion.
       </description>
     </key>
   </schema>

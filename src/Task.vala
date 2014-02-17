@@ -176,10 +176,14 @@ namespace Enote {
       var low_blurb = blurb.down();
       int at_pos = low_blurb.last_index_of(" at ");
       int in_pos = low_blurb.last_index_of(" in ");
-      debug("at_pos: "+at_pos.to_string()+"\tin_pos:"+in_pos.to_string());
+      int now_pos = low_blurb.last_index_of(" now");
+      debug("at_pos: "+at_pos.to_string()+"\tin_pos:"+in_pos.to_string()+"\tnow_pos:"+now_pos.to_string());
       if (at_pos == in_pos){
         this.title = blurb;
-        add_date(new DateTime.from_unix_local(0));
+        if (now_pos > 0)
+          add_date(new DateTime.now_local().add_seconds(1));
+        else
+          add_date(new DateTime.from_unix_local(0));
       } else if (at_pos > in_pos) {
         this.notifications = new Array<Ticket>();
         this.percent = 0;
@@ -233,17 +237,42 @@ namespace Enote {
       if (!ticket.is_valid())
         return false; // signify non-repetitive event
       debug("attempting notification");
-      if (!Notify.init("Enote"))
-        critical("Failed to initialize libnotify.");
-      Notify.Notification notification;
-      notification = new Notify.Notification(
-          "Reminder!",
-          this.title,
-          Utils.ICON);
-      try {
-        notification.show ();
-      } catch (GLib.Error error) {
-        warning ("Failed to show notification: %s", error.message);
+      if (Utils.intrusive) {
+        Gtk.MessageDialog snooze = new Gtk.MessageDialog (null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "");
+        snooze.text = this.title; // TODO: Add some markup, and enote icon?
+        snooze.add_button ("Snooze", Gtk.ResponseType.CANCEL);
+        snooze.add_button ("Done", Gtk.ResponseType.OK);
+        snooze.response.connect ((response_id) => {
+          switch (response_id) {
+            case Gtk.ResponseType.OK:
+              this.done = true;
+              debug ("done\n");
+              break;
+            case Gtk.ResponseType.CANCEL:
+              DateTime dt = new DateTime.now_local().add_minutes(5);
+              this.add_date(dt);
+              debug ("Snooze for 5 minutes\n");
+              break;
+            case Gtk.ResponseType.DELETE_EVENT:
+              stdout.puts ("Delete\n");
+              break;
+          }
+          snooze.destroy();
+        });
+        snooze.show ();  
+      } else {
+        if (!Notify.init("Enote"))
+          critical("Failed to initialize libnotify.");
+        Notify.Notification notification;
+        notification = new Notify.Notification(
+            "Reminder!",
+            this.title,
+            Utils.ICON);
+        try {
+          notification.show ();
+        } catch (GLib.Error error) {
+          warning ("Failed to show notification: %s", error.message);
+        }
       }
       return false;  // signify non-repetitive event
     }

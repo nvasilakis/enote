@@ -21,9 +21,10 @@ namespace Enote {
 
     // Preferences parameters with default values
     public static string db = "";
-    public static bool intrusive_notifications = false;
-    public static bool ask_delete_confirmation = false;
-    public static bool show_thread_inverse   = false;
+    public static bool intrusive = false;
+    public static bool ask_delete = false;
+    public static bool show_inverse = false;
+    public static bool play_sound = false;
     // 3 next could be a non-exclusive radio selection a la bootstrap
     public static bool add_ntf_early_5_mins  = true;
     public static bool add_ntf_early_15_mins = false;
@@ -89,6 +90,10 @@ namespace Enote {
       var op2 =(sts.get_string("db-dir") + DATADIR_SUFFIX);
       db = (sts.get_string("db-dir") == "")? op1 : op2;
       debug("db file:" + Utils.db);
+      intrusive = sts.get_boolean("intrusive-notifications");
+      ask_delete = sts.get_boolean("ask-delete");
+      show_inverse = sts.get_boolean("show-inverse");
+      play_sound = sts.get_boolean("play-sound");
     }
 
     // A sophisticated populate function that serves

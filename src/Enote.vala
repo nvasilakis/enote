@@ -49,7 +49,7 @@ namespace Enote{
          Granite.Services.LogLevel.WARN);
 
       // Setup GSettings
-      Utils.parse_settings(new Settings("org.pantheon.enote"));
+      Utils.parse_settings(new Settings("org.pantheon.enote.preferences"));
       // Create window
       Window layout = new Window(this);
       layout.add_menu(create_appmenu(new Gtk.Menu()));
