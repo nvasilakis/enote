@@ -178,15 +178,16 @@ namespace Enote {
       int in_pos = low_blurb.last_index_of(" in ");
       int now_pos = low_blurb.last_index_of(" now");
       debug("at_pos: "+at_pos.to_string()+"\tin_pos:"+in_pos.to_string()+"\tnow_pos:"+now_pos.to_string());
-      if (at_pos == in_pos){
+      this.notifications = new Array<Ticket>();
+      this.percent = 0;
+      if (at_pos == in_pos){ // Parse time and title
         this.title = blurb;
-        if (now_pos > 0)
+        if (now_pos > 0) {
           add_date(new DateTime.now_local().add_seconds(1));
-        else
+        } else {
           add_date(new DateTime.from_unix_local(0));
+        }
       } else if (at_pos > in_pos) {
-        this.notifications = new Array<Ticket>();
-        this.percent = 0;
         Epoch  dt = at_time(low_blurb.substring(at_pos+4));
         if (dt.is_valid()) {
           this.title = blurb.substring(0,at_pos);
@@ -196,8 +197,6 @@ namespace Enote {
           this.title = blurb;
         }
       } else if (at_pos < in_pos) {
-        this.notifications = new Array<Ticket>();
-        this.percent = 0;
         Epoch dt = is_offset(low_blurb.substring(in_pos+4));
         if (dt.is_valid()) {
           this.title = blurb.substring(0,in_pos);
@@ -239,9 +238,12 @@ namespace Enote {
       debug("attempting notification");
       if (Utils.intrusive) {
         Gtk.MessageDialog snooze = new Gtk.MessageDialog (null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "");
-        snooze.text = this.title; // TODO: Add some markup, and enote icon?
+        // TODO How to add enote' icon?
+        snooze.set_markup ("<b>Reminder!</b> \n" + this.title);
+        var img = new Gtk.Image.from_icon_name ("enote", Gtk.IconSize.DIALOG);
+        snooze.set_image (img);
         snooze.add_button ("Snooze", Gtk.ResponseType.CANCEL);
-        snooze.add_button ("Done", Gtk.ResponseType.OK);
+        snooze.add_button ("Done", Gtk.ResponseType.OK); // Should OK be first?
         snooze.response.connect ((response_id) => {
           switch (response_id) {
             case Gtk.ResponseType.OK:
@@ -259,7 +261,7 @@ namespace Enote {
           }
           snooze.destroy();
         });
-        snooze.show ();  
+        snooze.show_all ();  
       } else {
         if (!Notify.init("Enote"))
           critical("Failed to initialize libnotify.");
