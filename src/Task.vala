@@ -40,14 +40,16 @@ namespace Enote {
     public int id {get;set;}
 
     public string title {get; set; default = Utils.INIT_TEXT;}
-    private DateTime _date;
     public DateTime date {
       get {return _date;}
       set {add_date(value);}
     }
     public string more {get; set;}
     public int percent {get; set;}
+
+    private DateTime _date;
     private Array<Ticket> notifications;
+    private static Canberra.Context? sound_context = null;
 
     public Task(string title){
       this.title = title;
@@ -181,10 +183,11 @@ namespace Enote {
       this.notifications = new Array<Ticket>();
       this.percent = 0;
       if (at_pos == in_pos){ // Parse time and title
-        this.title = blurb;
         if (now_pos > 0) {
           add_date(new DateTime.now_local().add_seconds(1));
+          this.title = blurb.replace(" now", "");
         } else {
+          this.title = blurb;
           add_date(new DateTime.from_unix_local(0));
         }
       } else if (at_pos > in_pos) {
@@ -275,6 +278,11 @@ namespace Enote {
         } catch (GLib.Error error) {
           warning ("Failed to show notification: %s", error.message);
         }
+      }
+      if (Utils.play_sound) {
+        if (sound_context == null)
+          Canberra.Context.create(out sound_context);
+        sound_context.play (0, Canberra.PROP_EVENT_ID, "message-sent-email");
       }
       return false;  // signify non-repetitive event
     }
