@@ -41,8 +41,9 @@ namespace Enote{
     }
 
     public void swap_to_welcome() {
-      Utils.view = Facade.WELCOME;
+      Utils.view = Facade.MAIN;
       Enote.Welcome welcome = new Enote.Welcome(this);
+      debug("Should be showing welcome..");
       clear_container();
       container.pack_start(welcome);
       welcome.show_all();
@@ -50,18 +51,24 @@ namespace Enote{
 
     public void swap_to_main(){
       view = new Enote.MainView (this);
-      tlist = new TaskList (this);
+      tlist = new TaskList (this); // TODO: Needed?
 //      Utils.RunTests(this);
       if (Utils.view == Facade.WELCOME)
           Utils.view = Facade.MAIN;
       else {
           var persistence = new Persistence(Utils.db);
-          view.attach_all(persistence.load_db());
+          var tasks = persistence.load_db();
+          debug("tasks length: " + tasks.length.to_string());
+          if (tasks.length < 1) {
+            swap_to_welcome();
+          } else {
+            view.attach_all(tasks);
+            clear_container();
+            container.pack_end(view);
+            view.quick.grab_focus();
+            view.show_all();
+          }
       }
-      clear_container();
-      container.pack_end(view);
-      view.quick.grab_focus();
-      view.show_all();
     }
 
     public void clear_container(){

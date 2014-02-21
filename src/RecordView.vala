@@ -194,6 +194,8 @@ namespace Enote {
           Persistence persistence = new Persistence(Utils.db);
           persistence.delete(task);
           // TODO: Do not reload the Database
+          Utils.view = Facade.MAIN;
+          debug("DELETED: SWAPPING TO MAIN with: " + Utils.view.to_string());
           window.swap_to_main();
           return false;
           });

@@ -16,8 +16,9 @@ namespace Enote {
     public Persistence(string db) {
       try {
         hdb = new SQLHeavy.Database (db); //with default RWC
+        debug("Database created: " + db);
       } catch (SQLHeavy.Error e) {
-        warning ("Could not connect to db, %s", e.message);
+        warning ("Could not create db, %s", e.message);
       }
     }
 
@@ -31,7 +32,7 @@ namespace Enote {
             + " more TEXT,"
             + " id INTEGER PRIMARY KEY AUTOINCREMENT);");
       } catch (SQLHeavy.Error e) {
-        warning ("Could not create db, %s", e.message);
+        warning ("Could not create table, %s", e.message);
       }
     }
 

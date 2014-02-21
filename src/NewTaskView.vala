@@ -159,6 +159,7 @@ namespace Enote{
       if (!update) { // new
         window.view.attach_one(t);
         persistence.insert(t);
+        window.swap_to_main();
       } else {
         persistence.update(t);
         if (rview == null)
