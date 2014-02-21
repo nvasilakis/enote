@@ -52,7 +52,7 @@ namespace Enote{
       Utils.parse_settings(new Settings("org.pantheon.enote.preferences"));
       // Create window
       Window layout = new Window(this);
-      layout.add_menu(create_appmenu(new Gtk.Menu()));
+      layout.add_menu();
       if (Utils.file_exists(Utils.db)) { // proceed with data
         Utils.view = Facade.MAIN;
         layout.swap_to_main();

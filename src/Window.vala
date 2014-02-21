@@ -5,8 +5,17 @@ namespace Enote{
     public Enote.MainView view {get; set;}
     public Enote.TaskList tlist {get; set;}
     Granite.Widgets.LightWindow lw;
+    // Menu items 
+    private Gtk.Menu settings_menu;
+    private Gtk.MenuItem sync_item;
+    private Gtk.MenuItem import_item;
+    private Gtk.CheckMenuItem help_item;
+    private Gtk.ImageMenuItem preferences_item;
+    private Granite.Application application;
+
 
     public Window(Granite.Application application) {
+      this.application = application;
       title = "Enoté";
       set_default_size(400,500);
       window_position = Gtk.WindowPosition.CENTER;
@@ -14,16 +23,34 @@ namespace Enote{
       icon_name = Utils.ICON;
     }
 
-    public void add_menu(Granite.Widgets.AppMenu am){
-      // build header
+    public void add_menu(){
+      // First, create settings
+      settings_menu = new Gtk.Menu ();
+      sync_item = new Gtk.MenuItem.with_label ("Sync Now");
+      sync_item.activate.connect(on_sync);
+      import_item = new Gtk.MenuItem.with_label ("Export…");
+      import_item.activate.connect(on_import);
+      help_item = new Gtk.CheckMenuItem.with_label ("Help");
+      help_item.activate.connect(on_help);
+      preferences_item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
+      preferences_item.set_label ("Preferences");
+      preferences_item.activate.connect(on_preferences);
+
+      settings_menu.append (sync_item);
+      settings_menu.append (import_item);
+      settings_menu.append (new Gtk.SeparatorMenuItem ()); 
+      settings_menu.append (help_item);
+      settings_menu.append (preferences_item);
+
       container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
       toolbar = new Gtk.Toolbar();
       var img = new Gtk.Image.from_icon_name ("mail-message-new",
-          Gtk.IconSize.SMALL_TOOLBAR);
+                                              Gtk.IconSize.SMALL_TOOLBAR);
       var btn_create = new Gtk.ToolButton (img, "Create");
       btn_create.clicked.connect (create_new_task_window);
       toolbar.insert (btn_create,0);
-      var btn_gear = am;
+      // Attach menu gear
+      var btn_gear = this.application.create_appmenu(settings_menu);
       btn_gear.set_expand(true);
 
       btn_gear.set_halign(Gtk.Align.END);
@@ -77,6 +104,22 @@ namespace Enote{
           continue;
         container.remove(child);
       }
+    }
+
+    private void on_sync() {
+      debug("sync");
+    }
+
+    private void on_import() {
+      debug("import");
+    }
+
+    private void on_help() {
+      debug("help");
+    }
+
+    private void on_preferences() {
+      debug("preferences");
     }
   }
 }
