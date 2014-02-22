@@ -10,16 +10,22 @@ namespace Enote{
     private Gtk.MenuItem sync_item;
     private Gtk.MenuItem import_item;
     private Gtk.CheckMenuItem help_item;
+    private Gtk.CheckMenuItem quit_item;
     private Gtk.ImageMenuItem preferences_item;
     private Granite.Application application;
-
+    // Coordinates
+    private int opening_x;
+    private int opening_y;
+    private int window_width;
+    private int window_height;
 
     public Window(Granite.Application application) {
       this.application = application;
+      this.delete_event.connect (on_delete);
       title = "Enoté";
       set_default_size(400,500);
-      window_position = Gtk.WindowPosition.CENTER;
-      destroy.connect(Gtk.main_quit);
+      restore_window();
+      destroy.connect(on_close);
       icon_name = Utils.ICON;
     }
 
@@ -38,9 +44,9 @@ namespace Enote{
 
       settings_menu.append (sync_item);
       settings_menu.append (import_item);
+      settings_menu.append (preferences_item);
       settings_menu.append (new Gtk.SeparatorMenuItem ()); 
       settings_menu.append (help_item);
-      settings_menu.append (preferences_item);
 
       container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
       toolbar = new Gtk.Toolbar();
@@ -51,6 +57,9 @@ namespace Enote{
       toolbar.insert (btn_create,0);
       // Attach menu gear
       var btn_gear = this.application.create_appmenu(settings_menu);
+      quit_item = new Gtk.CheckMenuItem.with_label ("Quit");
+      settings_menu.append (new Gtk.SeparatorMenuItem ()); 
+      settings_menu.append (quit_item);
       btn_gear.set_expand(true);
 
       btn_gear.set_halign(Gtk.Align.END);
@@ -98,7 +107,7 @@ namespace Enote{
       }
     }
 
-    public void clear_container(){
+    public void clear_container (){
       foreach(var child in container.get_children()){
         if (child == toolbar)
           continue;
@@ -106,24 +115,64 @@ namespace Enote{
       }
     }
 
-    private void on_sync() {
+    private void on_sync () {
       debug("sync");
     }
 
-    private void on_import() {
+    private void on_import () {
       debug("import");
     }
 
-    private void on_help() {
+    private void on_help () {
       debug("help");
     }
 
-    private void on_preferences() {
+    private void on_preferences () {
       debug("preferences");
       PreferencesWindow preferences = new PreferencesWindow(this);
       preferences.show_all();
       preferences.run();
       preferences.hide();
     }
+
+    private void on_close () {
+    }
+
+    private bool on_delete () {
+      debug("Saving Window");
+      save_window ();
+      if (!Utils.preferences.hide_on_close)
+        Gtk.main_quit();
+      else 
+        base.hide_on_delete ();
+      return true;
+    }
+
+    public void save_window () {
+      this.get_position (out opening_x, out opening_y);
+      this.get_size (out window_width, out window_height);
+      debug(opening_x.to_string());
+      debug(opening_y.to_string());
+      debug(window_width.to_string());
+      debug(window_height.to_string());
+      Utils.saved_state.opening_x = this.opening_x;
+      Utils.saved_state.opening_y = this.opening_y;
+      Utils.saved_state.window_width = this.window_width;
+      Utils.saved_state.window_height = this.window_height;
+    }
+
+    private void restore_window () {
+      this.opening_x = Utils.saved_state.opening_x;
+      this.opening_y = Utils.saved_state.opening_y;
+      this.window_width = Utils.saved_state.window_width;
+      this.window_height = Utils.saved_state.window_height;
+      if (this.opening_x > 0 && this.opening_y > 0 && this.window_width > 0 && this.window_height > 0) {
+        this.move (this.opening_x, this.opening_y);
+        this.set_default_size (this.window_width, this.window_height);
+      } else {
+        window_position = Gtk.WindowPosition.CENTER;
+      }
+    }
+
   }
 }
