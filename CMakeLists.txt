@@ -50,7 +50,7 @@ vala_precompile(VALA_C #${EXEC_NAME}
     src/Task.vala
     src/RecordView.vala
     src/Persistence.vala
-    src/Preferences.vala
+    src/Settings.vala
     src/PreferencesWindow.vala
     src/NoteBookPage.vala
 PACKAGES

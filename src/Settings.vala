@@ -1,4 +1,4 @@
-namespace enote{
+namespace Enote{
   public class SavedState : Granite.Services.Settings {
 
     public int window_width { get; set; }
@@ -7,7 +7,7 @@ namespace enote{
     public int opening_y { get; set; }
     public int notification_x { get; set; }
     public int notification_y { get; set; }
-    public bool window_state { get; set; }
+    public string window_state { get; set; }
 
     public SavedState () {
       base ("org.pantheon.enote.saved-state");
@@ -27,10 +27,10 @@ namespace enote{
     public string user_name { get; set; }
     public string session_key { get; set; }
 
-    public Main ()  {
-      base ("org.pantheon.enote.settings");
-      if (music_folder == "") {
-        music_folder = GLib.Environment.get_user_special_dir (GLib.UserDirectory.MUSIC);
+    public Preferences ()  {
+      base ("org.pantheon.enote.preferences");
+      if (db_dir == "") {
+        db_dir = (Environment.get_home_dir()+ Utils.DATA_SUFFIX);
       }
     }
 

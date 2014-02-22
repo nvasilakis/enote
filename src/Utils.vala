@@ -14,23 +14,18 @@ namespace Enote {
     public const string INIT_TEXT = "Breakfast at Milliway's at 7am";
     public const string TOOLTIP_TEXT = "Add Task";
     public const string ICON = "enote";
-    public const string DATADIR_SUFFIX = "/.enote/n.db";
+    public const string DATA_SUFFIX = "/.enote/n.db";
     //boot params
     public static bool DEBUG = false;
     public static Facade view;
 
     // Preferences parameters with default values
-    public static string db = "";
-    public static bool intrusive = false;
-    public static bool ask_delete = false;
-    public static bool show_inverse = false;
-    public static bool play_sound = false;
+    public static SavedState saved_state;
+    public static Preferences preferences;
     // 3 next could be a non-exclusive radio selection a la bootstrap
     public static bool add_ntf_early_5_mins  = true;
     public static bool add_ntf_early_15_mins = false;
     public static bool add_ntf_early_1_hour  = false;
-    public static bool register_ntf_indication = false;
-    public static bool play_sound_on_ntfctn  = false;
     public static int days_to_rm_checked_recs = 7;
 
     public static const OptionEntry[] args = {
@@ -84,6 +79,7 @@ namespace Enote {
       return res;
     }
 
+    /*
     public static void parse_settings (Settings sts) {
       // TODO optimize
       var op1 = (Environment.get_home_dir()+ DATADIR_SUFFIX);
@@ -95,6 +91,7 @@ namespace Enote {
       show_inverse = sts.get_boolean("show-inverse");
       play_sound = sts.get_boolean("play-sound");
     }
+    */
 
     // A sophisticated populate function that serves
     // -- Demo purposes

@@ -7,13 +7,13 @@ namespace Enote {
     private Gee.Map<int, unowned NoteBookPage> sections = new Gee.HashMap<int, unowned NoteBookPage> ();
     private Granite.Widgets.StaticNotebook main_static_notebook;
     public Gtk.FileChooserButton directory_chooser;
-    private Gtk.Switch organize_folders_switch;
-    private Gtk.Switch write_file_metadata_switch;
-    private Gtk.Switch copy_imported_music_switch;
-    private Gtk.Switch hide_on_close_switch;
+    private Gtk.Switch gsync;
+    private Gtk.Switch ask_delete;
+    private Gtk.Switch early_notifications;
+    private Gtk.Switch play_sound;
+    private Gtk.Switch intrusive_notifications;
     public NoteBookPage general;
     public NoteBookPage sync;
-    private Gtk.Switch show_notifications_switch;
 
     public PreferencesWindow (Gtk.Window window) {
       build_ui(window);
@@ -23,12 +23,11 @@ namespace Enote {
       directory_chooser.hexpand = true;
 
       directory_chooser.set_current_folder ("~/Documents/");
-      //library_filechooser.file_set.connect (() => {
-      //  lw.setMusicFolder(library_filechooser.get_current_folder ());
-      //});
-
-      //directory_chooser.set_local_only (true);
-      //var general_section = new GeneralPage (directory_chooser);
+      directory_chooser.set_local_only (true);
+      directory_chooser.selection_changed.connect (() => {
+        Utils.preferences.db_dir = directory_chooser.get_current_folder() + Utils.DATA_SUFFIX;
+        debug("Setting directory to: " + directory_chooser.get_current_folder() + Utils.DATA_SUFFIX);
+      });
 
       general = new NoteBookPage ("General");
 
@@ -45,28 +44,28 @@ namespace Enote {
       label = new Gtk.Label ("Notes:");
       general.add_section (label, ref row);
 
-      organize_folders_switch = new Gtk.Switch ();
-      //main_settings.schema.bind("update-folder-hierarchy", organize_folders_switch, "active", SettingsBindFlags.DEFAULT);
-      general.add_option (new Gtk.Label ("Ask for confirmation before deleting: "), organize_folders_switch, ref row);
+      ask_delete = new Gtk.Switch ();
+      Utils.preferences.schema.bind("ask-delete", ask_delete, "active", SettingsBindFlags.DEFAULT);
+      general.add_option (new Gtk.Label ("Ask for confirmation before deleting: "), ask_delete, ref row);
 
       //write_file_metadata_switch = new Gtk.Switch ();
       //main_settings.schema.bind("write-metadata-to-file", write_file_metadata_switch, "active", SettingsBindFlags.DEFAULT);
       //general.add_option (new Gtk.Label ("Inverse task order:"), write_file_metadata_switch, ref row);
 
-      copy_imported_music_switch = new Gtk.Switch ();
-      //main_settings.schema.bind("copy-imported-music", copy_imported_music_switch, "active", SettingsBindFlags.DEFAULT);
-      general.add_option (new Gtk.Label ("Show notifications 5' earlier:"), copy_imported_music_switch, ref row);
+      early_notifications = new Gtk.Switch ();
+      Utils.preferences.schema.bind("early-notifications", early_notifications, "active", SettingsBindFlags.DEFAULT);
+      general.add_option (new Gtk.Label ("Show notifications 5' earlier:"), early_notifications, ref row);
 
       label = new Gtk.Label ("Desktop Integration:");
       general.add_section (label, ref row);
 
-      show_notifications_switch = new Gtk.Switch ();
-      //main_settings.schema.bind("show-notifications", show_notifications_switch, "active", SettingsBindFlags.DEFAULT);
-      general.add_option (new Gtk.Label ("Show intrusive notifications:"), show_notifications_switch, ref row);
+      intrusive_notifications = new Gtk.Switch ();
+      Utils.preferences.schema.bind("intrusive-notifications", intrusive_notifications, "active", SettingsBindFlags.DEFAULT);
+      general.add_option (new Gtk.Label ("Show intrusive notifications:"), intrusive_notifications, ref row);
 
-      hide_on_close_switch = new Gtk.Switch ();
-      //main_settings.schema.bind("close-while-playing", hide_on_close_switch, "active", SettingsBindFlags.INVERT_BOOLEAN);
-      general.add_option (new Gtk.Label ("Play sounds on notification"), hide_on_close_switch, ref row);
+      play_sound = new Gtk.Switch ();
+      Utils.preferences.schema.bind("play-sound", play_sound, "active", SettingsBindFlags.DEFAULT);
+      general.add_option (new Gtk.Label ("Play sounds on notification"), play_sound, ref row);
 
 
       sync = new NoteBookPage ("Synchronization");
@@ -74,17 +73,9 @@ namespace Enote {
       label = new Gtk.Label ("Google Tasks Account:");
       sync.add_section (label, ref row);
 
-      organize_folders_switch = new Gtk.Switch ();
-      //main_settings.schema.bind("update-folder-hierarchy", organize_folders_switch, "active", SettingsBindFlags.DEFAULT);
-      sync.add_option (new Gtk.Label ("Synchronize with google tasks"), organize_folders_switch, ref row);
-
-      //write_file_metadata_switch = new Gtk.Switch ();
-      ////main_settings.schema.bind("write-metadata-to-file", write_file_metadata_switch, "active", SettingsBindFlags.DEFAULT);
-      //sync.add_option (new Gtk.Label ("Write metadata to file:"), write_file_metadata_switch, ref row);
-
-      //copy_imported_music_switch = new Gtk.Switch ();
-      ////main_settings.schema.bind("copy-imported-music", copy_imported_music_switch, "active", SettingsBindFlags.DEFAULT);
-      //sync.add_option (new Gtk.Label ("Copy imported files to Library:"), copy_imported_music_switch, ref row);
+      gsync = new Gtk.Switch ();
+      Utils.preferences.schema.bind("gsync", gsync, "active", SettingsBindFlags.DEFAULT);
+      sync.add_option (new Gtk.Label ("Synchronize with google tasks"), gsync, ref row);
 
       add_page(general);
       add_page (sync);

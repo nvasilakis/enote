@@ -239,7 +239,7 @@ namespace Enote {
       if (!ticket.is_valid())
         return false; // signify non-repetitive event
       debug("attempting notification");
-      if (Utils.intrusive) {
+      if (Utils.preferences.intrusive_notifications) {
         Gtk.MessageDialog snooze = new Gtk.MessageDialog (null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "");
         // TODO How to add enote' icon?
         snooze.set_markup ("<b>Reminder!</b> \n" + this.title);
@@ -279,7 +279,7 @@ namespace Enote {
           warning ("Failed to show notification: %s", error.message);
         }
       }
-      if (Utils.play_sound) {
+      if (Utils.preferences.play_sound) {
         if (sound_context == null)
           Canberra.Context.create(out sound_context);
         sound_context.play (0, Canberra.PROP_EVENT_ID, "message-sent-email");

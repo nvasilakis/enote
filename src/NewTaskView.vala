@@ -150,7 +150,7 @@ namespace Enote{
         t.date = new DateTime.from_unix_local (0);
       }
       t.more = notes.buffer.text;
-      var persistence = new Persistence(Utils.db);
+      var persistence = new Persistence(Utils.preferences.db_dir);
       if (Utils.view == Facade.WELCOME) {
         persistence.create_db();
         debug("database created");

@@ -83,7 +83,7 @@ namespace Enote{
       if (Utils.view == Facade.WELCOME)
           Utils.view = Facade.MAIN;
       else {
-          var persistence = new Persistence(Utils.db);
+          var persistence = new Persistence(Utils.preferences.db_dir);
           var tasks = persistence.load_db();
           debug("tasks length: " + tasks.length.to_string());
           if (tasks.length < 1) {

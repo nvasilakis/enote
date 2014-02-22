@@ -175,7 +175,7 @@ namespace Enote {
       mark_as_done.set_tooltip_text ("Mark as done");
       mark_as_done.button_release_event.connect( (event) => {
           task.done = true;
-          Persistence persistence = new Persistence(Utils.db);
+          Persistence persistence = new Persistence(Utils.preferences.db_dir);
           persistence.update(task);
           window.swap_to_main();
           return false;
@@ -191,7 +191,7 @@ namespace Enote {
       mark_as_delete.child = this.delete_icon;
       mark_as_delete.set_tooltip_text ("Delete");
       mark_as_delete.button_release_event.connect( (event) => {
-          Persistence persistence = new Persistence(Utils.db);
+          Persistence persistence = new Persistence(Utils.preferences.db_dir);
           persistence.delete(task);
           // TODO: Do not reload the Database
           Utils.view = Facade.MAIN;

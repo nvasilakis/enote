@@ -55,9 +55,9 @@
         Show a dialog for every task deletion, that asks user to confirm such a deletion.
       </description>
     </key>
-    <key name="early-notifications" type="i">
-      <default>0</default>
-      <summary>How much earlier to show notifications</summary>
+    <key name="early-notifications" type="b">
+      <default>false</default>
+      <summary>Show notifications 5' earlier </summary>
       <description>
         Allow some slack for the user by showing a notification earlier than the actual event.
       </description>

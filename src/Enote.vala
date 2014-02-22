@@ -49,11 +49,13 @@ namespace Enote{
          Granite.Services.LogLevel.WARN);
 
       // Setup GSettings
-      Utils.parse_settings(new Settings("org.pantheon.enote.preferences"));
+      Utils.saved_state = new SavedState();
+      Utils.preferences = new Preferences();
       // Create window
       Window layout = new Window(this);
       layout.add_menu();
-      if (Utils.file_exists(Utils.db)) { // proceed with data
+      debug((Utils.preferences.db_dir.to_string()));
+      if (Utils.file_exists(Utils.preferences.db_dir)) { // proceed with data
         Utils.view = Facade.MAIN;
         layout.swap_to_main();
       } else { // welcome screen

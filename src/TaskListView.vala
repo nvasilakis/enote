@@ -87,7 +87,7 @@ namespace Enote{
     public void insert(string text) {
       Task t = new Task.from_parser(text);
       window.tlist.add(t);
-      Persistence persistence = new Persistence(Utils.db);
+      Persistence persistence = new Persistence(Utils.preferences.db_dir);
       debug("come here");
       persistence.insert(t);
       quick.text = "";
