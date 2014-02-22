@@ -1,5 +1,5 @@
 <schemalist>
-  <schema path="/org/pantheon/enote/state/" id="org.pantheon.enote.state">
+  <schema path="/org/pantheon/enote/saved-state/" id="org.pantheon.enote.saved-state">
     <key name="window-state" type="s">
       <default>"Normal"</default>
       <summary>The saved state of the window</summary>
@@ -27,6 +27,16 @@
       <summary>Y position of window</summary>
       <description>Saves the window’s Y position for restoring it later.</description>
     </key>
+    <key name="notification-x" type="i">
+      <default>-1</default>
+      <summary>X position of window</summary>
+      <description>Saves the window’s X position for restoring it later.</description>
+    </key>
+    <key name="notification-y" type="i">
+      <default>-1</default>
+      <summary>Y position of window</summary>
+      <description>Saves the window’s Y position for restoring it later.</description>
+    </key>
   </schema>
 
   <schema path="/org/pantheon/enote/preferences/" id="org.pantheon.enote.preferences">
@@ -38,11 +48,32 @@
         but can be configured to be anything (for instance, to synchronize via Dropbox)
       </description>
     </key>
+    <key name="ask-delete" type="b">
+      <default>false</default>
+      <summary>Ask for confirmation before deleting an event</summary>
+      <description>
+        Show a dialog for every task deletion, that asks user to confirm such a deletion.
+      </description>
+    </key>
+    <key name="early-notifications" type="i">
+      <default>0</default>
+      <summary>How much earlier to show notifications</summary>
+      <description>
+        Allow some slack for the user by showing a notification earlier than the actual event.
+      </description>
+    </key>
+    <key name="intrusive-notifications" type="b">
+      <default>false</default>
+      <summary>Show intrusive notification</summary>
+      <description>
+        Show a top level window that needs to be clicked (i.e., clear or snooze) instead of a libnotify event.
+      </description>
+    </key>
     <key name="play-sound" type="b">
       <default>false</default>
       <summary>Play sound on notification</summary>
       <description>
-        Play a sound when a notification is shown
+        Play a sound when a notification is shown.
       </description>
     </key>
     <key name="show-inverse" type="b">
@@ -52,18 +83,26 @@
         Show the task thead inverted, starting from old and coming down to new tasks.
       </description>
     </key>
-    <key name="intrusive-notifications" type="b">
+
+    <key name="gsync" type="b">
       <default>false</default>
-      <summary>Show intrusive notification</summary>
+      <summary>Synchronize with Google Tasks</summary>
       <description>
-        Show a top level window that needs to be clicked (i.e., clear or snooze) instead of a libnotify event
+        Allow Enoté to synchronize with GMail's Tasks.
       </description>
     </key>
-    <key name="ask-delete" type="b">
-      <default>false</default>
-      <summary>Ask for confirmation before deleting an event</summary>
+    <key name="user-name" type="s">
+      <default>""</default>
+      <summary>Google Username</summary>
       <description>
-        Show a dialog for every task deletion, that asks user to confirm such a deletion.
+        Username for Authentication with Google services.
+      </description>
+    </key>
+    <key name="session-key" type="s">
+      <default>""</default>
+      <summary>Unique session key</summary>
+      <description>
+        Session key used for logging in Google
       </description>
     </key>
   </schema>

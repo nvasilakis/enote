@@ -120,6 +120,10 @@ namespace Enote{
 
     private void on_preferences() {
       debug("preferences");
+      PreferencesWindow preferences = new PreferencesWindow(this);
+      preferences.show_all();
+      preferences.run();
+      preferences.hide();
     }
   }
 }
