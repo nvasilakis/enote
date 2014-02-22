@@ -12,6 +12,7 @@ namespace Enote {
     private Gtk.Switch early_notifications;
     private Gtk.Switch play_sound;
     private Gtk.Switch intrusive_notifications;
+    private Gtk.Switch hide_on_close;
     public NoteBookPage general;
     public NoteBookPage sync;
 
@@ -48,9 +49,6 @@ namespace Enote {
       Utils.preferences.schema.bind("ask-delete", ask_delete, "active", SettingsBindFlags.DEFAULT);
       general.add_option (new Gtk.Label ("Ask for confirmation before deleting: "), ask_delete, ref row);
 
-      //write_file_metadata_switch = new Gtk.Switch ();
-      //main_settings.schema.bind("write-metadata-to-file", write_file_metadata_switch, "active", SettingsBindFlags.DEFAULT);
-      //general.add_option (new Gtk.Label ("Inverse task order:"), write_file_metadata_switch, ref row);
 
       early_notifications = new Gtk.Switch ();
       Utils.preferences.schema.bind("early-notifications", early_notifications, "active", SettingsBindFlags.DEFAULT);
@@ -67,6 +65,9 @@ namespace Enote {
       Utils.preferences.schema.bind("play-sound", play_sound, "active", SettingsBindFlags.DEFAULT);
       general.add_option (new Gtk.Label ("Play sounds on notification"), play_sound, ref row);
 
+      hide_on_close = new Gtk.Switch ();
+      Utils.preferences.schema.bind("hide-on-close", hide_on_close, "active", SettingsBindFlags.DEFAULT);
+      general.add_option (new Gtk.Label ("Hide on close (instead of quit):"), hide_on_close, ref row);
 
       sync = new NoteBookPage ("Synchronization");
 

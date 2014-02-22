@@ -1,6 +1,6 @@
 namespace Enote{
   public class SavedState : Granite.Services.Settings {
-
+    // Only saved state
     public int window_width { get; set; }
     public int window_height { get; set; }
     public int opening_x { get; set; }
@@ -15,14 +15,15 @@ namespace Enote{
   }
 
   public class Preferences : Granite.Services.Settings {
-
+    // General tab
     public string db_dir { get; set; }
     public bool ask_delete { get; set; }
     public bool early_notifications { get; set; }
     public bool intrusive_notifications { get; set; }
     public bool play_sound { get; set; }
+    public bool hide_on_close { get; set; }
     public bool show_inverse { get; set; }
-
+    // Synchronization tab
     public bool gsync { get; set; }
     public string user_name { get; set; }
     public string session_key { get; set; }

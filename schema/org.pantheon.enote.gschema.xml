@@ -10,32 +10,32 @@
     <key name="window-width" type="i">
       <default>450</default>
       <summary>Window Width</summary>
-      <description>Saves the window width for restoring it later.</description>
+      <description>Saves the window width for later restoration.</description>
     </key>
     <key name="window-height" type="i">
       <default>600</default>
       <summary>Window Height</summary>
-      <description>Saves the window height for restoring it later.</description>
+      <description>Saves the window height for later restoration.</description>
     </key>
     <key name="opening-x" type="i">
       <default>-1</default>
       <summary>X position of window</summary>
-      <description>Saves the window’s X position for restoring it later.</description>
+      <description>Saves the window’s X position for later restoration.</description>
     </key>
     <key name="opening-y" type="i">
       <default>-1</default>
       <summary>Y position of window</summary>
-      <description>Saves the window’s Y position for restoring it later.</description>
+      <description>Saves the window’s Y position for later restoration.</description>
     </key>
     <key name="notification-x" type="i">
       <default>-1</default>
-      <summary>X position of window</summary>
-      <description>Saves the window’s X position for restoring it later.</description>
+      <summary>X position of the intrusive notification window</summary>
+      <description>Saves the intrudive notification's X position for later restoration.</description>
     </key>
     <key name="notification-y" type="i">
       <default>-1</default>
-      <summary>Y position of window</summary>
-      <description>Saves the window’s Y position for restoring it later.</description>
+      <summary>Y position of the intrusive notification window</summary>
+      <description>Saves the intrudive notification's Y position for later restoration.</description>
     </key>
   </schema>
 
@@ -45,7 +45,7 @@
       <summary>Database file directoy</summary>
       <description>
         Directory where the database file is stored. By default it's the user_data_dir, 
-        but can be configured to be anything (for instance, to synchronize via Dropbox)
+        but can be configured to be anything (for instance, to synchronize via Dropbox).
       </description>
     </key>
     <key name="ask-delete" type="b">
@@ -74,6 +74,13 @@
       <summary>Play sound on notification</summary>
       <description>
         Play a sound when a notification is shown.
+      </description>
+    </key>
+    <key name="hide-on-close" type="b">
+      <default>false</default>
+      <summary>Hide instead of exit when closing</summary>
+      <description>
+        When pressing the close button, hide the application instead of closing it.
       </description>
     </key>
     <key name="show-inverse" type="b">
