@@ -12,7 +12,7 @@ namespace Enote{
     private Gtk.CheckMenuItem help_item;
     private Gtk.CheckMenuItem quit_item;
     private Gtk.ImageMenuItem preferences_item;
-    private Granite.Application application;
+    private Granite.Application app;
     // Coordinates
     private int opening_x;
     private int opening_y;
@@ -20,7 +20,7 @@ namespace Enote{
     private int window_height;
 
     public Window(Granite.Application application) {
-      this.application = application;
+      this.app = application;
       this.delete_event.connect (on_delete);
       title = "Enoté";
       set_default_size(400,500);
@@ -56,7 +56,7 @@ namespace Enote{
       btn_create.clicked.connect (create_new_task_window);
       toolbar.insert (btn_create,0);
       // Attach menu gear
-      var btn_gear = this.application.create_appmenu(settings_menu);
+      var btn_gear = this.app.create_appmenu(settings_menu);
       quit_item = new Gtk.CheckMenuItem.with_label ("Quit");
       settings_menu.append (new Gtk.SeparatorMenuItem ()); 
       settings_menu.append (quit_item);

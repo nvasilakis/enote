@@ -12,8 +12,11 @@
 namespace Enote{
 
   public class Application : Granite.Application  {
+    private Window main_window;
 
     construct {
+      // Allows override cmd-line args method
+
       program_name        = "Enoté";
       build_version       = "0.1";
       build_release_name  = "Aether";
@@ -31,7 +34,53 @@ namespace Enote{
       about_license_type  = Gtk.License.LGPL_3_0;
     }
 
-    public void build_and_run (string[] args) {
+    public override void activate () {
+      warning(get_windows().length().to_string());
+      if (get_windows () == null) 
+        warning ("NULL");
+      else
+        warning ("not null");
+
+        try {
+             this.register ();
+             if (this.get_is_remote()) {
+                warning("Is remote");
+                main_window.show_all();
+                 //this.activate ();
+             } else {
+                warning("Is not remote");
+
+                warning(Utils.DEBUG.to_string());
+                // Setup logging
+                Granite.Services.Logger.DisplayLevel =
+                  (Utils.DEBUG ?
+                   Granite.Services.LogLevel.DEBUG :
+                   Granite.Services.LogLevel.WARN);
+
+                // Setup GSettings
+                Utils.saved_state = new SavedState();
+                Utils.preferences = new Preferences();
+                // Create window
+                Window main_window = new Window(this);
+                main_window.add_menu();
+                debug((Utils.preferences.db_dir.to_string()));
+                if (Utils.file_exists(Utils.preferences.db_dir)) { // proceed with data
+                  Utils.view = Facade.MAIN;
+                  main_window.swap_to_main();
+                } else { // welcome screen
+                  debug("db does not exist");
+                  Utils.view = Facade.WELCOME;
+                  main_window.swap_to_welcome();
+                }
+
+            }
+         }
+         catch (GLib.Error error) {
+             GLib.error ("Failed to activate running instance");
+         }
+    }
+
+    public static int main(string [] args) {
       // Grab command line arguments
       try {
         OptionContext context = new OptionContext ("enote");
@@ -42,33 +91,9 @@ namespace Enote{
         stdout.printf ("error: %s\n", e.message);
         stdout.printf ("Run '%s --help' to see a full list of available command line options.\n", args[0]);
       }
-      // Setup logging
-      Granite.Services.Logger.DisplayLevel =
-        (Utils.DEBUG ?
-         Granite.Services.LogLevel.DEBUG :
-         Granite.Services.LogLevel.WARN);
-
-      // Setup GSettings
-      Utils.saved_state = new SavedState();
-      Utils.preferences = new Preferences();
-      // Create window
-      Window layout = new Window(this);
-      layout.add_menu();
-      debug((Utils.preferences.db_dir.to_string()));
-      if (Utils.file_exists(Utils.preferences.db_dir)) { // proceed with data
-        Utils.view = Facade.MAIN;
-        layout.swap_to_main();
-      } else { // welcome screen
-        debug("db does not exist");
-        Utils.view = Facade.WELCOME;
-        layout.swap_to_welcome();
-      }
-      layout.show_all();
-    }
-
-    public static int main(string [] args) {
       Gtk.init(ref args);
-      new Application().build_and_run(args);
+      Application enote  = new Application();
+      enote.run(args);
       Gtk.main();
       return 0;
     }
