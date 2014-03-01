@@ -240,31 +240,22 @@ namespace Enote {
         return false; // signify non-repetitive event
       debug("attempting notification");
       if (Utils.preferences.intrusive_notifications) {
-        Gtk.MessageDialog snooze = new Gtk.MessageDialog (null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "");
-        // TODO How to add enote' icon?
-        snooze.set_markup ("<b>Reminder!</b> \n" + this.title);
-        var img = new Gtk.Image.from_icon_name ("enote", Gtk.IconSize.DIALOG);
-        snooze.set_image (img);
-        snooze.add_button ("Snooze", Gtk.ResponseType.CANCEL);
-        snooze.add_button ("Done", Gtk.ResponseType.OK); // Should OK be first?
-        snooze.response.connect ((response_id) => {
-          switch (response_id) {
-            case Gtk.ResponseType.OK:
-              this.done = true;
-              debug ("done\n");
-              break;
-            case Gtk.ResponseType.CANCEL:
-              DateTime dt = new DateTime.now_local().add_minutes(5);
-              this.add_date(dt);
-              debug ("Snooze for 5 minutes\n");
-              break;
-            case Gtk.ResponseType.DELETE_EVENT:
-              stdout.puts ("Delete\n");
-              break;
-          }
-          snooze.destroy();
+        Intrusive intr = new Intrusive ("Hey!");
+        intr.show_all();
+        //Gtk.MessageDialog snooze = new Gtk.MessageDialog (null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "");
+        //// TODO How to add enote' icon?
+        //snooze.set_markup ("<b>Reminder!</b> \n" + this.title);
+        //var img = new Gtk.Image.from_icon_name ("enote", Gtk.IconSize.DIALOG);
+        //snooze.set_image (img);
+        //snooze.add_button ("Snooze", Gtk.ResponseType.CANCEL);
+        //snooze.add_button ("Done", Gtk.ResponseType.OK); // Should OK be first?
+        intr.snooze.clicked.connect (() => {
+            DateTime dt = new DateTime.now_local().add_minutes(5);
+            this.add_date(dt);
+            debug ("Snooze for 5 minutes\n");
+            intr.destroy();
         });
-        snooze.show_all ();  
+        //snooze.show_all ();  
       } else {
         if (!Notify.init("Enote"))
           critical("Failed to initialize libnotify.");

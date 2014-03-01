@@ -53,6 +53,7 @@ vala_precompile(VALA_C #${EXEC_NAME}
     src/Settings.vala
     src/PreferencesWindow.vala
     src/NoteBookPage.vala
+    src/Intrusive.vala
 PACKAGES
     gtk+-3.0
     granite
