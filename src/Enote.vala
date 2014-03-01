@@ -38,17 +38,21 @@ namespace Enote{
     }
 
     public override void activate () {
-      if (this.main_window == null)
+      if (this.main_window == null) {
         run_forest_run ();
+      } else {
+        this.main_window.show_all();
+        this.main_window.present();
+      }
     }
 
     public void run_forest_run() {
       stdout.printf("one");
       warning(get_windows().length().to_string());
-      if (get_windows () == null) 
-        warning ("NULL");
-      else {
-        warning ("not null");
+      //if (get_windows () == null) 
+      //  warning ("NULL");
+      //else {
+      //  warning ("not null");
 
         try {
           /*
@@ -72,8 +76,9 @@ namespace Enote{
             Utils.saved_state = new SavedState();
             Utils.preferences = new Preferences();
             // Create window
-            Window main_window = new Window(this);
+            main_window = new Window(this);
             main_window.add_menu();
+            //main_window.set_application(this);
             debug((Utils.preferences.db_dir.to_string()));
             if (Utils.file_exists(Utils.preferences.db_dir)) { // proceed with data
               Utils.view = Facade.MAIN;
@@ -84,11 +89,10 @@ namespace Enote{
               main_window.swap_to_welcome();
             }
             main_window.show_all();
-        }
-        catch (GLib.Error error) {
+        } catch (GLib.Error error) {
           GLib.error ("Failed to activate running instance");
         }
-      }
+      //}
     }
 
     public static int main(string [] args) {
