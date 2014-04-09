@@ -48,6 +48,7 @@ etc.
 * play sound on notification
 * daemonize
 * create a better icon!
+* Wingpanel and GtkPopover
 
 Other, comparable products:
 * [taskpaper] (http://www.hogbaysoftware.com/products/taskpaper)
