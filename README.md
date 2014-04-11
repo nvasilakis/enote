@@ -30,26 +30,40 @@ etc.
 * simple text on right pane -- DONE (changed layout)
 * a simple way of deleting events -- DONE
 * simple Icon -- DONE
-* edit/Delete Event (Next)
+* edit/Delete Event -- DONE
 
 ### internals 
 
 * logging -- DONE
 * startup options -- DONE
 * register enoté on launchpad, transifex -- DONE
-* create ppa build recipe
+* create ppa build recipe -- DONE
 
 ## Roadmap for enoté v.0.3 | Atlas Release
 
-* menu quit and preferences pane'
+* menu quit and preferences pane' -- DONE
 * url/email parsing
-* synchronization with google services
+* i18n support
 * maya calendar integration
-* play sound on notification
-* daemonize
+* play sound on notification -- DONE
+* daemonize -- DONE
 * create a better icon!
+
+## Roadmap for enoté v.0.4 | Iris 
+* synchronization with google services
+      * https://developers.google.com/google-apps/tasks/
+      * https://developers.google.com/accounts/docs/OAuth2
+      * https://developers.google.com/google-apps/tasks/auth
+* Codenames for next releases: 
+      * Nephelai (0.5), 
+      * Uranus (0.6), 
+      * Helios (0.7)
+      * Aion, Selene, 
 * Wingpanel and GtkPopover
+* Webpage?
+      * http://steveno.github.io/balistica/
 
 Other, comparable products:
 * [taskpaper] (http://www.hogbaysoftware.com/products/taskpaper)
 * [todoist] (http://todoist.com/mac)
+*
