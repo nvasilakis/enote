@@ -240,22 +240,14 @@ namespace Enote {
         return false; // signify non-repetitive event
       debug("attempting notification");
       if (Utils.preferences.intrusive_notifications) {
-        Intrusive intr = new Intrusive ("Hey!");
+        Intrusive intr = new Intrusive (this.title);
         intr.show_all();
-        //Gtk.MessageDialog snooze = new Gtk.MessageDialog (null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "");
-        //// TODO How to add enote' icon?
-        //snooze.set_markup ("<b>Reminder!</b> \n" + this.title);
-        //var img = new Gtk.Image.from_icon_name ("enote", Gtk.IconSize.DIALOG);
-        //snooze.set_image (img);
-        //snooze.add_button ("Snooze", Gtk.ResponseType.CANCEL);
-        //snooze.add_button ("Done", Gtk.ResponseType.OK); // Should OK be first?
         intr.snooze.clicked.connect (() => {
             DateTime dt = new DateTime.now_local().add_minutes(5);
             this.add_date(dt);
             debug ("Snooze for 5 minutes\n");
             intr.destroy();
         });
-        //snooze.show_all ();  
       } else {
         if (!Notify.init("Enote"))
           critical("Failed to initialize libnotify.");

@@ -7,9 +7,9 @@ namespace Enote {
         private Gtk.Box container;
 
         public Intrusive (string message = "") {
-            this.set_title("Reminder!");
-            this.box.foreach ((w) => {
-                this.box.remove (w);
+            set_title("Reminder!");
+            box.foreach ((w) => {
+                box.remove (w);
             });
             close_img = new Gdk.Pixbuf(Gdk.Colorspace.RGB, true, 8, 1, 1);
             container = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -54,6 +54,7 @@ namespace Enote {
             bottom.margin = 5;
             container.add (top);
             container.add (bottom);
+            stick (); // show across all workspaces
         }
     }
 }
