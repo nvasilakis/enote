@@ -23,6 +23,10 @@ namespace Enote{
             window.create_new_task_window();
             break;
           case 1:
+            GAuth ga = new GAuth();
+            ga.authenticate();
+
+/*
             var txt = "<span weight='bold'>Sorry!</span>\n\n";
             txt += "This feature hasn't been implemented yet!";
             var msg = new Gtk.MessageDialog.with_markup (null,
@@ -32,6 +36,7 @@ namespace Enote{
               txt);
             msg.response.connect ((response_id) => { msg.destroy(); });
             msg.show();
+*/
             break;
         }
       });

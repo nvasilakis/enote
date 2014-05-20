@@ -25,7 +25,7 @@ find_package(PkgConfig)
 
 #Now we're declaring GTK+ 3 and Granite as our REQUIRE dependancies.
 #If PkgConfig can't find these, you need to install them in Step 1.
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 libnotify sqlheavy-0.1 libcanberra webkitgtk-3.0 json-glib-1.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 libnotify sqlheavy-0.1 libcanberra webkitgtk-3.0 json-glib-1.0 libsoup-2.4)
 
 #Now we're going to ready the libraries and get their directories to include them.
 set(CFLAGS
@@ -63,6 +63,7 @@ PACKAGES
     sqlheavy-0.1
     libcanberra
     webkitgtk-3.0
+    libsoup-2.4
     json-glib-1.0
 OPTIONS
     --thread)

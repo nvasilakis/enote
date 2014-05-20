@@ -6,8 +6,8 @@ namespace Enote{
 
     string access_token;
     string refresh_token;
-    int64? expires_in;
-    int64? issued;
+    int64  expires_in;
+    int64  issued;
 
     public bool hasValidAccessToken() {
       var now = new DateTime.now_local().to_unix();
@@ -25,18 +25,17 @@ namespace Enote{
     void write() {
       Utils.gtasks.access_token = access_token;
       Utils.gtasks.refresh_token = refresh_token;
-      Utils.gtasks.expires_in = expires_in;
-      Utils.gtasks.issued = issued;
+      Utils.gtasks.expires_in = (int) expires_in;
+      Utils.gtasks.issued = (int) issued;
     }
 
     void doFullAuth() {
-      unowned string[] args = null;
-      Gtk.init(ref args);
-
-      var window = new Gtk.Window (Gtk.WindowType.TOPLEVEL);
-      window.set_default_size(400, 650);
+      var window = new Granite.Widgets.LightWindow ("Sing in!");
+      window.resizable = false;
+      window.set_keep_above (true);
+      window.set_default_size(400,500);
+      window.set_size_request (100,200);
       window.set_position(Gtk.WindowPosition.CENTER);
-      window.title = "GTasks";
       window.destroy.connect(Gtk.main_quit);
 
       var webView = new WebView();
@@ -61,8 +60,8 @@ namespace Enote{
         }
       });
 
-      webView.show();
-      window.show();
+      //webView.show();
+      window.show_all();
 
       webView.load_uri(uri);
 
@@ -94,7 +93,7 @@ namespace Enote{
     }
 
     Json.Object request(string params) {
-      var session = new Soup.Session();
+      var session = new Soup.SessionSync();
       var message = new Soup.Message("POST", "https://accounts.google.com/o/oauth2/token");
       message.set_request("application/x-www-form-urlencoded", Soup.MemoryUse.COPY, params.data);
       session.send_message(message);
@@ -121,7 +120,7 @@ namespace Enote{
       var object = request(params);
 
       access_token = object.get_string_member("access_token");
-      expires_in = object.get_int_member("expires_in");
+      expires_in = object.get_int_member("expires_in"); 
       refresh_token = object.get_string_member("refresh_token");
       issued = new DateTime.now_local().to_unix();
       write();
@@ -133,7 +132,7 @@ namespace Enote{
 
       var params = "client_id=237167695494.apps.googleusercontent.com&";
       params += "client_secret=kfqqhqU4RiWQ5nolCOlMbH3O&";
-      params += @"refresh_token=$(AuthInfo.refresh_token)&";
+      params += @"refresh_token=$(refresh_token)&";
       params += "grant_type=refresh_token";
 
       var object = request(params);
