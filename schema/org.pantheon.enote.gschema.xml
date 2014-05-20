@@ -113,4 +113,28 @@
       </description>
     </key>
   </schema>
+
+  <schema path="/org/pantheon/enote/gtasks/" id="org.pantheon.enote.gtasks">
+    <key name="access-token" type="s">
+      <default>""</default>
+      <summary>Application Access Token</summary>
+      <description> The token used to authenticate users.</description>
+    </key>
+    <key name="refresh-token" type="s">
+      <default>""</default>
+      <summary>Application Refresh Token</summary>
+      <description>Not sure what this is.</description>
+    </key>
+    <key name="expires-in" type="i">
+      <default>-1</default>
+      <summary>Token Expiration</summary>
+      <description>When token expires.</description>
+    </key>
+    <key name="issued" type="i">
+      <default>-1</default>
+      <summary>Token Issue Date</summary>
+      <description>When token was issued.</description>
+    </key>
+  </schema>
+
 </schemalist>

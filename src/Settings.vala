@@ -14,6 +14,17 @@ namespace Enote{
     }
   }
 
+  public class GTasks : Granite.Services.Settings {
+    public string access_token {get; set;}
+    public string refresh_token {get; set;}
+    public int expires_in {get; set;}
+    public int issued {get; set;}
+
+    public GTasks () {
+      base ("org.pantheon.enote.gtasks");
+    }
+  }
+
   public class Preferences : Granite.Services.Settings {
     // General tab
     public string db_dir { get; set; }
@@ -23,7 +34,7 @@ namespace Enote{
     public bool play_sound { get; set; }
     public bool hide_on_close { get; set; }
     public bool show_inverse { get; set; }
-    // Synchronization tab
+    // Synchronization tab -- Is this obsolete?
     public bool gsync { get; set; }
     public string user_name { get; set; }
     public string session_key { get; set; }

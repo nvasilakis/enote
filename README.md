@@ -66,4 +66,5 @@ etc.
 Other, comparable products:
 * [taskpaper] (http://www.hogbaysoftware.com/products/taskpaper)
 * [todoist] (http://todoist.com/mac)
-*
+* [corebird] (http://www.ryanlerch.org/blog/corebird-on-fedora)
+* [evernote] (http://dev.evernote.com/doc/)

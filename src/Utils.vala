@@ -22,6 +22,7 @@ namespace Enote {
     // Preferences parameters with default values
     public static SavedState saved_state;
     public static Preferences preferences;
+    public static GTasks gtasks;
     // 3 next could be a non-exclusive radio selection a la bootstrap
     public static bool add_ntf_early_5_mins  = true;
     public static bool add_ntf_early_15_mins = false;
